@@ -6,25 +6,33 @@
 /*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 20:12:37 by mneves-l          #+#    #+#             */
-/*   Updated: 2024/06/08 19:05:36 by gcatarin         ###   ########.fr       */
+/*   Updated: 2024/06/09 20:15:59 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cubed.h"
 
-//check for wrong chars in map matriz, and return a value
 int	check_char(char c)
 {
 	if (c != '1' && c != '0' && c != 'N' && c != 'S' && c != 'W' \
 	&& c != 'E' && c != ' ' && c != '\n')
 		return (1);
 	if (c == 'N' || c == 'S' || c == 'W' || c == 'E')
+	{
+		if (c == 'N')
+			d()->player_a = 3 * PI / 2;
+		else if (c == 'S')
+			d()->player_a = PI / 2;
+		else if (c == 'W')
+			d()->player_a = PI;
+		else if (c == 'E')
+			d()->player_a = 0;
 		return (2);
+	}
 	else
 		return (0);
 }
 
-//loop the entire matriz searching for chars errors, and save playerPOS
 void	map_check_matriz(void)
 {
 	int	x;
@@ -37,18 +45,15 @@ void	map_check_matriz(void)
 		while (d()->map[y][x])
 		{
 			if (check_char(d()->map[y][x]) == 1)
-				error("Error in file_to_check()\n");
+				error("Error\nWrong character found in map!\n");
 			if (check_char(d()->map[y][x]) == 2)
 			{
 				d()->player_x = x * 64;
 				d()->player_y = y * 64;
-				d()->player_a = 0;
 				d()->player_dx = cos(d()->player_a);
 				d()->player_dy = sin(d()->player_a);
 			}
 			x++;
-		//	if (ft_strlen(d()->map[y]) != d()->map_x) //verificar se funciona
-		//		error("Error\nMap must be rectangular!"); // segfault
 		}
 		y++;
 	}

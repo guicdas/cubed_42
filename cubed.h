@@ -6,7 +6,7 @@
 /*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 19:51:10 by mneves-l          #+#    #+#             */
-/*   Updated: 2024/06/08 20:05:41 by gcatarin         ###   ########.fr       */
+/*   Updated: 2024/06/09 20:19:20 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@
 #define KEY_S 115
 #define KEY_A 97
 #define KEY_ESC 65307
+#define KEY_LEFT 65361
+#define KEY_RIGHT 65363
 
 #define RED 0xE40000
 #define GREEN 0x3BFC3B
@@ -33,7 +35,8 @@
 #define SCREENH 768
 #define SCREENW 1024
 #define TEXTURE_SIZE 64
-#define PLAYER_SPEED 2 // speed???
+#define PLAYER_SPEED 2	// speed???
+#define MINISIZE 16		//n "funciona"
 
 #define PI 3.14159265359
 #define DR 0.0174533
@@ -41,9 +44,7 @@
 #define HEXA "0123456789ABCDEF"
 #define DECA "0123456789"
 
-#ifndef BUFFER_SIZE
-# define BUFFER_SIZE 20
-#endif
+#define BUFFER_SIZE 20
 
 typedef struct s_img
 {
@@ -60,17 +61,18 @@ typedef struct s_data
 {
 	void	*mlx;
 	void	*win_ptr;
-	t_img	img;
 	int		frames;
 	int		screen_height;
 	int		screen_width;
 	int		**pixels;
 	char	**textures;
+	int		info_count;
 
 	//---- bonus minimap ----//
-	void	*wall;
-	void	*exit;
-	void	*empty;
+	int		minimap_size;
+	t_img	wall;
+	t_img	exit;
+	t_img	empty;
 
 	//---- map ----//
 	char	*map_no;
@@ -111,6 +113,8 @@ typedef struct s_data
 	int		line_height;
 	int		draw_start;
 	int		draw_end;
+	int		x;
+	int		y;
 
 	//---- textures ----//
 	int		texture_size;
@@ -135,8 +139,9 @@ void	ft_putendl_fd(char *s, int fd);
 
 // utils.c
 void	draw_vertical_line(int x, int start, int end, int color);
-int		put_b_nbr(unsigned long long nbr, char *b, size_t bs);
+int		ft_isspace(int c);
 char	*ft_itoa(long long n, int bs, char *b);
+int		ft_isdigit(int c);
 
 //	leave.c
 void	error(char *s);
@@ -179,9 +184,11 @@ void	render_frame(void);
 void	print_minimap(void);
 
 //	init.c
-void	init_img(char *path);
+void	init_image(t_img *img, char *path, int i);
 void	init_values(void);
 void	init_pixels(void);
 void	init_dda(int x);
 
-int	limits_colors(char *s);
+int		limits_colors(char *s);
+char	*check_util(char *c, char *s);
+void	initialize_everything(void);

@@ -6,7 +6,7 @@
 /*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 16:57:42 by gcatarin          #+#    #+#             */
-/*   Updated: 2024/06/08 19:54:43 by gcatarin         ###   ########.fr       */
+/*   Updated: 2024/06/09 20:34:26 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,22 +17,22 @@ static void	calculate_dda(void)
 	if (d()->ray_dir_x < 0)
 	{
 		d()->step_x = -1;
-		d()->side_dist_x = (d()->player_x - d()->map_x) * d()->delta_dist_x;
+		d()->side_dist_x = (d()->player_x - d()->x) * d()->delta_dist_x;
 	}
 	else
 	{
 		d()->step_x = 1;
-		d()->side_dist_x = (d()->map_x + 1.0 - d()->player_x) * d()->delta_dist_x;
+		d()->side_dist_x = (d()->x + 1.0 - d()->player_y) * d()->delta_dist_x;
 	}
 	if (d()->ray_dir_y < 0)
 	{
 		d()->step_x = -1;
-		d()->side_dist_y = (d()->player_y - d()->map_y) * d()->delta_dist_y;
+		d()->side_dist_y = (d()->player_y - d()->y) * d()->delta_dist_y;
 	}
 	else
 	{
 		d()->step_x = 1;
-		d()->side_dist_y = (d()->map_y + 1.0 - d()->player_y) * d()->delta_dist_y;
+		d()->side_dist_y = (d()->y + 1.0 - d()->player_y) * d()->delta_dist_y;
 	}
 }
 
@@ -46,19 +46,20 @@ static void	dda_execute(void)
 		if (d()->side_dist_x < d()->side_dist_y)
 		{
 			d()->side_dist_x += d()->delta_dist_x;
-			d()->map_x += d()->step_x;
+			d()->x += d()->step_x;
 			d()->side = 0;
 		}
 		else
 		{
 			d()->side_dist_y += d()->delta_dist_y;
-			d()->map_y += d()->step_y;
+			d()->y += d()->step_y;
 			d()->side = 1;
 		}
-		if (d()->map_y < 0.25 || d()->map_x < 0.25 || \
-		d()->map_y > d()->map_h - 0.25 || d()->map_x > d()->map_w - 1.25)
+		if (d()->y < 0.25 || d()->x < 0.25 || \
+		d()->y > d()->screen_height - 0.25 || \
+		d()->x > d()->screen_width - 1.25)
 			break ;
-		else if (d()->map[d()->map_y][d()->map_x] > '0')
+		else if (d()->map[d()->y][d()->x] > '0')
 			hit = 1;
 	}
 }
@@ -87,7 +88,7 @@ void	update_textures(int x)
 {
 	int	color;
 	int	y;
-
+	
 	d()->texture_x = (int)(d()->wall_x * d()->texture_size);
 	if ((d()->side == 0 && d()->ray_dir_x < 0) || \
 	(d()->side == 1 && d()->ray_dir_y > 0))
@@ -100,28 +101,26 @@ void	update_textures(int x)
 	{
 		d()->texture_y = (int)d()->pos & (d()->texture_size - 1);
 		d()->pos += d()->step;
-		color = d()->textures[d()->texture_index] \
-		[d()->texture_size * d()->texture_y + d()->texture_x];
+		color = d()->textures[d()->texture_index][d()->texture_size * d()->texture_y + d()->texture_x];
 		if (d()->ray_dir_y < 0 || d()->ray_dir_x > 0)
 			color = (color >> 1) & 8355711;
-		if (color > 0)
-			d()->pixels[y][x] = color;
+		d()->pixels[y][x] = color; // if color > 0?printf("color: %d, %d\n", color, d()->texture_size);
 		y++;
 	}
 }
 
 void	raycaster(void)
 {
-	int		x;
+	int		i;
 
-	x = 0;
-	while (x < d()->screen_width)
+	i = 0;
+	while (i < d()->screen_width)
 	{
-		init_dda(x);
+		init_dda(i);
 		calculate_dda();
 		dda_execute();
 		calculate_line();
-		update_textures(x);
-		x++;
+		update_textures(i);
+		i++;
 	}
 }

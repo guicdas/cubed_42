@@ -32,6 +32,7 @@ minilibx:
 	@make -C minilibx-linux/ > /dev/null 2>&1
 
 ${NAME}: $(OBJ)
+	clear
 	$(CC) $(FLAGS) $(OBJ) $(MLXFLAGS) -o $(NAME)
 	@echo "$(GREEN)Compilation of ${CLR_RMV}${CYAN}$(NAME) ${CLR_RMV}$(GREEN)"
 	@echo "$(CYAN)$(NAME) ${CLR_RMV}$(GREEN)created with sucess ${CLR_RMV} "
@@ -52,6 +53,9 @@ fclean: clean
 re: fclean all
 
 run: re
-	@./cub3d maps/mapvalid.cub
+	@./cub3d maps/good/map.cub
 
-.PHONY: all clean fclean re run
+norm:
+	clear && norminette srcs && norminette cubed.h
+
+.PHONY: all clean fclean re run norm

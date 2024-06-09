@@ -6,7 +6,7 @@
 /*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 16:32:04 by gcatarin          #+#    #+#             */
-/*   Updated: 2024/06/08 19:02:24 by gcatarin         ###   ########.fr       */
+/*   Updated: 2024/06/09 19:14:04 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,15 +47,20 @@ void	draw_vertical_line(int x, int start, int end, int color)
 	}
 }
 
-int	put_b_nbr(unsigned long long nbr, char *b, size_t bs)
+int		ft_isspace(int c)
 {
-	int	i;
+	c = (unsigned char)c;
+	if (c == '\t' || c == '\n' || c == '\v' || c == '\f' || c == '\r'
+		|| c == ' ')
+		return (1);
+	return (0);
+}
 
-	i = 0;
-	if (nbr >= bs)
-		i = put_b_nbr((nbr / bs), b, bs);
-	i *= 10;
-	return (i + (b[nbr % bs] - 48));
+int	ft_isdigit(int c)
+{
+	if (c >= '0' && c <= '9')
+		return (1);
+	return (0);
 }
 
 char	*convert(long long n, char *str, int bs, char *b)

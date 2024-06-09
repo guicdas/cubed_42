@@ -6,7 +6,7 @@
 /*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 16:31:05 by gcatarin          #+#    #+#             */
-/*   Updated: 2024/06/08 19:52:37 by gcatarin         ###   ########.fr       */
+/*   Updated: 2024/06/09 20:15:59 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,74 +33,69 @@ void valid_entry(int ac, char *str)
 
 static char	*xpm_to_img(char *path)
 {
+	t_img	img;
 	char	*buffer;
 	int		x;
 	int		y;
 
-	init_img(path);
+	init_image(&img, path, 0);
 	buffer = ft_calloc(d()->texture_size * d()->texture_size + 1, sizeof(char));
 	if (!buffer)
-		error("error!\nCouldn't allocate buffer!\n");
+		error("Error\nCouldn't allocate buffer!\n");
 	y = 0;
 	while (y < d()->texture_size)
 	{
 		x = 0;
 		while (x < d()->texture_size)
 		{
-			buffer[y * d()->texture_size + x] = d()->img.addr[y * d()->texture_size + x];
+			buffer[y * d()->texture_size + x] = img.addr[y * d()->texture_size + x];
 			x++;
 		}
 		y++;
 	}	
-	mlx_destroy_image(d()->mlx, d()->img.image); //indirect leak
+	mlx_destroy_image(d()->mlx, img.image); //indirect leak
 	return (buffer);
 }
 
 static void	assets()
 {
-	d()->texture_size = TEXTURE_SIZE;
-	d()->player_speed = PLAYER_SPEED;
-	d()->screen_height = SCREENH;
-	d()->screen_width = SCREENH;
-
 	d()->mlx = mlx_init();
 	d()->win_ptr = mlx_new_window(d()->mlx, d()->screen_width, d()->screen_height, "CUBED");
 	if (!d()->mlx || !d()->win_ptr)
-		error("Error!\n Cub3d coudn't be initialized!\n");
-
+		error("Error\n Cub3d coudn't be initialized!\n");
 	d()->textures = ft_calloc(5, sizeof(int *));
 	if (!d()->textures)
-		error("error!\n Couldn't allocate textures\n");
-
-	info_print();
-
+		error("Error\n Couldn't allocate textures\n");
 	d()->textures[0] = xpm_to_img(d()->map_no);
 	d()->textures[1] = xpm_to_img(d()->map_so);
-	d()->textures[2] = xpm_to_img(d()->map_ea);	//verificar se ta na boa ordem
+	d()->textures[2] = xpm_to_img(d()->map_ea);
 	d()->textures[3] = xpm_to_img(d()->map_we);
-	
-	d()->wall = mlx_xpm_file_to_image(d()->mlx, "/home/gcatarin/Documents/cub3d/textures/wall.xpm", &d()->texture_size, &d()->texture_size);
-	d()->exit = mlx_xpm_file_to_image(d()->mlx, "/home/gcatarin/Documents/cub3d/textures/exit.xpm", &d()->texture_size, &d()->texture_size);
-	d()->empty = mlx_xpm_file_to_image(d()->mlx, "/home/gcatarin/Documents/cub3d/textures/floor.xpm", &d()->texture_size, &d()->texture_size);
-	
+	init_image(&d()->wall, "/home/gcatarin/Documents/cub3d/textures/wall.xpm", 1);
+	init_image(&d()->exit, "/home/gcatarin/Documents/cub3d/textures/exit.xpm", 1);
+	init_image(&d()->empty, "/home/gcatarin/Documents/cub3d/textures/floor.xpm", 1);
 	init_pixels();
-	d()->plane_x = (double) 0;
-	d()->plane_y = (double) 0.66;
-
 }
 
 int main(int ac, char **av)
 {
 	valid_entry(ac, av[1]);
+	initialize_everything();
 	parsing(av);
 
 	assets();
-
 	raycaster();
 	render_frame();
-	print_minimap();
+	// print_minimap();
 
 	mlx_hook(d()->win_ptr, 17, 0, destroy_hook, d);
 	mlx_hook(d()->win_ptr,  2, 1L << 0, movekey_hook, d);
 	mlx_loop(d()->mlx);
 }
+
+/*
+The map must be closed/surrounded by walls.
+
+Spaces are a valid part of the map and are up to you to handle.
+You must be able to parse any kind of map, as long as it respects 
+the rules of the map.
+*/

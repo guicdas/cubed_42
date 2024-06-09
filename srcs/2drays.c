@@ -6,7 +6,7 @@
 /*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 16:48:17 by gcatarin          #+#    #+#             */
-/*   Updated: 2024/06/08 19:31:34 by gcatarin         ###   ########.fr       */
+/*   Updated: 2024/06/09 19:25:57 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,13 +25,10 @@ void	draw_map(void)
 		{
 			if (d()->map[y][x] == '1')
 				mlx_put_image_to_window(d()->mlx, d()->win_ptr, \
-				d()->wall, x * 64, y * 64);
-			else if (d()->map[y][x] == 'E')
+				d()->wall.image, x * d()->minimap_size, y * d()->minimap_size);
+			else 
 				mlx_put_image_to_window(d()->mlx, d()->win_ptr, \
-				d()->exit, x * 64, y * 64);
-			else
-				mlx_put_image_to_window(d()->mlx, d()->win_ptr, \
-				d()->empty, x * 64, y * 64);
+				d()->empty.image, x * d()->minimap_size, y * d()->minimap_size);
 			x++;
 		}
 		y++;
