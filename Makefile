@@ -8,7 +8,7 @@ SRC				= srcs/2drays.c srcs/get_next_line.c srcs/leave.c srcs/lib_utils.c \
 				srcs/main.c srcs/moves.c srcs/parsing_dir.c srcs/parsing_map.c srcs/utils.c \
 				srcs/rays.c srcs/hooks.c srcs/renders.c srcs/init.c srcs/debug.c srcs/colors.c
 INCLUDES		=	
-OBJ				= $(SRC:%.c=%.o)
+OBJ				= $(SRC:srcs/%.c=objs/%.o)
 
 ###################COLOR CODES#############################
 
@@ -26,23 +26,24 @@ GREY 		= \033[0;37m
 
 ###########################################################
 
-all: minilibx ${NAME}
+all: minilibx objs ${NAME}
 
 minilibx:
-	make -C minilibx-linux/
+	@make -C minilibx-linux/ > /dev/null 2>&1
 
 ${NAME}: $(OBJ)
-	@$(MAKE) --no-print-directory -C $(MINILIBX_PATH)
-	@clear
 	$(CC) $(FLAGS) $(OBJ) $(MLXFLAGS) -o $(NAME)
 	@echo "$(GREEN)Compilation of ${CLR_RMV}${CYAN}$(NAME) ${CLR_RMV}$(GREEN)"
 	@echo "$(CYAN)$(NAME) ${CLR_RMV}$(GREEN)created with sucess ${CLR_RMV} "
 
-%.o: %.c
+objs:
+	@mkdir -p objs
+
+objs/%.o: srcs/%.c
 	$(CC) $(FLAGS) -c $^ -o $@ 
 
 clean:	
-	@rm -rf $(OBJ)
+	@rm -rf $(OBJ) objs
 	@echo "$(RED)Deleting $(PURPLE)-> $(YELLOW)$(NAME) $(CLR_RMV)$(RED)[objs]$(GREEN) ${CLR_RMV}"
 
 fclean: clean
