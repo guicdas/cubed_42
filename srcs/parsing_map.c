@@ -6,11 +6,18 @@
 /*   By: jnuncio- <jnuncio-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 20:12:37 by mneves-l          #+#    #+#             */
-/*   Updated: 2024/06/09 15:22:44 by jnuncio-         ###   ########.fr       */
+/*   Updated: 2024/06/10 21:08:19 by jnuncio-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cubed.h"
+
+static void	init_orientation(float a, float px, float py)
+{
+	d()->player_a = a;
+	d()->plane_x = px;
+	d()->plane_y = py;
+}
 
 //check for wrong chars in map matriz, and return a value
 int	check_char(char c)
@@ -19,7 +26,17 @@ int	check_char(char c)
 	&& c != 'E' && c != ' ' && c != '\n')
 		return (1);
 	if (c == 'N' || c == 'S' || c == 'W' || c == 'E')
+	{
+		if (c == 'N')
+			init_orientation(3 * PI / 2, 0.66, 0);
+		else if (c == 'S')
+			init_orientation(PI / 2, -0.66, 0);
+		else if (c == 'W')
+			init_orientation(PI, 0, -0.66);
+		else if (c == 'E')
+			init_orientation(0, 0, 0.66);
 		return (2);
+	}
 	else
 		return (0);
 }
@@ -53,7 +70,6 @@ void	map_check_matriz(void)
 	d()->map_w = ft_strlen(d()->map[y - 1]);
 }
 
-//check if the map is surrounded and if have Player exit proportions
 void	map_flood_fill(int x, int y, char **map, int size)
 {
 	if (y < 0 || y >= size || x < 0 || map[y][x] == '1' \

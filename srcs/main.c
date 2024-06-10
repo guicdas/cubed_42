@@ -6,7 +6,7 @@
 /*   By: jnuncio- <jnuncio-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 16:31:05 by gcatarin          #+#    #+#             */
-/*   Updated: 2024/06/10 20:28:36 by jnuncio-         ###   ########.fr       */
+/*   Updated: 2024/06/10 21:05:04 by jnuncio-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,8 +96,8 @@ static void	assets(void)
 		&d()->texture_size, &d()->texture_size);
 	d()->empty = tmp4;
 	init_pixels();
-	d()->plane_x = (double) 0;
-	d()->plane_y = (double) 0.66;
+	max_map();
+	d()->player_a = ROT_SPEED;
 }
 
 int	main(int ac, char **av)

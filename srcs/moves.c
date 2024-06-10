@@ -6,7 +6,7 @@
 /*   By: jnuncio- <jnuncio-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 17:44:24 by gcatarin          #+#    #+#             */
-/*   Updated: 2024/06/09 15:31:27 by jnuncio-         ###   ########.fr       */
+/*   Updated: 2024/06/10 21:04:23 by jnuncio-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 static int	check_move(int i, int j)
 {
 	if (d()->map[((int)d()->player_y + j) / 64] \
-		[(((int)d()->player_x + i) / 64)] != 49)
+	[(((int)d()->player_x + i) / 64)] != '1')
 		return (1);
 	return (0);
 }
