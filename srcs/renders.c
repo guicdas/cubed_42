@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   renders.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jnuncio- <jnuncio-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/07 14:02:57 by gcatarin          #+#    #+#             */
-/*   Updated: 2024/06/08 19:59:13 by gcatarin         ###   ########.fr       */
+/*   Updated: 2024/06/09 16:36:50 by jnuncio-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,12 +37,15 @@ void	render_frame(void)
 {
 	int	x;
 	int	y;
+	int	*tmp;
 
-	d()->img.image = mlx_new_image(d()->mlx, d()->screen_width, d()->screen_height);
+	tmp = mlx_new_image(d()->mlx, d()->screen_width, d()->screen_height);
+	d()->img.image = tmp;
 	if (d()->img.image == NULL)
 		error("mlx rendering error\n");
-	d()->img.addr = (int *)mlx_get_data_addr(d()->img.image, \
-	&d()->img.bpp, &d()->img.linesize, &d()->img.endian);
+	tmp = (int *)mlx_get_data_addr(d()->img.image, \
+		&d()->img.bpp, &d()->img.linesize, &d()->img.endian);
+	d()->img.addr = tmp;
 	y = 0;
 	while (y < d()->screen_height)
 	{
@@ -53,4 +56,11 @@ void	render_frame(void)
 	}
 	mlx_put_image_to_window(d()->mlx, d()->win_ptr, d()->img.image, 0, 0);
 	mlx_destroy_image(d()->mlx, d()->img.image);
+}
+
+void	print_minimap(void)
+{
+	draw_map();
+	mlx_pixel_put(d()->mlx, d()->win_ptr, d()->player_x, d()->player_y, GREEN);
+	draw_player_direction(d()->player_x, d()->player_y, RED);
 }

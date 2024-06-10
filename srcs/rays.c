@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rays.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jnuncio- <jnuncio-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 16:57:42 by gcatarin          #+#    #+#             */
-/*   Updated: 2024/06/08 19:54:43 by gcatarin         ###   ########.fr       */
+/*   Updated: 2024/06/09 15:14:52 by jnuncio-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,8 @@ static void	calculate_dda(void)
 	else
 	{
 		d()->step_x = 1;
-		d()->side_dist_x = (d()->map_x + 1.0 - d()->player_x) * d()->delta_dist_x;
+		d()->side_dist_x = (d()->map_x + 1.0 - d()->player_x) \
+			* d()->delta_dist_x;
 	}
 	if (d()->ray_dir_y < 0)
 	{
@@ -32,7 +33,8 @@ static void	calculate_dda(void)
 	else
 	{
 		d()->step_x = 1;
-		d()->side_dist_y = (d()->map_y + 1.0 - d()->player_y) * d()->delta_dist_y;
+		d()->side_dist_y = (d()->map_y + 1.0 - d()->player_y) \
+			* d()->delta_dist_y;
 	}
 }
 

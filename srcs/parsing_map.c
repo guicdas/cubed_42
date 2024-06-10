@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_map.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jnuncio- <jnuncio-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 20:12:37 by mneves-l          #+#    #+#             */
-/*   Updated: 2024/06/08 19:05:36 by gcatarin         ###   ########.fr       */
+/*   Updated: 2024/06/09 15:22:44 by jnuncio-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,6 @@ void	map_check_matriz(void)
 				d()->player_dy = sin(d()->player_a);
 			}
 			x++;
-		//	if (ft_strlen(d()->map[y]) != d()->map_x) //verificar se funciona
-		//		error("Error\nMap must be rectangular!"); // segfault
 		}
 		y++;
 	}

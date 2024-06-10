@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   colors.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jnuncio- <jnuncio-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 16:44:00 by gcatarin          #+#    #+#             */
-/*   Updated: 2024/06/08 20:06:03 by gcatarin         ###   ########.fr       */
+/*   Updated: 2024/06/09 15:06:40 by jnuncio-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,5 @@ int	limits_colors(char *s)
 	ret = create_trgb(0, get_color(tmp, &i), \
 	get_color(tmp, &i), get_color(tmp, &i));
 	free(tmp);
-	
 	return (ret);
 }

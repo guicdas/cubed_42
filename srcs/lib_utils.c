@@ -3,18 +3,33 @@
 /*                                                        :::      ::::::::   */
 /*   lib_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jnuncio- <jnuncio-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 19:50:59 by mneves-l          #+#    #+#             */
-/*   Updated: 2024/06/07 15:39:38 by gcatarin         ###   ########.fr       */
+/*   Updated: 2024/06/09 15:17:41 by jnuncio-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cubed.h"
 
+void	*ft_calloc(size_t nmemb, size_t size)
+{
+	void	*result;
+	size_t	total_mem;
+
+	total_mem = nmemb * size;
+	if (total_mem && (total_mem / size) != nmemb)
+		return (NULL);
+	result = malloc(total_mem);
+	if (!result)
+		return (NULL);
+	ft_bzero(result, total_mem);
+	return (result);
+}
+
 int	ft_strcmp(char *s1, char *s2)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (s1[i] == s2[i] && s1[i] != '\0' && s2[i] != '\0')
@@ -43,30 +58,4 @@ void	ft_putendl_fd(char *s, int fd)
 		i++;
 	}
 	write(fd, "\n", 1);
-}
-
-int	free_double_char(char **map)
-{
-	int	i;
-
-	i = -1;
-	if (!map)
-		return (1);
-	while (map[++i])
-		free(map[i]);
-	free(map);
-	return (1);
-}
-
-int	free_double_int(int **map)
-{
-	int	i;
-
-	i = -1;
-	if (!map)
-		return (1);
-	while (map[++i])
-		free(map[i]);
-	free(map);
-	return (1);
 }

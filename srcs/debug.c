@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   debug.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jnuncio- <jnuncio-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/07 14:25:08 by gcatarin          #+#    #+#             */
-/*   Updated: 2024/06/08 19:56:02 by gcatarin         ###   ########.fr       */
+/*   Updated: 2024/06/09 15:07:26 by jnuncio-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,5 +53,5 @@ void	debug_dda(void)
 	printf("ddist y: %f\n", d()->delta_dist_y);
 	printf("sX: %d, sY; %d\n", d()->step_x, d()->step_y);
 	printf("sideX: %f, sideY: %f\n", d()->side_dist_x, d()->side_dist_y);
-	// printf("start: %d end: %d\n", d()->draw_start, d()->draw_end);
 }
+	// printf("start: %d end: %d\n", d()->draw_start, d()->draw_end);

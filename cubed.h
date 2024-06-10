@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cubed.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jnuncio- <jnuncio-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 19:51:10 by mneves-l          #+#    #+#             */
-/*   Updated: 2024/06/08 20:05:41 by gcatarin         ###   ########.fr       */
+/*   Updated: 2024/06/10 20:00:52 by jnuncio-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,18 +41,16 @@
 #define HEXA "0123456789ABCDEF"
 #define DECA "0123456789"
 
-#ifndef BUFFER_SIZE
-# define BUFFER_SIZE 20
-#endif
+#define BUFFER_SIZE 20
 
 typedef struct s_img
 {
-	void	*image;
-	int		*addr;
+	int	*image;
+	int	*addr;
 
-	int		bpp;
-	int		linesize;
-	int		endian;
+	int	bpp;
+	int	linesize;
+	int	endian;
 
 }	t_img;
 
@@ -67,12 +65,10 @@ typedef struct s_data
 	int		**pixels;
 	char	**textures;
 
-	//---- bonus minimap ----//
 	void	*wall;
 	void	*exit;
 	void	*empty;
 
-	//---- map ----//
 	char	*map_no;
 	char	*map_so;
 	char	*map_we;
@@ -83,9 +79,9 @@ typedef struct s_data
 	int		map_y;
 	int		map_h;
 	int		map_w;
+	char	**full_map;
 	char	**map;
 
-	//---- player ----//
 	double	player_x;
 	double	player_y;
 	double	player_a;
@@ -93,7 +89,6 @@ typedef struct s_data
 	double	player_dy;
 	float	player_speed;
 
-	//---- rays ----//
 	double	camera_x;
 	double	ray_dir_x;
 	double	ray_dir_y;
@@ -112,7 +107,6 @@ typedef struct s_data
 	int		draw_start;
 	int		draw_end;
 
-	//---- textures ----//
 	int		texture_size;
 	double	step;
 	double	pos;
@@ -134,8 +128,10 @@ int		ft_strlen(const char *str);
 void	ft_putendl_fd(char *s, int fd);
 
 // utils.c
+void	ft_bzero(void *s, size_t n);
 void	draw_vertical_line(int x, int start, int end, int color);
 int		put_b_nbr(unsigned long long nbr, char *b, size_t bs);
+char	*convert(long long n, char *str, int bs, char *b);
 char	*ft_itoa(long long n, int bs, char *b);
 
 //	leave.c
@@ -151,9 +147,9 @@ int		check_for_element(char *s);
 char	*clean_string(char *s, int i, int flag);
 
 //	debug.c
-void	map_print(void);
 void	info_print(void);
-void	debug_dda();
+void	map_print(void);
+void	debug_dda(void);
 
 //	parsing_map.c
 int		check_char(char c);
@@ -167,11 +163,13 @@ int		move(int keypress);
 int		movekey_hook(int keypress);
 
 //	2drays.c
-void	draw_player_direction(int x1, int y1, int color);
-void	draw_horizontal_rays(void);
 void	draw_map(void);
+float	distance(float ax, float ay, float bx, float by);
+void	draw_player_direction(int x1, int y1, int color);
+//void	draw_horizontal_rays(void);
 
 //	rays.c
+void	update_textures(int x);
 void	raycaster(void);
 
 //	renders.c
@@ -184,4 +182,5 @@ void	init_values(void);
 void	init_pixels(void);
 void	init_dda(int x);
 
-int	limits_colors(char *s);
+//	colors.c
+int		limits_colors(char *s);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   2drays.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jnuncio- <jnuncio-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 16:48:17 by gcatarin          #+#    #+#             */
-/*   Updated: 2024/06/08 19:31:34 by gcatarin         ###   ########.fr       */
+/*   Updated: 2024/06/09 14:40:57 by jnuncio-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,10 +56,10 @@ void	draw_player_direction(int x1, int y1, int color)
 	}
 }
 
-void	draw_horizontal_rays(void)
+/*void	draw_horizontal_rays(void)
 {
 	
-}/*
+}
 	int m, p, dof;
 	float ray_x, ray_y, yo, dH =10000, hx=d()->player_x, hy=d()->player_y;
 	float ray_a = d()->player_a - DR*30; 

@@ -1,7 +1,7 @@
-NO          /home/gcatarin/Documents/cub3d/textures/red.xpm 
-SO  /home/gcatarin/Documents/cub3d/textures/red.xpm    
-WE        /home/gcatarin/Documents/cub3d/textures/red.xpm  
-EA    /home/gcatarin/Documents/cub3d/textures/red.xpm               
+NO          textures/wall.xpm 
+SO  textures/wall.xpm    
+WE        textures/wall.xpm  
+EA    textures/wall.xpm               
 
 F 10,255,255
 C 255,10,255
