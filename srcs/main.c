@@ -6,7 +6,7 @@
 /*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 16:31:05 by gcatarin          #+#    #+#             */
-/*   Updated: 2024/06/10 19:23:04 by gcatarin         ###   ########.fr       */
+/*   Updated: 2024/06/10 20:01:45 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,7 @@ static void	assets()
 	init_image(&d()->player, "/home/gcatarin/Documents/cub3d/textures/player.xpm", 1);
 	init_pixels();
 	max_map();
+	d()->player_a = ROT_SPEED;
 }
 
 int main(int ac, char **av)

@@ -6,7 +6,7 @@
 /*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/07 14:10:24 by gcatarin          #+#    #+#             */
-/*   Updated: 2024/06/10 19:02:05 by gcatarin         ###   ########.fr       */
+/*   Updated: 2024/06/10 20:30:58 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,10 +53,9 @@ void	init_pixels(void)
 
 void	init_dda(int x)
 {
-	d()->player_a = ROT_SPEED;
 	d()->camera_x = 2 * x / (double)d()->screen_width - 1;
-	d()->ray_dir_x = (d()->player_dx * d()->player_speed) + d()->plane_x * d()->camera_x;
-	d()->ray_dir_y = (d()->player_dy * d()->player_speed) + d()->plane_y * d()->camera_x;
+	d()->ray_dir_x = (d()->player_dx / d()->player_speed) + d()->plane_x * d()->camera_x;
+	d()->ray_dir_y = (d()->player_dy / d()->player_speed) + d()->plane_y * d()->camera_x;
 	d()->map_x = (int)d()->player_x / 64;
 	d()->map_y = (int)d()->player_y / 64;
 	d()->delta_dist_x = fabs(1 / d()->ray_dir_x);
@@ -65,9 +64,6 @@ void	init_dda(int x)
 
 void	initialize_everything(void)
 {
-	int	i;
-
-	i = 0;
 	d()->mlx = NULL;
 	d()->win_ptr = NULL;
 	d()->moves = 0;
@@ -79,8 +75,6 @@ void	initialize_everything(void)
 	d()->screen_height = SCREENH;
 	d()->screen_width = SCREENW;
 	d()->mmap_s = MINISIZE;
-	d()->plane_x = (double) 0;
-	d()->plane_y = (double) 0.66;
 	d()->max_x = 0;
 	d()->map_x = 0;
 	d()->map_y = 0;

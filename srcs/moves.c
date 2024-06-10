@@ -6,7 +6,7 @@
 /*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 17:44:24 by gcatarin          #+#    #+#             */
-/*   Updated: 2024/06/10 19:03:34 by gcatarin         ###   ########.fr       */
+/*   Updated: 2024/06/10 19:36:38 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int	check_move(int i, int j)
 {
 	if (d()->map[((int)d()->player_y + j) / 64] \
-	[(((int)d()->player_x + i) / 64)] != 49)
+	[(((int)d()->player_x + i) / 64)] != '1')
 		return (1);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 16:57:42 by gcatarin          #+#    #+#             */
-/*   Updated: 2024/06/10 18:55:10 by gcatarin         ###   ########.fr       */
+/*   Updated: 2024/06/10 20:40:14 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,22 +17,26 @@ static void	calculate_dda(void)
 	if (d()->ray_dir_x < 0)
 	{
 		d()->step_x = -1;
-		d()->side_dist_x = (d()->player_x - d()->map_x) * d()->delta_dist_x;
+		d()->side_dist_x = ((d()->player_x / 64) - d()->map_x) \
+		* d()->delta_dist_x;
 	}
 	else
 	{
 		d()->step_x = 1;
-		d()->side_dist_x = (d()->map_x + 1.0 - d()->player_y) * d()->delta_dist_x;
+		d()->side_dist_x = (d()->map_x + 1.0 - (d()->player_y / 64)) \
+		* d()->delta_dist_x;
 	}
 	if (d()->ray_dir_y < 0)
 	{
 		d()->step_y = -1;
-		d()->side_dist_y = (d()->player_y - d()->map_y) * d()->delta_dist_y;
+		d()->side_dist_y = ((d()->player_y / 64) - d()->map_y) \
+		* d()->delta_dist_y;
 	}
 	else
 	{
 		d()->step_y = 1;
-		d()->side_dist_y = (d()->map_y + 1.0 - d()->player_y) * d()->delta_dist_y;
+		d()->side_dist_y = (d()->map_y + 1.0 - (d()->player_y / 64)) \
+		* d()->delta_dist_y;
 	}
 }
 
@@ -56,8 +60,8 @@ static void	dda_execute(void)
 			d()->side = 1;
 		}
 		if (d()->map_y < 0.25 || d()->map_x < 0.25 || \
-		d()->map_x > d()->max_x - 0.25|| \
-		d()->map_y > d()->map_h - 1.25 )
+		d()->map_x > d()->max_x - 0.25 \
+		|| d()->map_y > d()->map_h - 1.25 )
 			break;
 		else if (d()->map[d()->map_y][d()->map_x] == '1')
 			hit = 1;
@@ -66,17 +70,11 @@ static void	dda_execute(void)
 
 static void	calculate_line(void)
 {
-	// printf("side: %f delta: %f\n", d()->side_dist_x, d()->delta_dist_x);
 	if (d()->side == 0)
-	{
-		// printf("side: %d\n", d()->side);	
-	d()->wall_dist = (d()->side_dist_x - d()->delta_dist_x);}
+	d()->wall_dist = (d()->side_dist_x - d()->delta_dist_x);
 	else
-	{
-		// printf("side: %d\n", d()->side);
-	d()->wall_dist = (d()->side_dist_y - d()->delta_dist_y);}
+	d()->wall_dist = (d()->side_dist_y - d()->delta_dist_y);
 	d()->line_height = (int)(d()->screen_height / d()->wall_dist);
-	// printf("line: %d, wall: %f\n", d()->screen_height, d()->wall_dist);
 	d()->draw_start = -(d()->line_height) / 2 + (d()->screen_height / 2);
 	if (d()->draw_start < 0)
 		d()->draw_start = 0;
@@ -100,9 +98,6 @@ void	update_textures(int x)
 	if ((d()->side == 0 && d()->ray_dir_x > 0) || \
 	(d()->side == 1 && d()->ray_dir_y < 0))
 		d()->texture_x = d()->texture_size - d()->texture_x - 1;
-	if (d()->line_height == 0)
-		d()->step = 100000000;
-	else
 	d()->step = d()->texture_size / d()->line_height;
 	d()->pos = (d()->draw_start - d()->screen_height / 2 + \
 	d()->line_height / 2) * d()->step;

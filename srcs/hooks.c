@@ -6,7 +6,7 @@
 /*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/07 14:01:48 by gcatarin          #+#    #+#             */
-/*   Updated: 2024/06/10 19:14:11 by gcatarin         ###   ########.fr       */
+/*   Updated: 2024/06/10 20:37:32 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,6 @@
 void	print_minimap(void)
 {
 	draw_map();
-	/* put_image(d()->player.image, d()->player_x / 2 - 16, 
-	d()->player_y / 2 - 16);*/
 	mlx_pixel_put(d()->mlx, d()->win_ptr, d()->player_x / 2, \
 	d()->player_y / 2, GREEN);
 	draw_player_direction(d()->player_x / 2, d()->player_y / 2, RED);

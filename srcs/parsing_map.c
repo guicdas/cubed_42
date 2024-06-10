@@ -6,11 +6,18 @@
 /*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 20:12:37 by mneves-l          #+#    #+#             */
-/*   Updated: 2024/06/10 16:07:43 by gcatarin         ###   ########.fr       */
+/*   Updated: 2024/06/10 19:53:34 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cubed.h"
+
+static void	init_orientation(float a, float px, float py)
+{
+	d()->player_a = a;
+	d()->plane_x = px;
+	d()->plane_y = py;
+}
 
 int	check_char(char c)
 {
@@ -20,13 +27,13 @@ int	check_char(char c)
 	if (c == 'N' || c == 'S' || c == 'W' || c == 'E')
 	{
 		if (c == 'N')
-			d()->player_a = 3 * PI / 2;
+			init_orientation(3 * PI / 2, 0.66, 0);
 		else if (c == 'S')
-			d()->player_a = PI / 2;
+			init_orientation(PI / 2, -0.66, 0);
 		else if (c == 'W')
-			d()->player_a = PI;
+			init_orientation(PI, 0, -0.66);
 		else if (c == 'E')
-			d()->player_a = 0;
+			init_orientation(0, 0, 0.66);
 		return (2);
 	}
 	else
@@ -60,7 +67,6 @@ void	map_check_matriz(void)
 	d()->map_w = ft_strlen(d()->map[y - 1]);
 }
 
-//check if the map is surrounded and if have Player exit proportions
 void	map_flood_fill(int x, int y, char **map, int size)
 {
 	if (y < 0 || y >= size || x < 0 || map[y][x] == '1' \

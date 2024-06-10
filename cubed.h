@@ -6,7 +6,7 @@
 /*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 19:51:10 by mneves-l          #+#    #+#             */
-/*   Updated: 2024/06/10 19:08:21 by gcatarin         ###   ########.fr       */
+/*   Updated: 2024/06/10 20:32:40 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,8 @@
 #define SCREENW 1024
 #define TEXTURE_SIZE 64
 #define PLAYER_SPEED 3
-#define ROT_SPEED 0.2
-#define MINISIZE 16		//n "funciona"
+#define ROT_SPEED 0.08
+#define MINISIZE 32
 
 #define PI 3.14159265359
 #define DR 0.0174533
@@ -109,8 +109,8 @@ typedef struct s_data
 	double	ray_dir_y;
 	int		step_x;
 	int		step_y;
-	int		plane_x;
-	int		plane_y;
+	double	plane_x;
+	double	plane_y;
 	double	side_dist_x;
 	double	side_dist_y;
 	double	delta_dist_x;

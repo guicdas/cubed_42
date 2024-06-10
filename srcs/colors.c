@@ -6,7 +6,7 @@
 /*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 16:44:00 by gcatarin          #+#    #+#             */
-/*   Updated: 2024/06/10 19:22:21 by gcatarin         ###   ########.fr       */
+/*   Updated: 2024/06/10 19:26:07 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,6 @@ int	limits_colors(char *s)
 	rgb_tab[1] = get_color(tmp, &i);
 	rgb_tab[2] = get_color(tmp, &i);
 	ret = convert_rgb_to_hex(rgb_tab);
-	// d()->info_count++;
 	free(rgb_tab);
 	free(tmp);
 	return (ret);
