@@ -6,26 +6,27 @@
 /*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 16:31:05 by gcatarin          #+#    #+#             */
-/*   Updated: 2024/06/10 20:01:45 by gcatarin         ###   ########.fr       */
+/*   Updated: 2024/06/10 22:38:06 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cubed.h"
 #include "../minilibx-linux/mlx.h"	
 
-t_data  *d(void)
+t_data	*d(void)
 {
-	static t_data data;
+	static t_data	data;
+
 	return (&data);
 }
 
-void valid_entry(int ac, char *str)
+void	valid_entry(int ac, char *str)
 {
 	if (ac != 2)
 		error("Error\nWrong input -> ./cub3d [path_to_map]\n");
-	if (ft_strlen(str) <= 4 )
+	if (ft_strlen(str) <= 4)
 		error("Error\nEmpty map name\n");
-	while(*str && *str != '.')
+	while (*str && *str != '.')
 		str++;
 	if (ft_strcmp(str, ".cub") != 0)
 		error("Error\nWrong file format -> [map.cub]\n");
@@ -48,49 +49,56 @@ static int	*xpm_to_img(char *path)
 		x = 0;
 		while (x < d()->texture_size)
 		{
-			buffer[y * d()->texture_size + x] = img.addr[y * d()->texture_size + x];
+			buffer[y * d()->texture_size + x] = \
+			img.addr[y * d()->texture_size + x];
 			x++;
 		}
 		y++;
-	}	
+	}
 	mlx_destroy_image(d()->mlx, img.image);
 	return (buffer);
 }
 
-static void	assets()
+static void	assets(void)
 {
+	void	*tmp;
+	void	*tmp1;
+
 	d()->mlx = mlx_init();
-	d()->win_ptr = mlx_new_window(d()->mlx, d()->screen_width, d()->screen_height, "CUBED");
+	tmp = mlx_new_window(d()->mlx, d()->screen_width, \
+	d()->screen_height, "CUBED");
+	d()->win_ptr = tmp;
 	if (!d()->mlx || !d()->win_ptr)
 		error("Error\n Cub3d coudn't be initialized!\n");
-	d()->textures = ft_calloc(5, sizeof(int *));
+	tmp1 = ft_calloc(5, sizeof(int *));
+	d()->textures = tmp1;
 	if (!d()->textures)
 		error("Error\n Couldn't allocate textures\n");
 	d()->textures[0] = xpm_to_img(d()->map_no);
 	d()->textures[1] = xpm_to_img(d()->map_so);
 	d()->textures[2] = xpm_to_img(d()->map_ea);
 	d()->textures[3] = xpm_to_img(d()->map_we);
-	init_image(&d()->wall, "/home/gcatarin/Documents/cub3d/textures/image_1_.xpm", 1);
-	init_image(&d()->exit, "/home/gcatarin/Documents/cub3d/textures/exit.xpm", 1);
-	init_image(&d()->floor, "/home/gcatarin/Documents/cub3d/textures/wall.xpm", 1);
-	init_image(&d()->empty, "/home/gcatarin/Documents/cub3d/textures/black.xpm", 1);
-	init_image(&d()->player, "/home/gcatarin/Documents/cub3d/textures/player.xpm", 1);
+	init_image(&d()->wall, "textures/image_1_.xpm", 1);
+	init_image(&d()->exit, "textures/exit.xpm", 1);
+	init_image(&d()->floor, "textures/wall.xpm", 1);
+	init_image(&d()->empty, "textures/black.xpm", 1);
+	init_image(&d()->player, "textures/player.xpm", 1);
 	init_pixels();
 	max_map();
 	d()->player_a = ROT_SPEED;
 }
 
-int main(int ac, char **av)
+int	main(int ac, char **av)
 {
 	valid_entry(ac, av[1]);
 	initialize_everything();
 	parsing(av);
-
+	info_print();
+	map_print();
 	assets();
 	raycaster();
 	render_frame();
 	print_minimap();
-
 	mlx_hook(d()->win_ptr, 17, 0, destroy_hook, d);
 	mlx_hook(d()->win_ptr,  2, 1L << 0, movekey_hook, d);
 	mlx_loop(d()->mlx);
@@ -106,5 +114,7 @@ the rules of the map.
 	erros possiveis
 		single digits (0, 1..)
 		+ se a linha F ou C tiver mal escrita
+
+		
 	
 */

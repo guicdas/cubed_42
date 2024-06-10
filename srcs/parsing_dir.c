@@ -6,122 +6,131 @@
 /*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 19:46:55 by mneves-l          #+#    #+#             */
-/*   Updated: 2024/06/10 19:24:31 by gcatarin         ###   ########.fr       */
+/*   Updated: 2024/06/10 22:25:44 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cubed.h"
 
-void    parsing(char **av)
-{
-	int	fd;
-	int fd2;
-
-	fd = open(av[1], O_RDONLY , 0700);
-	if (fd < 0)
-		error("Error\nCouldn't open map\n");
-	fd2 = open(av[1], O_RDONLY , 0700);
-	if (fd2 < 0)
-		error("Error\nCouldn't open map\n");
-	load_map(fd, fd2);
-	map_check_matriz();
-	map_flood_fill(d()->player_x, d()->player_y, d()->map, d()->map_h);
-}
-
-void load_map(int fd, int fd2)
+static void	get_map_lines(int fd)
 {
 	char	*tmp;
+	char	**temp;
+	int		n_lines;
+
+	n_lines = 0;
+	while (1)
+	{
+		tmp = get_next_line(fd);
+		if (tmp == NULL)
+			break ;
+		n_lines++;
+		free(tmp);
+	}
+	temp = ft_calloc(sizeof(char *), n_lines + 1);
+	d()->full_map = temp;
+	if (!d()->full_map)
+		error("Error\n Couldn't allocate full map\n");
+}
+
+static int	copy_map(int fd2)
+{
+	char	*tmp;
+	char	*temp;
 	int		i;
+	int		n_lines;
 
 	i = 0;
-	while ((tmp = get_next_line(fd)) != NULL)
+	n_lines = 0;
+	while (1)
 	{
-		check_for_element(tmp);
-		if (d()->map_ea && d()->map_no && d()->map_so && d()->map_we \
-		&& d()->map_c && d()->map_f)				//seg fault quando ha linhas que faltam no .cub
+		tmp = get_next_line(fd2);
+		if (tmp == NULL)
+			break ;
+		if (tmp[0] != '\n')
 		{
-			if (tmp[0] != '\n')
-				d()->map_h++;
+			temp = clean_string(tmp, 0, 0);
+			d()->full_map[i++] = temp;
+			n_lines++;
 		}
 		free(tmp);
 	}
-	d()->map = ft_calloc(sizeof(char **), d()->map_h);
-	while ((tmp = get_next_line(fd2)) != NULL)
-	{
-		if (check_for_element(tmp) == 2 && tmp[0] != '\n')
-			d()->map[i++] = clean_string(tmp, 0, 0);
-		free(tmp);
-	}
-	d()->map[i] = NULL;
+	d()->full_map[i] = NULL;
+	return (n_lines);
 }
 
-char	*check_util(char *c, char *s)
+static void	load_map(int nlines)
 {
-	if (!c)
+	int	i;
+	int	j;
+	int	max_width;
+
+	i = -1;
+	j = 0;
+	max_width = 0;
+	while (++i < nlines)
 	{
-		// d()->info_count++;
-		return (clean_string(s, 2, 1));
+		write(2, d()->full_map[i], ft_strlen(d()->full_map[i]));
+		write(2, "\n", 1);
+		if (check_for_element(d()->full_map[i]) == 2)
+			d()->map_h++;
+		if (max_width < ft_strlen(d()->full_map[i]))
+			max_width = ft_strlen(d()->full_map[i]);
 	}
-	return (c);
+	if (!d()->map_h)
+		error("Error\nMissing map in .cub file!\n");
+	init_map(max_width);
+	i = nlines - d()->map_h;
+	while (i < nlines - 1)
+		d()->map[j++] = d()->full_map[i++];
+	d()->map[j] = NULL;
 }
 
-int check_for_element(char *s)
+int	check_for_element(char *s)
 {
-	if (s && s[0])
+	if (s && *s)
 	{
-		if(s[0] == ' ' || s[0] == '\t')
-			error("Error\nFound spaces before elements\n");
-		if (s[0] == 'N' && s[1] == 'O')
-			d()->map_no = check_util(d()->map_no, s);
-		else if (s[0] == 'S' && s[1] == 'O')
-			d()->map_so = check_util(d()->map_so, s);
-		else if (s[0] == 'W' && s[1] == 'E')
-			d()->map_we = check_util(d()->map_we, s);
-		else if (s[0] == 'E' && s[1] == 'A')
-			d()->map_ea = check_util(d()->map_ea, s);
-		else if (s[0] == 'F')
-		{
-			if (!d()->map_f)
-				d()->map_f = limits_colors(s);
-		}
-		else if (s[0] == 'C')
-		{
-			if (!d()->map_c)
-				d()->map_c = limits_colors(s);
-		}
-		else if (s[0] == '1')
-			return (2);	// temporario, isto da erro provavelmente
+		if (*s == ' ' || *s == '\t')
+			(*s)++;
+		if (*s == 'N')
+			clean_info('N', s);
+		else if (*s == 'S')
+			clean_info('S', s);
+		else if (*s == 'W')
+			clean_info('W', s);
+		else if (*s == 'E')
+			clean_info('E', s);
+		else if (*s == 'F')
+			d()->map_f = limits_colors(s);
+		else if (*s == 'C')
+			d()->map_c = limits_colors(s);
+		else if (*s == '1')
+			return (2);
 		return (1);
 	}
-	return(0);
+	return (0);
 }
 
-char    *clean_string(char *s, int i, int flag)
+void	parsing(char **av)
 {
-    int start;
-    int end;
-    char *new;
+	int	fd;
+	int	fd2;
+	int	i;
 
-	// if (ft_strlen(s) >= 7)
-	// {
-		if (flag == 1)
-		{
-			while (s[i] == ' ' || s[i] == '\t' || s[i] == '\n')
-				i++;
-			start = i;
-		}
-		else
-			start = 0;
-		i = ft_strlen(s) - 1;
-		while (s[i] == ' ' || s[i] == '\t' || s[i] == '\n')
-			i--;
-		new = ft_calloc(sizeof(char *), i - start + 1);
-		end = i;
-		new[end + 1] = '\0';
-		i = 0;
-		while (start <= end)
-			new[i++] = s[start++];
-		return(new);
-	// }
-	// return (NULL);
+	fd = open(av[1], O_RDONLY, 0700);
+	if (fd < 0)
+		error("Error\nCouldn't open map\n");
+	fd2 = open(av[1], O_RDONLY, 0700);
+	if (fd2 < 0)
+	{
+		close(fd);
+		error("Error\nCouldn't open map\n");
+	}
+	get_map_lines(fd);
+	close(fd);
+	i = copy_map(fd2);
+	close(fd2);
+	load_map(i);
+	map_check_matriz();
+	map_flood_fill(d()->player_x, d()->player_y, d()->map, d()->map_h);
 }

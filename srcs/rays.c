@@ -6,7 +6,7 @@
 /*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 16:57:42 by gcatarin          #+#    #+#             */
-/*   Updated: 2024/06/10 20:40:14 by gcatarin         ###   ########.fr       */
+/*   Updated: 2024/06/10 20:44:14 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,8 +61,8 @@ static void	dda_execute(void)
 		}
 		if (d()->map_y < 0.25 || d()->map_x < 0.25 || \
 		d()->map_x > d()->max_x - 0.25 \
-		|| d()->map_y > d()->map_h - 1.25 )
-			break;
+		|| d()->map_y > d()->map_h - 1.25)
+			break ;
 		else if (d()->map[d()->map_y][d()->map_x] == '1')
 			hit = 1;
 	}
@@ -71,16 +71,16 @@ static void	dda_execute(void)
 static void	calculate_line(void)
 {
 	if (d()->side == 0)
-	d()->wall_dist = (d()->side_dist_x - d()->delta_dist_x);
+		d()->wall_dist = (d()->side_dist_x - d()->delta_dist_x);
 	else
-	d()->wall_dist = (d()->side_dist_y - d()->delta_dist_y);
+		d()->wall_dist = (d()->side_dist_y - d()->delta_dist_y);
 	d()->line_height = (int)(d()->screen_height / d()->wall_dist);
 	d()->draw_start = -(d()->line_height) / 2 + (d()->screen_height / 2);
 	if (d()->draw_start < 0)
 		d()->draw_start = 0;
 	d()->draw_end = d()->line_height / 2 + (d()->screen_height / 2);
 	if (d()->draw_end >= d()->screen_height)
-		d()->draw_end = d()->screen_height - 1;	
+		d()->draw_end = d()->screen_height - 1;
 	if (d()->side == 0)
 		d()->wall_x = d()->player_y + d()->wall_dist * d()->ray_dir_y;
 	else
@@ -106,7 +106,8 @@ void	update_textures(int x)
 	{
 		d()->texture_y = (int)d()->pos & (d()->texture_size - 1);
 		d()->pos += d()->step;
-		color = d()->textures[d()->texture_index][d()->texture_size * d()->texture_y + d()->texture_x];
+		color = d()->textures[d()->texture_index][d()->texture_size \
+		* d()->texture_y + d()->texture_x];
 		if (d()->side == 1)
 			color = (color >> 1) & 8355711;
 		if (color > 0)

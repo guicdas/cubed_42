@@ -6,7 +6,7 @@
 /*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 19:51:10 by mneves-l          #+#    #+#             */
-/*   Updated: 2024/06/10 20:32:40 by gcatarin         ###   ########.fr       */
+/*   Updated: 2024/06/10 22:31:09 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@
 #define TEXTURE_SIZE 64
 #define PLAYER_SPEED 3
 #define ROT_SPEED 0.08
-#define MINISIZE 32
+#define MINISIZE 16
 
 #define PI 3.14159265359
 #define DR 0.0174533
@@ -92,6 +92,7 @@ typedef struct s_data
 	int		map_y;
 	int		map_h;
 	int		map_w;
+	char	**full_map;
 	char	**map;
 	int		max_x;
 
@@ -157,7 +158,6 @@ int		free_double_int(int **map);
 
 //	parsing_dir.c
 void	parsing(char **av);
-void	load_map(int fd, int fd2);
 int		check_for_element(char *s);
 char	*clean_string(char *s, int i, int flag);
 
@@ -196,8 +196,9 @@ void	init_pixels(void);
 void	init_dda(int x);
 
 int		limits_colors(char *s);
-char	*check_util(char *c, char *s);
 void	initialize_everything(void);
 void	max_map(void);
 void	get_index(void);
 void	put_image(void *img, int h, int w);
+void	init_map(int width);
+void	clean_info(char C, char *str);
