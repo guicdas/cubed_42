@@ -6,7 +6,7 @@
 /*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 17:45:43 by gcatarin          #+#    #+#             */
-/*   Updated: 2024/06/08 19:47:48 by gcatarin         ###   ########.fr       */
+/*   Updated: 2024/06/10 12:41:11 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	error(char *s)
 {
 	ft_putendl_fd(s, 2);
 	free_double_char(d()->map);
-	free_double_char(d()->textures);
+	free_double_int(d()->textures);
 	free_double_int(d()->pixels);
 	free(d()->map_ea);
 	free(d()->map_so);

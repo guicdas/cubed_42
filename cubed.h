@@ -6,7 +6,7 @@
 /*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 19:51:10 by mneves-l          #+#    #+#             */
-/*   Updated: 2024/06/09 20:19:20 by gcatarin         ###   ########.fr       */
+/*   Updated: 2024/06/10 17:44:55 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 #define KEY_D 100
 #define KEY_S 115
 #define KEY_A 97
+#define KEY_Q 113
 #define KEY_ESC 65307
 #define KEY_LEFT 65361
 #define KEY_RIGHT 65363
@@ -31,11 +32,13 @@
 #define GREEN 0x3BFC3B
 #define YELLOW 0xF4FF49
 #define ORANGE 0xff8000
+#define WHITE 0xFFFFFF
 
 #define SCREENH 768
 #define SCREENW 1024
 #define TEXTURE_SIZE 64
-#define PLAYER_SPEED 2	// speed???
+#define PLAYER_SPEED 3
+#define ROT_SPEED 0.3
 #define MINISIZE 16		//n "funciona"
 
 #define PI 3.14159265359
@@ -65,14 +68,17 @@ typedef struct s_data
 	int		screen_height;
 	int		screen_width;
 	int		**pixels;
-	char	**textures;
+	int		**textures;
 	int		info_count;
+	int		settings_flag;
 
 	//---- bonus minimap ----//
-	int		minimap_size;
+	int		mmap_s;
 	t_img	wall;
 	t_img	exit;
+	t_img	floor;
 	t_img	empty;
+	t_img	player;
 
 	//---- map ----//
 	char	*map_no;
@@ -86,6 +92,7 @@ typedef struct s_data
 	int		map_h;
 	int		map_w;
 	char	**map;
+	int		max_x;
 
 	//---- player ----//
 	double	player_x;
@@ -94,6 +101,7 @@ typedef struct s_data
 	double	player_dx;
 	double	player_dy;
 	float	player_speed;
+	float	rotation_speed;
 
 	//---- rays ----//
 	double	camera_x;
@@ -113,8 +121,6 @@ typedef struct s_data
 	int		line_height;
 	int		draw_start;
 	int		draw_end;
-	int		x;
-	int		y;
 
 	//---- textures ----//
 	int		texture_size;
@@ -166,14 +172,14 @@ void	map_check_matriz(void);
 void	map_flood_fill(int x, int y, char **map, int size);
 
 //	moves.c
-int		move(int keypress);
+void	move(int keypress);
+void	rotate(int keypress);
 
 //	hooks.c
 int		movekey_hook(int keypress);
 
 //	2drays.c
 void	draw_player_direction(int x1, int y1, int color);
-void	draw_horizontal_rays(void);
 void	draw_map(void);
 
 //	rays.c
@@ -192,3 +198,6 @@ void	init_dda(int x);
 int		limits_colors(char *s);
 char	*check_util(char *c, char *s);
 void	initialize_everything(void);
+void	max_map(void);
+void	get_index(void);
+void	put_image(void *img, int h, int w);

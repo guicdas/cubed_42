@@ -6,7 +6,7 @@
 /*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 16:57:42 by gcatarin          #+#    #+#             */
-/*   Updated: 2024/06/09 20:34:26 by gcatarin         ###   ########.fr       */
+/*   Updated: 2024/06/10 17:42:52 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,22 +17,22 @@ static void	calculate_dda(void)
 	if (d()->ray_dir_x < 0)
 	{
 		d()->step_x = -1;
-		d()->side_dist_x = (d()->player_x - d()->x) * d()->delta_dist_x;
+		d()->side_dist_x = (d()->player_x - d()->map_x) * d()->delta_dist_x;
 	}
 	else
 	{
 		d()->step_x = 1;
-		d()->side_dist_x = (d()->x + 1.0 - d()->player_y) * d()->delta_dist_x;
+		d()->side_dist_x = (d()->map_x + 1.0 - d()->player_y) * d()->delta_dist_x;
 	}
 	if (d()->ray_dir_y < 0)
 	{
-		d()->step_x = -1;
-		d()->side_dist_y = (d()->player_y - d()->y) * d()->delta_dist_y;
+		d()->step_y = -1;
+		d()->side_dist_y = (d()->player_y - d()->map_y) * d()->delta_dist_y;
 	}
 	else
 	{
-		d()->step_x = 1;
-		d()->side_dist_y = (d()->y + 1.0 - d()->player_y) * d()->delta_dist_y;
+		d()->step_y = 1;
+		d()->side_dist_y = (d()->map_y + 1.0 - d()->player_y) * d()->delta_dist_y;
 	}
 }
 
@@ -46,37 +46,46 @@ static void	dda_execute(void)
 		if (d()->side_dist_x < d()->side_dist_y)
 		{
 			d()->side_dist_x += d()->delta_dist_x;
-			d()->x += d()->step_x;
+			d()->map_x += d()->step_x;
 			d()->side = 0;
 		}
 		else
 		{
 			d()->side_dist_y += d()->delta_dist_y;
-			d()->y += d()->step_y;
+			d()->map_y += d()->step_y;
 			d()->side = 1;
 		}
-		if (d()->y < 0.25 || d()->x < 0.25 || \
-		d()->y > d()->screen_height - 0.25 || \
-		d()->x > d()->screen_width - 1.25)
-			break ;
-		else if (d()->map[d()->y][d()->x] > '0')
+		if (d()->map_y < 0.25 || d()->map_x < 0.25 || d()->map_x > d()->max_x || \
+		d()->map_y > d()->screen_height - 0.25 || \
+		d()->map_x > d()->screen_width - 1.25)
+			break;
+		else if (d()->map[d()->map_y][d()->map_x] == '1')
+		{				
+			//printf("ENTROU!x:%d y: %d\n", d()->map_y, d()->map_x);
 			hit = 1;
+		}
 	}
 }
 
 static void	calculate_line(void)
 {
+	// printf("side: %f delta: %f\n", d()->side_dist_x, d()->delta_dist_x);
 	if (d()->side == 0)
-		d()->wall_dist = (d()->side_dist_x - d()->delta_dist_x);
+	{
+		// printf("side: %d\n", d()->side);	
+	d()->wall_dist = (d()->side_dist_x - d()->delta_dist_x);}
 	else
-		d()->wall_dist = (d()->side_dist_y - d()->delta_dist_y);
+	{
+		// printf("side: %d\n", d()->side);
+	d()->wall_dist = (d()->side_dist_y - d()->delta_dist_y);}
 	d()->line_height = (int)(d()->screen_height / d()->wall_dist);
+	// printf("line: %d, wall: %f\n", d()->screen_height, d()->wall_dist);
 	d()->draw_start = -(d()->line_height) / 2 + (d()->screen_height / 2);
 	if (d()->draw_start < 0)
 		d()->draw_start = 0;
 	d()->draw_end = d()->line_height / 2 + (d()->screen_height / 2);
 	if (d()->draw_end >= d()->screen_height)
-		d()->draw_end = d()->screen_height - 1;
+		d()->draw_end = d()->screen_height - 1;	
 	if (d()->side == 0)
 		d()->wall_x = d()->player_y + d()->wall_dist * d()->ray_dir_y;
 	else
@@ -88,12 +97,16 @@ void	update_textures(int x)
 {
 	int	color;
 	int	y;
-	
+
+	get_index();
 	d()->texture_x = (int)(d()->wall_x * d()->texture_size);
-	if ((d()->side == 0 && d()->ray_dir_x < 0) || \
-	(d()->side == 1 && d()->ray_dir_y > 0))
+	if ((d()->side == 0 && d()->ray_dir_x > 0) || \
+	(d()->side == 1 && d()->ray_dir_y < 0))
 		d()->texture_x = d()->texture_size - d()->texture_x - 1;
-	d()->step = 1.0 * d()->texture_size / d()->line_height;
+	if (d()->line_height == 0)
+		d()->step = 1000000;
+	else
+		d()->step = d()->texture_size / d()->line_height;
 	d()->pos = (d()->draw_start - d()->screen_height / 2 + \
 	d()->line_height / 2) * d()->step;
 	y = d()->draw_start;
@@ -102,9 +115,10 @@ void	update_textures(int x)
 		d()->texture_y = (int)d()->pos & (d()->texture_size - 1);
 		d()->pos += d()->step;
 		color = d()->textures[d()->texture_index][d()->texture_size * d()->texture_y + d()->texture_x];
-		if (d()->ray_dir_y < 0 || d()->ray_dir_x > 0)
+		if (d()->side == 1)
 			color = (color >> 1) & 8355711;
-		d()->pixels[y][x] = color; // if color > 0?printf("color: %d, %d\n", color, d()->texture_size);
+		if (color > 0)
+			d()->pixels[y][x] = color;
 		y++;
 	}
 }

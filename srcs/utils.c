@@ -6,7 +6,7 @@
 /*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 16:32:04 by gcatarin          #+#    #+#             */
-/*   Updated: 2024/06/09 19:14:04 by gcatarin         ###   ########.fr       */
+/*   Updated: 2024/06/10 14:35:45 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,3 +84,35 @@ char	*ft_itoa(long long n, int bs, char *b)
 	convert(n, s, bs, b);
 	return (s);
 }
+
+void	max_map(void)
+{
+	int	y;
+
+	y = 0;
+	while (y < d()->map_h - 1)
+	{
+		if (d()->max_x < ft_strlen(d()->map[y]))
+			d()->max_x = ft_strlen(d()->map[y]);
+		y++;
+	}
+}
+
+void	get_index(void)
+{
+	if (d()->side == 0)
+	{
+		if (d()->ray_dir_x < 0)
+			d()->texture_index = 3;
+		else
+			d()->texture_index = 2;
+	}
+	else
+	{
+		if (d()->ray_dir_y > 0)
+			d()->texture_index = 1;
+		else
+			d()->texture_index = 0;
+	}
+}
+
