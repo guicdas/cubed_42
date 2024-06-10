@@ -6,13 +6,14 @@
 /*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/07 14:10:24 by gcatarin          #+#    #+#             */
-/*   Updated: 2024/06/10 17:31:34 by gcatarin         ###   ########.fr       */
+/*   Updated: 2024/06/10 19:02:05 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cubed.h"
 
-void	init_image(t_img *img, char *path, int i){
+void	init_image(t_img *img, char *path, int i)
+{
 	img->image = NULL;
 	img->addr = NULL;
 	img->bpp = 0;
@@ -52,9 +53,10 @@ void	init_pixels(void)
 
 void	init_dda(int x)
 {
+	d()->player_a = ROT_SPEED;
 	d()->camera_x = 2 * x / (double)d()->screen_width - 1;
-	d()->ray_dir_x = d()->player_dx + d()->plane_x * d()->camera_x;
-	d()->ray_dir_y = d()->player_dy + d()->plane_y * d()->camera_x;
+	d()->ray_dir_x = (d()->player_dx * d()->player_speed) + d()->plane_x * d()->camera_x;
+	d()->ray_dir_y = (d()->player_dy * d()->player_speed) + d()->plane_y * d()->camera_x;
 	d()->map_x = (int)d()->player_x / 64;
 	d()->map_y = (int)d()->player_y / 64;
 	d()->delta_dist_x = fabs(1 / d()->ray_dir_x);
@@ -68,13 +70,12 @@ void	initialize_everything(void)
 	i = 0;
 	d()->mlx = NULL;
 	d()->win_ptr = NULL;
-	d()->frames = 0;
+	d()->moves = 0;
 	d()->textures = NULL;
 	d()->pixels = NULL;
 	d()->texture_index = 0;
 	d()->texture_size = TEXTURE_SIZE;
 	d()->player_speed = PLAYER_SPEED;
-	d()->rotation_speed = ROT_SPEED;
 	d()->screen_height = SCREENH;
 	d()->screen_width = SCREENW;
 	d()->mmap_s = MINISIZE;

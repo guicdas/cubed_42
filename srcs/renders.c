@@ -6,7 +6,7 @@
 /*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/07 14:02:57 by gcatarin          #+#    #+#             */
-/*   Updated: 2024/06/10 14:41:45 by gcatarin         ###   ########.fr       */
+/*   Updated: 2024/06/10 19:21:26 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,8 @@ static void	set_pixel(int x, t_img *img, int y)
 void	render_frame(void)
 {
 	t_img	img;
-	int	x;
-	int	y;
+	int		x;
+	int		y;
 
 	img.image = mlx_new_image(d()->mlx, d()->screen_width, d()->screen_height);
 	if (img.image == NULL)

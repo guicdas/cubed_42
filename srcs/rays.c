@@ -6,7 +6,7 @@
 /*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 16:57:42 by gcatarin          #+#    #+#             */
-/*   Updated: 2024/06/10 17:42:52 by gcatarin         ###   ########.fr       */
+/*   Updated: 2024/06/10 18:55:10 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,15 +55,12 @@ static void	dda_execute(void)
 			d()->map_y += d()->step_y;
 			d()->side = 1;
 		}
-		if (d()->map_y < 0.25 || d()->map_x < 0.25 || d()->map_x > d()->max_x || \
-		d()->map_y > d()->screen_height - 0.25 || \
-		d()->map_x > d()->screen_width - 1.25)
+		if (d()->map_y < 0.25 || d()->map_x < 0.25 || \
+		d()->map_x > d()->max_x - 0.25|| \
+		d()->map_y > d()->map_h - 1.25 )
 			break;
 		else if (d()->map[d()->map_y][d()->map_x] == '1')
-		{				
-			//printf("ENTROU!x:%d y: %d\n", d()->map_y, d()->map_x);
 			hit = 1;
-		}
 	}
 }
 
@@ -104,9 +101,9 @@ void	update_textures(int x)
 	(d()->side == 1 && d()->ray_dir_y < 0))
 		d()->texture_x = d()->texture_size - d()->texture_x - 1;
 	if (d()->line_height == 0)
-		d()->step = 1000000;
+		d()->step = 100000000;
 	else
-		d()->step = d()->texture_size / d()->line_height;
+	d()->step = d()->texture_size / d()->line_height;
 	d()->pos = (d()->draw_start - d()->screen_height / 2 + \
 	d()->line_height / 2) * d()->step;
 	y = d()->draw_start;

@@ -6,7 +6,7 @@
 /*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 16:44:00 by gcatarin          #+#    #+#             */
-/*   Updated: 2024/06/09 20:15:59 by gcatarin         ###   ########.fr       */
+/*   Updated: 2024/06/10 19:22:21 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,12 +53,6 @@ static unsigned long	convert_rgb_to_hex(int *rgb_tab)
 	result = ((r & 0xff) << 16) + ((g & 0xff) << 8) + (b & 0xff);
 	return (result);
 }
-
-/*	erros possiveis
-		single digits (0, 1..) 
-		+ tirar atoi e meter ft_atoi
-		+ se a linha F ou C tiver mal escrita
-	*/
 
 int	limits_colors(char *s)
 {

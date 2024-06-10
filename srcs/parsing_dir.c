@@ -6,17 +6,16 @@
 /*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 19:46:55 by mneves-l          #+#    #+#             */
-/*   Updated: 2024/06/09 18:21:00 by gcatarin         ###   ########.fr       */
+/*   Updated: 2024/06/10 19:24:31 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cubed.h"
 
-//Save and check every imput before the game starts
 void    parsing(char **av)
 {
 	int	fd;
-	int	fd2;
+	int fd2;
 
 	fd = open(av[1], O_RDONLY , 0700);
 	if (fd < 0)
@@ -24,7 +23,7 @@ void    parsing(char **av)
 	fd2 = open(av[1], O_RDONLY , 0700);
 	if (fd2 < 0)
 		error("Error\nCouldn't open map\n");
-	load_map(fd, fd2);/*verificar o clean string*//*close fd1*/
+	load_map(fd, fd2);
 	map_check_matriz();
 	map_flood_fill(d()->player_x, d()->player_y, d()->map, d()->map_h);
 }

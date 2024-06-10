@@ -6,7 +6,7 @@
 /*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 19:51:10 by mneves-l          #+#    #+#             */
-/*   Updated: 2024/06/10 17:44:55 by gcatarin         ###   ########.fr       */
+/*   Updated: 2024/06/10 19:08:21 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,14 +31,14 @@
 #define RED 0xE40000
 #define GREEN 0x3BFC3B
 #define YELLOW 0xF4FF49
-#define ORANGE 0xff8000
+#define BLACK 0x000000
 #define WHITE 0xFFFFFF
 
 #define SCREENH 768
 #define SCREENW 1024
 #define TEXTURE_SIZE 64
 #define PLAYER_SPEED 3
-#define ROT_SPEED 0.3
+#define ROT_SPEED 0.2
 #define MINISIZE 16		//n "funciona"
 
 #define PI 3.14159265359
@@ -64,13 +64,14 @@ typedef struct s_data
 {
 	void	*mlx;
 	void	*win_ptr;
-	int		frames;
+	int		moves;
 	int		screen_height;
 	int		screen_width;
 	int		**pixels;
 	int		**textures;
 	int		info_count;
 	int		settings_flag;
+	int		fd;
 
 	//---- bonus minimap ----//
 	int		mmap_s;
@@ -97,11 +98,10 @@ typedef struct s_data
 	//---- player ----//
 	double	player_x;
 	double	player_y;
-	double	player_a;
+	float	player_a;
 	double	player_dx;
 	double	player_dy;
 	float	player_speed;
-	float	rotation_speed;
 
 	//---- rays ----//
 	double	camera_x;
