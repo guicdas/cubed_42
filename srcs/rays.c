@@ -6,7 +6,7 @@
 /*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 16:57:42 by gcatarin          #+#    #+#             */
-/*   Updated: 2024/06/10 20:44:14 by gcatarin         ###   ########.fr       */
+/*   Updated: 2024/06/11 15:02:35 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,8 +60,8 @@ static void	dda_execute(void)
 			d()->side = 1;
 		}
 		if (d()->map_y < 0.25 || d()->map_x < 0.25 || \
-		d()->map_x > d()->max_x - 0.25 \
-		|| d()->map_y > d()->map_h - 1.25)
+		d()->map_x > d()->screen_width - 0.25 \
+		|| d()->map_y > d()->screen_height - 1.25)
 			break ;
 		else if (d()->map[d()->map_y][d()->map_x] == '1')
 			hit = 1;

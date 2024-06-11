@@ -6,16 +6,20 @@
 /*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 17:44:24 by gcatarin          #+#    #+#             */
-/*   Updated: 2024/06/10 19:36:38 by gcatarin         ###   ########.fr       */
+/*   Updated: 2024/06/11 15:07:25 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cubed.h"
 
-int	check_move(int i, int j)
+int	check_move(float i, float j)
 {
-	if (d()->map[((int)d()->player_y + j) / 64] \
-	[(((int)d()->player_x + i) / 64)] != '1')
+	int	y;
+	int	x;
+
+	y = (int)(d()->player_y + j) / 64;
+	x = (int)(d()->player_x + i) / 64;
+	if (d()->map[y][x] != '1')
 		return (1);
 	return (0);
 }

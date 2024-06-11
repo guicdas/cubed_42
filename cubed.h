@@ -6,7 +6,7 @@
 /*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 19:51:10 by mneves-l          #+#    #+#             */
-/*   Updated: 2024/06/10 22:31:09 by gcatarin         ###   ########.fr       */
+/*   Updated: 2024/06/11 14:34:10 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -200,5 +200,6 @@ void	initialize_everything(void);
 void	max_map(void);
 void	get_index(void);
 void	put_image(void *img, int h, int w);
-void	init_map(int width);
+void	init_map(int width, int i);
 void	clean_info(char C, char *str);
+int		ft_is_onlyspace(char *s);

@@ -6,7 +6,7 @@
 /*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/07 14:10:24 by gcatarin          #+#    #+#             */
-/*   Updated: 2024/06/10 21:40:36 by gcatarin         ###   ########.fr       */
+/*   Updated: 2024/06/11 15:14:37 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	init_image(t_img *img, char *path, int i)
 		img->image = mlx_xpm_file_to_image(d()->mlx, path, \
 		&d()->mmap_s, &d()->mmap_s);
 	if (img->image == NULL)
-		error("Error\nXpm_to_img didn't work correctly!\n");
+		error("Error\nCouldn't open map file!\n");
 	img->addr = (int *)mlx_get_data_addr(img->image, &img->bpp, \
 	&img->linesize, &img->endian);
 	if (img->addr == NULL)

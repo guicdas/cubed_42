@@ -6,7 +6,7 @@
 /*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 20:12:37 by mneves-l          #+#    #+#             */
-/*   Updated: 2024/06/10 19:53:34 by gcatarin         ###   ########.fr       */
+/*   Updated: 2024/06/11 14:58:08 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static void	init_orientation(float a, float px, float py)
 int	check_char(char c)
 {
 	if (c != '1' && c != '0' && c != 'N' && c != 'S' && c != 'W' \
-	&& c != 'E' && c != ' ' && c != '\n')
+	&& c != 'E' && ft_isspace(c) != 1)
 		return (1);
 	if (c == 'N' || c == 'S' || c == 'W' || c == 'E')
 	{

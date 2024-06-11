@@ -3,10 +3,12 @@ SO  textures/blue.xpm
 WE        textures/red.xpm
 EA    textures/rose.xpm
 
-F 20,30,20
+F 0
 C 158,199,228
 
-	11111111111
+
+
+11111111111
 10001010001
 10101000001
 10100S10001

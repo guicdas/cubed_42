@@ -6,7 +6,7 @@
 /*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 16:31:05 by gcatarin          #+#    #+#             */
-/*   Updated: 2024/06/10 22:38:06 by gcatarin         ###   ########.fr       */
+/*   Updated: 2024/06/11 15:03:37 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,6 @@ int	main(int ac, char **av)
 	valid_entry(ac, av[1]);
 	initialize_everything();
 	parsing(av);
-	info_print();
 	map_print();
 	assets();
 	raycaster();
@@ -108,13 +107,6 @@ int	main(int ac, char **av)
 The map must be closed/surrounded by walls.
 
 Spaces are a valid part of the map and are up to you to handle.
-You must be able to parse any kind of map, as long as it respects 
-the rules of the map.
 
-	erros possiveis
-		single digits (0, 1..)
-		+ se a linha F ou C tiver mal escrita
-
-		
-	
+wall clipping
 */

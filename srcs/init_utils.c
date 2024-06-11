@@ -6,11 +6,41 @@
 /*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 21:40:23 by gcatarin          #+#    #+#             */
-/*   Updated: 2024/06/10 22:20:51 by gcatarin         ###   ########.fr       */
+/*   Updated: 2024/06/11 14:45:04 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cubed.h"
+
+int	ft_is_onlyspace(char *s)
+{
+	int	i;
+
+	i = 0;
+	while (s[i])
+	{
+		if (ft_isspace(s[i]) == 0)
+			return (1);
+		i++;
+	}
+	return (0);
+}
+
+static size_t	ft_strlcpy(char *dest, const char *src, size_t size)
+{
+	size_t	count;
+
+	count = 0;
+	if (size == 0)
+		return (ft_strlen(src));
+	while (src[count] != '\0' && count < (size - 1))
+	{
+		dest[count] = src[count];
+		count++;
+	}
+	dest[count] = '\0';
+	return (ft_strlen(src));
+}
 
 void	init_pixels(void)
 {
@@ -35,25 +65,26 @@ void	init_pixels(void)
 	}
 }
 
-void	init_map(int width)
+void	init_map(int width, int j)
 {
 	int		i;
 	void	*tmp;
 	void	*tmp1;
-	(void)tmp1;
-	(void)width;
-	i = 0;
 
+	i = 0;
 	tmp = ft_calloc(sizeof(char *), d()->map_h + 1);
 	d()->map = tmp;
 	if (!d()->map)
 		error("Error\n Couldn't allocate map\n");
-	while (i < d()->map_h - 1)
+	while (i < d()->map_h)
 	{
 		tmp1 = ft_calloc(width + 1, sizeof(char));
 		d()->map[i] = tmp1;
 		if (!d()->map[i])
 			error("Error\n Couldn't allocate map line\n");
+		// printf("string: %s\n", d()->full_map[j]);
+		ft_strlcpy(d()->map[i], d()->full_map[j], ft_strlen(d()->full_map[j]) + 1);
+		j++;
 		i++;
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 19:46:55 by mneves-l          #+#    #+#             */
-/*   Updated: 2024/06/10 22:25:44 by gcatarin         ###   ########.fr       */
+/*   Updated: 2024/06/11 14:57:57 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,25 +37,23 @@ static int	copy_map(int fd2)
 {
 	char	*tmp;
 	char	*temp;
-	int		i;
 	int		n_lines;
 
-	i = 0;
 	n_lines = 0;
 	while (1)
 	{
 		tmp = get_next_line(fd2);
 		if (tmp == NULL)
 			break ;
-		if (tmp[0] != '\n')
+		if (ft_is_onlyspace(tmp) == 1)
 		{
 			temp = clean_string(tmp, 0, 0);
-			d()->full_map[i++] = temp;
+			d()->full_map[n_lines] = temp;
 			n_lines++;
 		}
 		free(tmp);
 	}
-	d()->full_map[i] = NULL;
+	d()->full_map[n_lines] = NULL;
 	return (n_lines);
 }
 
@@ -70,8 +68,6 @@ static void	load_map(int nlines)
 	max_width = 0;
 	while (++i < nlines)
 	{
-		write(2, d()->full_map[i], ft_strlen(d()->full_map[i]));
-		write(2, "\n", 1);
 		if (check_for_element(d()->full_map[i]) == 2)
 			d()->map_h++;
 		if (max_width < ft_strlen(d()->full_map[i]))
@@ -79,18 +75,14 @@ static void	load_map(int nlines)
 	}
 	if (!d()->map_h)
 		error("Error\nMissing map in .cub file!\n");
-	init_map(max_width);
-	i = nlines - d()->map_h;
-	while (i < nlines - 1)
-		d()->map[j++] = d()->full_map[i++];
-	d()->map[j] = NULL;
+	init_map(max_width, nlines - d()->map_h);
 }
 
 int	check_for_element(char *s)
 {
 	if (s && *s)
 	{
-		if (*s == ' ' || *s == '\t')
+		while (ft_isspace(*s) == 1)
 			(*s)++;
 		if (*s == 'N')
 			clean_info('N', s);

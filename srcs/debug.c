@@ -6,7 +6,7 @@
 /*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/07 14:25:08 by gcatarin          #+#    #+#             */
-/*   Updated: 2024/06/10 19:12:42 by gcatarin         ###   ########.fr       */
+/*   Updated: 2024/06/11 15:09:29 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,17 +27,15 @@ void	info_print(void)
 void	map_print(void)
 {
 	int	i;
-	int	j;
 
 	i = 0;
+	printf("\tMAP\n");
 	while (d()->map[i])
-	{
-		j = 0;
-		while (j < d()->map_w)
-			printf("[%d%d] - ", j++, i);
-		printf("\n");
-		i++;
-	}
+		printf("\t%s\n", d()->map[i++]);
+	i = 0;
+	printf("\n\tFULL MAP\n");
+	while (d()->full_map[i])
+		printf("\t%s\n", d()->full_map[i++]);
 }
 
 void	debug_dda(void)

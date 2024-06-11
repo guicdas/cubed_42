@@ -6,16 +6,20 @@
 /*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 17:45:43 by gcatarin          #+#    #+#             */
-/*   Updated: 2024/06/10 22:37:18 by gcatarin         ###   ########.fr       */
+/*   Updated: 2024/06/11 14:56:40 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cubed.h"
 
-static void	free_map(void)
+static void	free_maps(void)
 {
-	int	i;
+	int i;
 
+	i = 0;
+	while (i < d()->map_h)
+		free(d()->map[i++]);
+	free(d()->map);
 	i = 0;
 	while (d()->full_map[i])
 		free(d()->full_map[i++]);
@@ -37,8 +41,7 @@ static void	free_info(void)
 void	error(char *s)
 {
 	ft_putendl_fd(s, 2);
-	free(d()->map);
-	free_map();
+	free_maps();
 	if (d()->textures)
 		free_double_int(d()->textures);
 	if (d()->pixels)

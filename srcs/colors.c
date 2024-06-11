@@ -6,7 +6,7 @@
 /*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 16:44:00 by gcatarin          #+#    #+#             */
-/*   Updated: 2024/06/10 19:26:07 by gcatarin         ###   ########.fr       */
+/*   Updated: 2024/06/11 14:49:14 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,8 @@ int	limits_colors(char *s)
 	unsigned long	ret;
 	int				*rgb_tab;
 
+	if (ft_strlen(s) <= 2)
+		error("Error\nEmpty rgb color!\n");
 	rgb_tab = calloc(3, sizeof(int));
 	i = 0;
 	tmp = clean_string(s, 1, 1);

@@ -6,7 +6,7 @@
 /*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 16:48:17 by gcatarin          #+#    #+#             */
-/*   Updated: 2024/06/10 22:30:57 by gcatarin         ###   ########.fr       */
+/*   Updated: 2024/06/11 15:05:08 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	draw_map(void)
 	int	x;
 
 	y = 0;
-	while (y < d()->map_h - 1)
+	while (y < d()->map_h)
 	{
 		x = 0;
 		while (x < d()->max_x)
