@@ -6,7 +6,7 @@
 /*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/07 14:01:48 by gcatarin          #+#    #+#             */
-/*   Updated: 2024/06/11 17:58:22 by gcatarin         ###   ########.fr       */
+/*   Updated: 2024/06/11 19:16:16 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,8 +64,10 @@ int	movekey_hook(int keypress)
 		rotate(keypress);
 	raycaster();
 	render_frame();
-	print_minimap();
 	if (d()->settings_flag == 1)
+	{
+		print_minimap();
 		show_settings();
+	}
 	return (0);
 }

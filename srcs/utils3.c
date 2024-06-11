@@ -1,30 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init_utils.c                                       :+:      :+:    :+:   */
+/*   utils3.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 21:40:23 by gcatarin          #+#    #+#             */
-/*   Updated: 2024/06/11 15:21:52 by gcatarin         ###   ########.fr       */
+/*   Updated: 2024/06/11 22:31:30 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cubed.h"
-
-int	ft_is_onlyspace(char *s)
-{
-	int	i;
-
-	i = 0;
-	while (s[i])
-	{
-		if (ft_isspace(s[i]) == 0)
-			return (1);
-		i++;
-	}
-	return (0);
-}
 
 static size_t	ft_strlcpy(char *dest, const char *src, size_t size)
 {
@@ -33,9 +19,17 @@ static size_t	ft_strlcpy(char *dest, const char *src, size_t size)
 	count = 0;
 	if (size == 0)
 		return (ft_strlen(src));
-	while (src[count] != '\0' && count < (size - 1))
+	while (src[count] != '\0')
 	{
-		dest[count] = src[count];
+		if (ft_isspace(src[count]) == 1)
+			dest[count] = '\2';
+		else
+			dest[count] = src[count];
+		count++;
+	}
+	while (count < (size - 1))
+	{
+		dest[count] = '\2';
 		count++;
 	}
 	dest[count] = '\0';
@@ -50,7 +44,7 @@ void	init_pixels(void)
 
 	i = 0;
 	if (d()->pixels)
-		free_double_int(d()->pixels);
+		free_double((void **)d()->pixels);
 	tmp = ft_calloc(d()->screen_height + 1, sizeof(int *));
 	d()->pixels = tmp;
 	if (!d()->pixels)
@@ -78,30 +72,54 @@ void	init_map(int width, int j)
 		error("Error\n Couldn't allocate map\n");
 	while (i < d()->map_h)
 	{
-		tmp1 = ft_calloc(width + 1, sizeof(char));
+		tmp1 = ft_calloc(width + 2, sizeof(char));
 		d()->map[i] = tmp1;
 		if (!d()->map[i])
 			error("Error\n Couldn't allocate map line\n");
-		ft_strlcpy(d()->map[i], d()->full_map[j], \
-		ft_strlen(d()->full_map[j]) + 1);
+		ft_strlcpy(d()->map[i], d()->full_map[j], width + 2);
 		j++;
 		i++;
 	}
 }
 
-void	clean_info(char c, char *str)
+char *tes(char *str)
 {
-	char	*tmp;
-	int		i;
+	char	**args;
+	size_t	size;
 
-	i = 2;
-	tmp = clean_string(str, 2, 1);
-	if (c == 'N')
-		d()->map_no = tmp;
-	if (c == 'S')
-		d()->map_so = tmp;
-	if (c == 'E')
-		d()->map_ea = tmp;
-	if (c == 'W')
-		d()->map_we = tmp;
+	args = ft_split(str, ' ');
+	size = ft_strlen_array(args);
+	if (size != 2)
+		return (free_double((void **)args), NULL);
+	str = args[1];
+	args[1] = NULL;
+	return (free_double((void **)args), str);
+}
+
+void	clean_info(char *s)
+{
+	if (s[0] == 'N' && s[1] == 'O' && ft_isspace(s[2]))
+	{
+		if (d()->map_no)
+			error("Error\nMultiple NO textures in map file.\n");
+		d()->map_no = tes(s);
+	}
+	if (s[0] == 'S' && s[1] == 'O' && ft_isspace(s[2]))
+	{
+		if (d()->map_so)
+			error("Error\nMultiple SO textures in map file.\n");	
+		d()->map_so = tes(s);
+	}
+	if (s[0] == 'E' && s[1] == 'A' && ft_isspace(s[2]))
+	{	
+		if (d()->map_ea)
+			error("Error\nMultiple EA textures in map file.\n");
+		d()->map_ea = tes(s);
+	}
+	if (s[0] == 'W' && s[1] == 'E' && ft_isspace(s[2]))
+	{	
+		if (d()->map_we)
+			error("Error\nMultiple WE textures in map file.\n");
+		d()->map_we = tes(s);
+	}
 }

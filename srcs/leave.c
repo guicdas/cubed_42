@@ -6,7 +6,7 @@
 /*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 17:45:43 by gcatarin          #+#    #+#             */
-/*   Updated: 2024/06/11 17:18:00 by gcatarin         ###   ########.fr       */
+/*   Updated: 2024/06/11 21:49:04 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,13 @@ static void	free_maps(void)
 	i = 0;
 	while (i < d()->map_h)
 		free(d()->map[i++]);
-	free(d()->map);
+	if (d()->map)
+		free(d()->map);
 	i = 0;
 	while (d()->full_map[i])
 		free(d()->full_map[i++]);
-	free(d()->full_map);
+	if (d()->full_map)
+		free(d()->full_map);
 }
 
 static void	free_info(void)
@@ -38,15 +40,31 @@ static void	free_info(void)
 		free(d()->map_we);
 }
 
+void	free_image(void)
+{
+	if (d()->wall.image)
+		mlx_destroy_image(d()->mlx, d()->wall.image);
+	if (d()->exit.image)
+		mlx_destroy_image(d()->mlx, d()->exit.image);
+	if (d()->floor.image)
+		mlx_destroy_image(d()->mlx, d()->floor.image);
+	if (d()->empty.image)
+		mlx_destroy_image(d()->mlx, d()->empty.image);
+	if (d()->player.image)
+		mlx_destroy_image(d()->mlx, d()->player.image);
+}
+
 void	error(char *s)
 {
 	ft_putendl_fd(s, 2);
 	free_maps();
 	if (d()->textures)
-		free_double_int(d()->textures);
+		free_double((void **)d()->textures);
 	if (d()->pixels)
-		free_double_int(d()->pixels);
+		free_double((void **)d()->pixels);
 	free_info();
+	if (d()->mlx)
+		free_image();
 	if (d()->mlx && d()->win_ptr)
 		mlx_destroy_window(d()->mlx, d()->win_ptr);
 	if (d()->mlx)

@@ -6,7 +6,7 @@
 /*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 19:04:48 by gcatarin          #+#    #+#             */
-/*   Updated: 2024/06/10 21:13:22 by gcatarin         ###   ########.fr       */
+/*   Updated: 2024/06/11 18:40:52 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,22 +56,25 @@ char	*clean_string(char *s, int i, int flag)
 	int		end;
 	char	*new;
 
-	if (flag == 1)
+	if (flag == 1 && s[i])
 	{
-		while (s[i] == ' ' || s[i] == '\t' || s[i] == '\n')
+		while (ft_isspace(s[i]) == 1 || s[i] == '\n')
 			i++;
 		start = i;
 	}
 	else
 		start = 0;
 	i = ft_strlen(s) - 1;
-	while (s[i] == ' ' || s[i] == '\t' || s[i] == '\n')
+	while (ft_isspace(s[i]) == 1 || s[i] == '\n')
 		i--;
 	new = ft_calloc(sizeof(char *), i - start + 1);
-	end = i;
-	new[end + 1] = '\0';
+	end = i + 1;
+	if (i > start)
+		new[end] = '\0';
+	else
+		new[0] = '\0';
 	i = 0;
-	while (start <= end)
+	while (start < end)
 		new[i++] = s[start++];
 	return (new);
 }

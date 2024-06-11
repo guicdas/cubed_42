@@ -6,7 +6,7 @@
 /*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 19:51:10 by mneves-l          #+#    #+#             */
-/*   Updated: 2024/06/11 18:20:13 by gcatarin         ###   ########.fr       */
+/*   Updated: 2024/06/11 22:32:25 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,8 @@
 #define SCREENH 768
 #define SCREENW 1024
 #define TEXTURE_SIZE 128
-#define PLAYER_SPEED 4
-#define ROT_SPEED 0.15
+#define PLAYER_SPEED 5
+#define ROT_SPEED 0.2
 #define MINISIZE 16
 
 #define PI 3.14159265359
@@ -71,6 +71,7 @@ typedef struct s_data
 	int		**textures;
 	int		info_count;
 	int		settings_flag;
+	int		n_player;
 
 	int		mmap_s;
 	t_img	wall;
@@ -135,7 +136,11 @@ char	*get_next_line(int fd);
 //	lib_utils.c
 void	*ft_calloc(size_t nmemb, size_t size);
 int		ft_strcmp(char *s1, char *s2);
+int		ft_strncmp(char *s1, char *s2);
+int		ft_strncmp(char *s1, char *s2);
 int		ft_strlen(const char *str);
+int		ft_strlen_array(char **str);
+char	**ft_split(char const *s, char c);
 void	ft_putendl_fd(char *s, int fd);
 
 // utils.c
@@ -147,8 +152,7 @@ int		ft_isdigit(int c);
 //	leave.c
 void	error(char *s);
 int		destroy_hook(void);
-int		free_double_char(char **map);
-int		free_double_int(int **map);
+void	free_double(void **map);
 
 //	parsing_dir.c
 void	parsing(char **av);
@@ -189,13 +193,12 @@ void	init_values(void);
 void	init_pixels(void);
 void	init_dda(int x);
 
-int		limits_colors(char *s);
+void	limits_colors(char *s);
 void	initialize_everything(void);
 void	max_map(void);
 void	get_index(void);
 void	put_image(void *img, int h, int w);
 void	init_map(int width, int i);
-void	clean_info(char c, char *str);
-int		ft_is_onlyspace(char *s);
+void	clean_info(char *str);
 void	move_left(void);
 void	move_right(void);

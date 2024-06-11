@@ -6,7 +6,7 @@
 /*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 16:48:17 by gcatarin          #+#    #+#             */
-/*   Updated: 2024/06/11 15:05:08 by gcatarin         ###   ########.fr       */
+/*   Updated: 2024/06/11 21:45:51 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,13 +33,11 @@ void	draw_map(void)
 				if (d()->map[y][x] == '1')
 					put_image(d()->wall.image, \
 					x * d()->mmap_s, y * d()->mmap_s);
-				else 
+				else if (d()->map[y][x] == '-' || d()->map[y][x] == 'P' \
+				|| d()->map[y][x] == '0')
 					put_image(d()->floor.image, \
 					x * d()->mmap_s, y * d()->mmap_s);
 			}
-			else
-				put_image(d()->empty.image, \
-				x * d()->mmap_s, y * d()->mmap_s);
 			x++;
 		}
 		y++;

@@ -6,7 +6,7 @@
 /*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 19:46:55 by mneves-l          #+#    #+#             */
-/*   Updated: 2024/06/11 18:36:51 by gcatarin         ###   ########.fr       */
+/*   Updated: 2024/06/11 22:30:13 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,12 +45,9 @@ static int	copy_map(int fd2)
 		tmp = get_next_line(fd2);
 		if (tmp == NULL)
 			break ;
-		if (ft_is_onlyspace(tmp) == 1)
-		{
-			temp = clean_string(tmp, 0, 0);
-			d()->full_map[n_lines] = temp;
-			n_lines++;
-		}
+		temp = clean_string(tmp, 0, 0);
+		d()->full_map[n_lines] = temp;
+		n_lines++;
 		free(tmp);
 	}
 	d()->full_map[n_lines] = NULL;
@@ -69,9 +66,11 @@ static void	load_map(int nlines)
 	while (++i < nlines)
 	{
 		if (check_for_element(d()->full_map[i]) == 2)
+		{
 			d()->map_h++;
-		if (max_width < ft_strlen(d()->full_map[i]))
-			max_width = ft_strlen(d()->full_map[i]);
+			if (max_width < ft_strlen(d()->full_map[i]))
+				max_width = ft_strlen(d()->full_map[i]);
+		}
 	}
 	if (!d()->map_h)
 		error("Error\nMissing map in .cub file!\n");
@@ -84,19 +83,9 @@ int	check_for_element(char *s)
 	{
 		while (ft_isspace(*s) == 1)
 			s++;
-		if (*s == 'N')
-			clean_info('N', s);
-		else if (*s == 'S')
-			clean_info('S', s);
-		else if (*s == 'W')
-			clean_info('W', s);
-		else if (*s == 'E')
-			clean_info('E', s);
-		else if (*s == 'F')
-			d()->map_f = limits_colors(s);
-		else if (*s == 'C')
-			d()->map_c = limits_colors(s);
-		else if (*s == '1')
+		clean_info(s);
+		limits_colors(s);
+		if (*s == '1')
 			return (2);
 		return (1);
 	}
@@ -124,6 +113,8 @@ void	parsing(char **av)
 	close(fd2);
 	load_map(i);
 	map_check_matriz();
+	if (d()->n_player != 1)
+		error("Error\nWrong player count!\n");	
 	map_flood_fill((int)d()->player_x / 64, (int)d()->player_y / 64, \
 	d()->map, d()->map_h);
 }

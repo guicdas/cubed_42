@@ -6,7 +6,7 @@
 /*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/07 14:02:57 by gcatarin          #+#    #+#             */
-/*   Updated: 2024/06/11 15:22:52 by gcatarin         ###   ########.fr       */
+/*   Updated: 2024/06/11 19:04:45 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,25 +16,20 @@ static void	set_pixel(int x, t_img *img, int y)
 {
 	int		pixel;
 
-	if (y < (d()->mmap_s * d()->map_h) && x < d()->mmap_s * d()->max_x)
-		return ;
-	else
+	if (d()->pixels[y][x] > 0)
 	{
-		if (d()->pixels[y][x] > 0)
-		{
-			pixel = y * (img->linesize / 4) + x;
-			img->addr[pixel] = d()->pixels[y][x];
-		}
-		else if (y < d()->screen_height / 2)
-		{
-			pixel = y * (img->linesize / 4) + x;
-			img->addr[pixel] = d()->map_c;
-		}
-		else if (y < d()->screen_height - 1)
-		{
-			pixel = y * (img->linesize / 4) + x;
-			img->addr[pixel] = d()->map_f;
-		}
+		pixel = y * (img->linesize / 4) + x;
+		img->addr[pixel] = d()->pixels[y][x];
+	}
+	else if (y < d()->screen_height / 2)
+	{
+		pixel = y * (img->linesize / 4) + x;
+		img->addr[pixel] = d()->map_c;
+	}
+	else if (y < d()->screen_height - 1)
+	{
+		pixel = y * (img->linesize / 4) + x;
+		img->addr[pixel] = d()->map_f;
 	}
 }
 
