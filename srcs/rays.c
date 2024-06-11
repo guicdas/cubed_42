@@ -6,7 +6,7 @@
 /*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 16:57:42 by gcatarin          #+#    #+#             */
-/*   Updated: 2024/06/11 15:59:34 by gcatarin         ###   ########.fr       */
+/*   Updated: 2024/06/11 17:08:23 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static void	calculate_dda(void)
 	else
 	{
 		d()->step_x = 1;
-		d()->side_dist_x = (d()->map_x + 1.0 - (d()->player_y / 64)) \
+		d()->side_dist_x = (d()->map_x + 1.0 - (d()->player_x / 64)) \
 		* d()->delta_dist_x;
 	}
 	if (d()->ray_dir_y < 0)
@@ -99,10 +99,7 @@ void	update_textures(int x)
 	if ((d()->side == 0 && d()->ray_dir_x > 0) || \
 	(d()->side == 1 && d()->ray_dir_y < 0))
 		d()->texture_x = d()->texture_size - d()->texture_x - 1;
-	if (d()->line_height == 0)
-		{printf("line h	: %d\n", d()->line_height);d()->step = d()->texture_size / 0.01;}
-	else
-		d()->step = d()->texture_size / d()->line_height;
+	d()->step = d()->texture_size / d()->line_height;
 	d()->pos = (d()->draw_start - d()->screen_height / 2 + \
 	d()->line_height / 2) * d()->step;
 	y = d()->draw_start;

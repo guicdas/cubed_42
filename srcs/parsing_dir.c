@@ -6,7 +6,7 @@
 /*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 19:46:55 by mneves-l          #+#    #+#             */
-/*   Updated: 2024/06/11 14:57:57 by gcatarin         ###   ########.fr       */
+/*   Updated: 2024/06/11 18:36:51 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ int	check_for_element(char *s)
 	if (s && *s)
 	{
 		while (ft_isspace(*s) == 1)
-			(*s)++;
+			s++;
 		if (*s == 'N')
 			clean_info('N', s);
 		else if (*s == 'S')
@@ -124,5 +124,6 @@ void	parsing(char **av)
 	close(fd2);
 	load_map(i);
 	map_check_matriz();
-	map_flood_fill(d()->player_x, d()->player_y, d()->map, d()->map_h);
+	map_flood_fill((int)d()->player_x / 64, (int)d()->player_y / 64, \
+	d()->map, d()->map_h);
 }

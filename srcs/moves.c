@@ -6,7 +6,7 @@
 /*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 17:44:24 by gcatarin          #+#    #+#             */
-/*   Updated: 2024/06/11 15:07:25 by gcatarin         ###   ########.fr       */
+/*   Updated: 2024/06/11 18:37:23 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	rotate(int keypress)
 	rot = d()->player_a;
 	old_dir = d()->player_dx;
 	old_plane = d()->plane_x;
-	if (keypress == KEY_A || keypress == KEY_LEFT)
+	if (keypress == KEY_LEFT)
 		rot *= -1;
 	d()->player_dx = (d()->player_dx * cos(rot)) - (d()->player_dy * sin(rot));
 	d()->player_dy = (old_dir * sin(rot)) + (d()->player_dy * cos(rot));
@@ -46,20 +46,50 @@ void	move(int keypress)
 {
 	if (keypress == KEY_W)
 	{
-		if (check_move(d()->player_dx, d()->player_dy) == 1)
-		{
+		if (check_move(d()->player_dx * d()->player_speed, 0) == 1)
 			d()->player_x += d()->player_dx * d()->player_speed;
+		if (check_move(0, d()->player_dy * d()->player_speed) == 1)
 			d()->player_y += d()->player_dy * d()->player_speed;
-			d()->moves++;
-		}
+		d()->moves++;
 	}
 	else
 	{
-		if (check_move(-d()->player_dx, -d()->player_dy) == 1)
-		{
+		if (check_move(-d()->player_dx * d()->player_speed, 0) == 1)
 			d()->player_x -= d()->player_dx * d()->player_speed;
+		if (check_move(0, -d()->player_dy * d()->player_speed) == 1)
 			d()->player_y -= d()->player_dy * d()->player_speed;
-			d()->moves++;
-		}
+		d()->moves++;
 	}
+}
+
+void	move_left(void)
+{
+	int	rot;
+
+	rot = d()->player_a;
+	if (check_move(((d()->player_dx * cos(rot - PI / 2)) - \
+	(d()->player_dy * sin(rot - PI / 2))) * d()->player_speed, 0) == 1)
+		d()->player_x += ((d()->player_dx * cos(rot - PI / 2)) - \
+		(d()->player_dy * sin(rot - PI / 2))) * d()->player_speed;
+	if (check_move(0, ((d()->player_dx * sin(rot - PI / 2)) + \
+	(d()->player_dy * cos(rot - PI / 2))) * d()->player_speed) == 1)
+		d()->player_y += ((d()->player_dx * sin(rot - PI / 2)) + \
+		(d()->player_dy * cos(rot - PI / 2))) * d()->player_speed;
+	d()->moves++;
+}
+
+void	move_right(void)
+{
+	int	rot;
+
+	rot = d()->player_a;
+	if (check_move(-((d()->player_dx * cos(-rot - PI / 2)) - \
+	(d()->player_dy * sin(-rot - PI / 2))) * d()->player_speed, 0) == 1)
+		d()->player_x -= ((d()->player_dx * cos(-rot - PI / 2)) - \
+		(d()->player_dy * sin(-rot - PI / 2))) * d()->player_speed;
+	if (check_move(0, -((d()->player_dx * sin(-rot - PI / 2)) + \
+	(d()->player_dy * cos(-rot - PI / 2))) * d()->player_speed) == 1)
+		d()->player_y -= ((d()->player_dx * sin(-rot - PI / 2)) + \
+		(d()->player_dy * cos(-rot - PI / 2))) * d()->player_speed;
+	d()->moves++;
 }

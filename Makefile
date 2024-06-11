@@ -54,7 +54,7 @@ fclean: clean
 re: fclean all
 
 run: re
-	@./cub3d maps/good/good.cub
+	@./cub3d maps/good/map.cub
 
 norm:
 	clear && norminette srcs && norminette cubed.h

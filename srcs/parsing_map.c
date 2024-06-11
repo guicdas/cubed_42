@@ -6,7 +6,7 @@
 /*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 20:12:37 by mneves-l          #+#    #+#             */
-/*   Updated: 2024/06/11 14:58:08 by gcatarin         ###   ########.fr       */
+/*   Updated: 2024/06/11 17:16:19 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,11 +74,8 @@ void	map_flood_fill(int x, int y, char **map, int size)
 		return ;
 	if (ft_strlen(map[y]) <= x)
 		return ;
-	if (map[y][x] == ' ')
-	{
-		printf("Flood_fill found a leak in the map[%d][%d]\n", y, x);
-		return ;
-	}
+	if (ft_isspace(map[y][x]) == 1)
+		error("Flood_fill found a leak in the map\n");
 	if (check_char(map[y][x]) == 2)
 	{
 		printf("Flood_fill found a Player[%d][%d]\n", y, x);

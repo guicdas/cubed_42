@@ -6,7 +6,7 @@
 /*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/07 14:01:48 by gcatarin          #+#    #+#             */
-/*   Updated: 2024/06/11 16:06:57 by gcatarin         ###   ########.fr       */
+/*   Updated: 2024/06/11 17:58:22 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,10 +39,10 @@ static void	show_settings(void)
 	BLACK, ft_itoa(d()->moves, 10, DECA));
 	mlx_string_put(d()->mlx, d()->win_ptr, 2, 24, WHITE, "Y:");
 	mlx_string_put(d()->mlx, d()->win_ptr, 14, 26, \
-	BLACK, ft_itoa((int)d()->player_y / 64 + 1, 10, DECA));
+	BLACK, ft_itoa((int)d()->player_y / 64, 10, DECA));
 	mlx_string_put(d()->mlx, d()->win_ptr, 40, 24, WHITE, "X:");
 	mlx_string_put(d()->mlx, d()->win_ptr, 54, 26, \
-	BLACK, ft_itoa((int)d()->player_x / 64 + 1, 10, DECA));
+	BLACK, ft_itoa((int)d()->player_x / 64, 10, DECA));
 }
 
 int	movekey_hook(int keypress)
@@ -56,8 +56,11 @@ int	movekey_hook(int keypress)
 		d()->settings_flag++;
 	if (keypress == KEY_W || keypress == KEY_S)
 		move(keypress);
-	else if (keypress == KEY_RIGHT || keypress == KEY_D || \
-	keypress == KEY_A || keypress == KEY_LEFT)
+	if (keypress == KEY_A)
+		move_left();
+	if (keypress == KEY_D)
+		move_right();
+	else if (keypress == KEY_RIGHT || keypress == KEY_LEFT)
 		rotate(keypress);
 	raycaster();
 	render_frame();

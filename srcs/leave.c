@@ -6,7 +6,7 @@
 /*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 17:45:43 by gcatarin          #+#    #+#             */
-/*   Updated: 2024/06/11 15:20:48 by gcatarin         ###   ########.fr       */
+/*   Updated: 2024/06/11 17:18:00 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,11 +52,11 @@ void	error(char *s)
 	if (d()->mlx)
 		mlx_destroy_display(d()->mlx);
 	free(d()->mlx);
-	exit(1);
+	exit(0);
 }
 
 int	destroy_hook(void)
 {
 	error("\nexit");
-	return (1);
+	return (0);
 }

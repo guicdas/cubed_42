@@ -6,7 +6,7 @@
 /*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 19:51:10 by mneves-l          #+#    #+#             */
-/*   Updated: 2024/06/11 15:24:02 by gcatarin         ###   ########.fr       */
+/*   Updated: 2024/06/11 18:20:13 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,9 @@
 
 #define SCREENH 768
 #define SCREENW 1024
-#define TEXTURE_SIZE 64
-#define PLAYER_SPEED 3
-#define ROT_SPEED 0.08
+#define TEXTURE_SIZE 128
+#define PLAYER_SPEED 4
+#define ROT_SPEED 0.15
 #define MINISIZE 16
 
 #define PI 3.14159265359
@@ -71,7 +71,6 @@ typedef struct s_data
 	int		**textures;
 	int		info_count;
 	int		settings_flag;
-	int		fd;
 
 	int		mmap_s;
 	t_img	wall;
@@ -115,7 +114,7 @@ typedef struct s_data
 	double	wall_dist;
 	double	wall_x;
 	int		side;
-	int		line_height;
+	double	line_height;
 	int		draw_start;
 	int		draw_end;
 
@@ -196,5 +195,7 @@ void	max_map(void);
 void	get_index(void);
 void	put_image(void *img, int h, int w);
 void	init_map(int width, int i);
-void	clean_info(char C, char *str);
+void	clean_info(char c, char *str);
 int		ft_is_onlyspace(char *s);
+void	move_left(void);
+void	move_right(void);
