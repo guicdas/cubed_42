@@ -6,7 +6,7 @@
 /*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 16:31:05 by gcatarin          #+#    #+#             */
-/*   Updated: 2024/06/11 15:20:28 by gcatarin         ###   ########.fr       */
+/*   Updated: 2024/06/11 16:10:54 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,19 +93,16 @@ int	main(int ac, char **av)
 	valid_entry(ac, av[1]);
 	initialize_everything();
 	parsing(av);
-	map_print();
 	assets();
-	raycaster();
-	render_frame();
-	print_minimap();
+	info_print();
+	mlx_string_put(d()->mlx, d()->win_ptr, d()->screen_width / 2 - 75, \
+	d()->screen_height / 2, WHITE, "PRESS ANY KEY");
 	mlx_hook(d()->win_ptr, 17, 0, destroy_hook, d);
 	mlx_hook(d()->win_ptr, 2, 1L << 0, movekey_hook, d);
 	mlx_loop(d()->mlx);
 }
 
 /*
-The map must be closed/surrounded by walls.
-
 Spaces are a valid part of the map and are up to you to handle.
 
 wall clipping

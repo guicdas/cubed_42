@@ -6,7 +6,7 @@
 /*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/07 14:01:48 by gcatarin          #+#    #+#             */
-/*   Updated: 2024/06/11 15:16:17 by gcatarin         ###   ########.fr       */
+/*   Updated: 2024/06/11 16:06:57 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,13 +36,13 @@ void	init_values(void)
 static void	show_settings(void)
 {
 	mlx_string_put(d()->mlx, d()->win_ptr, 2, 12, \
-	RED, ft_itoa(d()->moves, 10, DECA));
-	mlx_string_put(d()->mlx, d()->win_ptr, 2, 24, WHITE, "X:");
+	BLACK, ft_itoa(d()->moves, 10, DECA));
+	mlx_string_put(d()->mlx, d()->win_ptr, 2, 24, WHITE, "Y:");
 	mlx_string_put(d()->mlx, d()->win_ptr, 14, 26, \
-	RED, ft_itoa(d()->player_x, 10, DECA));
-	mlx_string_put(d()->mlx, d()->win_ptr, 40, 24, WHITE, "Y:");
+	BLACK, ft_itoa((int)d()->player_y / 64 + 1, 10, DECA));
+	mlx_string_put(d()->mlx, d()->win_ptr, 40, 24, WHITE, "X:");
 	mlx_string_put(d()->mlx, d()->win_ptr, 54, 26, \
-	RED, ft_itoa(d()->player_y, 10, DECA));
+	BLACK, ft_itoa((int)d()->player_x / 64 + 1, 10, DECA));
 }
 
 int	movekey_hook(int keypress)

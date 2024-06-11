@@ -6,7 +6,7 @@
 /*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/07 14:25:08 by gcatarin          #+#    #+#             */
-/*   Updated: 2024/06/11 15:09:29 by gcatarin         ###   ########.fr       */
+/*   Updated: 2024/06/11 15:30:57 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ void	info_print(void)
 	printf("Value F  -> |%d|\n", (d()->map_f));
 	printf("Value C  -> |%d|\n\n", (d()->map_c));
 	printf("player_pos [x][y]= [%f][%f]\n", d()->player_x, d()->player_y);
+	printf("WIDTH: %d HEIGHT: %d\n", d()->max_x, d()->map_h);
 }
 
 void	map_print(void)

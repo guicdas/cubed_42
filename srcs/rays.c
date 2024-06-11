@@ -6,7 +6,7 @@
 /*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 16:57:42 by gcatarin          #+#    #+#             */
-/*   Updated: 2024/06/11 15:02:35 by gcatarin         ###   ########.fr       */
+/*   Updated: 2024/06/11 15:59:34 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,9 +59,10 @@ static void	dda_execute(void)
 			d()->map_y += d()->step_y;
 			d()->side = 1;
 		}
-		if (d()->map_y < 0.25 || d()->map_x < 0.25 || \
-		d()->map_x > d()->screen_width - 0.25 \
-		|| d()->map_y > d()->screen_height - 1.25)
+		if (d()->map_y < 0.1 || d()->map_x < 0.1 \
+		|| d()->map_y > d()->map_h - 1 || d()->map_x > d()->max_x \
+		|| d()->map_x > d()->screen_width - 0.1 \
+		|| d()->map_y > d()->screen_height - 1.1)
 			break ;
 		else if (d()->map[d()->map_y][d()->map_x] == '1')
 			hit = 1;
@@ -98,7 +99,10 @@ void	update_textures(int x)
 	if ((d()->side == 0 && d()->ray_dir_x > 0) || \
 	(d()->side == 1 && d()->ray_dir_y < 0))
 		d()->texture_x = d()->texture_size - d()->texture_x - 1;
-	d()->step = d()->texture_size / d()->line_height;
+	if (d()->line_height == 0)
+		{printf("line h	: %d\n", d()->line_height);d()->step = d()->texture_size / 0.01;}
+	else
+		d()->step = d()->texture_size / d()->line_height;
 	d()->pos = (d()->draw_start - d()->screen_height / 2 + \
 	d()->line_height / 2) * d()->step;
 	y = d()->draw_start;
