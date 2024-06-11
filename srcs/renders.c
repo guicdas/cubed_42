@@ -6,7 +6,7 @@
 /*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/07 14:02:57 by gcatarin          #+#    #+#             */
-/*   Updated: 2024/06/11 15:18:45 by gcatarin         ###   ########.fr       */
+/*   Updated: 2024/06/11 15:22:52 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,8 @@ static void	set_pixel(int x, t_img *img, int y)
 {
 	int		pixel;
 
-	if (y <	d()->mmap_s * d()->map_h && x <	d()->mmap_s * d()->max_x)
-	{
-	}
+	if (y < (d()->mmap_s * d()->map_h) && x < d()->mmap_s * d()->max_x)
+		return ;
 	else
 	{
 		if (d()->pixels[y][x] > 0)

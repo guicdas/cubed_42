@@ -6,7 +6,7 @@
 /*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 17:45:43 by gcatarin          #+#    #+#             */
-/*   Updated: 2024/06/11 14:56:40 by gcatarin         ###   ########.fr       */
+/*   Updated: 2024/06/11 15:20:48 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static void	free_maps(void)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (i < d()->map_h)

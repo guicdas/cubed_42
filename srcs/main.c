@@ -6,7 +6,7 @@
 /*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 16:31:05 by gcatarin          #+#    #+#             */
-/*   Updated: 2024/06/11 15:03:37 by gcatarin         ###   ########.fr       */
+/*   Updated: 2024/06/11 15:20:28 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ int	main(int ac, char **av)
 	render_frame();
 	print_minimap();
 	mlx_hook(d()->win_ptr, 17, 0, destroy_hook, d);
-	mlx_hook(d()->win_ptr,  2, 1L << 0, movekey_hook, d);
+	mlx_hook(d()->win_ptr, 2, 1L << 0, movekey_hook, d);
 	mlx_loop(d()->mlx);
 }
 

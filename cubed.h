@@ -6,7 +6,7 @@
 /*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 19:51:10 by mneves-l          #+#    #+#             */
-/*   Updated: 2024/06/11 14:34:10 by gcatarin         ###   ########.fr       */
+/*   Updated: 2024/06/11 15:24:02 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,6 @@ typedef struct s_data
 	int		settings_flag;
 	int		fd;
 
-	//---- bonus minimap ----//
 	int		mmap_s;
 	t_img	wall;
 	t_img	exit;
@@ -81,7 +80,6 @@ typedef struct s_data
 	t_img	empty;
 	t_img	player;
 
-	//---- map ----//
 	char	*map_no;
 	char	*map_so;
 	char	*map_we;
@@ -96,7 +94,6 @@ typedef struct s_data
 	char	**map;
 	int		max_x;
 
-	//---- player ----//
 	double	player_x;
 	double	player_y;
 	float	player_a;
@@ -104,7 +101,6 @@ typedef struct s_data
 	double	player_dy;
 	float	player_speed;
 
-	//---- rays ----//
 	double	camera_x;
 	double	ray_dir_x;
 	double	ray_dir_y;
@@ -123,7 +119,6 @@ typedef struct s_data
 	int		draw_start;
 	int		draw_end;
 
-	//---- textures ----//
 	int		texture_size;
 	double	step;
 	double	pos;
@@ -164,7 +159,7 @@ char	*clean_string(char *s, int i, int flag);
 //	debug.c
 void	map_print(void);
 void	info_print(void);
-void	debug_dda();
+void	debug_dda(void);
 
 //	parsing_map.c
 int		check_char(char c);

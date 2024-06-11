@@ -6,7 +6,7 @@
 /*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 21:40:23 by gcatarin          #+#    #+#             */
-/*   Updated: 2024/06/11 14:45:04 by gcatarin         ###   ########.fr       */
+/*   Updated: 2024/06/11 15:21:52 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,8 +82,8 @@ void	init_map(int width, int j)
 		d()->map[i] = tmp1;
 		if (!d()->map[i])
 			error("Error\n Couldn't allocate map line\n");
-		// printf("string: %s\n", d()->full_map[j]);
-		ft_strlcpy(d()->map[i], d()->full_map[j], ft_strlen(d()->full_map[j]) + 1);
+		ft_strlcpy(d()->map[i], d()->full_map[j], \
+		ft_strlen(d()->full_map[j]) + 1);
 		j++;
 		i++;
 	}
@@ -92,7 +92,7 @@ void	init_map(int width, int j)
 void	clean_info(char c, char *str)
 {
 	char	*tmp;
-	int	i;
+	int		i;
 
 	i = 2;
 	tmp = clean_string(str, 2, 1);
