@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_dir.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jnuncio- <jnuncio-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 19:46:55 by mneves-l          #+#    #+#             */
-/*   Updated: 2024/06/11 22:30:13 by gcatarin         ###   ########.fr       */
+/*   Updated: 2024/06/12 21:18:26 by jnuncio-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,14 @@ static int	copy_map(int fd2)
 		tmp = get_next_line(fd2);
 		if (tmp == NULL)
 			break ;
-		temp = clean_string(tmp, 0, 0);
+		if (tmp[0] != '\n')
+			temp = clean_string(tmp, 0, 0);
+		else
+		{
+			temp = ft_calloc(sizeof(char), 2);
+			temp[0] = '\n';
+			temp[1] = '\0';
+		}
 		d()->full_map[n_lines] = temp;
 		n_lines++;
 		free(tmp);
@@ -63,7 +70,7 @@ static void	load_map(int nlines)
 	i = -1;
 	j = 0;
 	max_width = 0;
-	while (++i < nlines)
+	while (d()->full_map[++i])
 	{
 		if (check_for_element(d()->full_map[i]) == 2)
 		{
@@ -72,6 +79,8 @@ static void	load_map(int nlines)
 				max_width = ft_strlen(d()->full_map[i]);
 		}
 	}
+	if (d()->n_info != 6)
+		error("Error\nMissing element in .cub file!");
 	if (!d()->map_h)
 		error("Error\nMissing map in .cub file!\n");
 	init_map(max_width, nlines - d()->map_h);
@@ -79,14 +88,17 @@ static void	load_map(int nlines)
 
 int	check_for_element(char *s)
 {
+	while (s && ft_isspace(*s) == 1)
+		s++;
+	if (d()->n_info == 6)
+	{
+		(d())->init_map_flag += (s && *s != '\0');
+		return (1 + (d()->init_map_flag > 0));
+	}
 	if (s && *s)
 	{
-		while (ft_isspace(*s) == 1)
-			s++;
 		clean_info(s);
 		limits_colors(s);
-		if (*s == '1')
-			return (2);
 		return (1);
 	}
 	return (0);
@@ -112,9 +124,11 @@ void	parsing(char **av)
 	i = copy_map(fd2);
 	close(fd2);
 	load_map(i);
+	map_print();
+	info_print();
 	map_check_matriz();
 	if (d()->n_player != 1)
-		error("Error\nWrong player count!\n");	
+		error("Error\nWrong player count!\n");
 	map_flood_fill((int)d()->player_x / 64, (int)d()->player_y / 64, \
 	d()->map, d()->map_h);
 }

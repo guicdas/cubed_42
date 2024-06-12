@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   leave.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jnuncio- <jnuncio-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 17:45:43 by gcatarin          #+#    #+#             */
-/*   Updated: 2024/06/11 21:49:04 by gcatarin         ###   ########.fr       */
+/*   Updated: 2024/06/12 21:12:48 by jnuncio-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,15 +17,13 @@ static void	free_maps(void)
 	int	i;
 
 	i = 0;
-	while (i < d()->map_h)
+	while (d()->map && d()->map[i])
 		free(d()->map[i++]);
-	if (d()->map)
-		free(d()->map);
+	free(d()->map);
 	i = 0;
-	while (d()->full_map[i])
+	while (d()->full_map && d()->full_map[i])
 		free(d()->full_map[i++]);
-	if (d()->full_map)
-		free(d()->full_map);
+	free(d()->full_map);
 }
 
 static void	free_info(void)

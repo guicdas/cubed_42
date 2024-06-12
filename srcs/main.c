@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jnuncio- <jnuncio-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 16:31:05 by gcatarin          #+#    #+#             */
-/*   Updated: 2024/06/11 22:00:19 by gcatarin         ###   ########.fr       */
+/*   Updated: 2024/06/12 20:51:54 by jnuncio-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,6 @@ int	main(int ac, char **av)
 	initialize_everything();
 	parsing(av);
 	assets();
-	map_print();
 	mlx_string_put(d()->mlx, d()->win_ptr, d()->screen_width / 2 - 75, \
 	d()->screen_height / 2, WHITE, "PRESS ANY KEY");
 	mlx_hook(d()->win_ptr, 17, 0, destroy_hook, d);

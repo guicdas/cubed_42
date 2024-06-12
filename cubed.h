@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cubed.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jnuncio- <jnuncio-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 19:51:10 by mneves-l          #+#    #+#             */
-/*   Updated: 2024/06/11 22:32:25 by gcatarin         ###   ########.fr       */
+/*   Updated: 2024/06/12 20:58:20 by jnuncio-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ typedef struct s_data
 	int		info_count;
 	int		settings_flag;
 	int		n_player;
+	int		n_info;
 
 	int		mmap_s;
 	t_img	wall;
@@ -93,6 +94,7 @@ typedef struct s_data
 	char	**full_map;
 	char	**map;
 	int		max_x;
+	int		init_map_flag;
 
 	double	player_x;
 	double	player_y;
@@ -137,11 +139,12 @@ char	*get_next_line(int fd);
 void	*ft_calloc(size_t nmemb, size_t size);
 int		ft_strcmp(char *s1, char *s2);
 int		ft_strncmp(char *s1, char *s2);
-int		ft_strncmp(char *s1, char *s2);
 int		ft_strlen(const char *str);
 int		ft_strlen_array(char **str);
 char	**ft_split(char const *s, char c);
+void	ft_memset(void *s, size_t n, char c);
 void	ft_putendl_fd(char *s, int fd);
+int		check_c(const char *s, char c);
 
 // utils.c
 void	draw_vertical_line(int x, int start, int end, int color);

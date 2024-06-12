@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   utils2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jnuncio- <jnuncio-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 16:32:04 by gcatarin          #+#    #+#             */
-/*   Updated: 2024/06/10 19:11:09 by gcatarin         ###   ########.fr       */
+/*   Updated: 2024/06/12 21:14:11 by jnuncio-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,17 @@ void	ft_bzero(void *s, size_t n)
 		return ;
 	while (n-- >= 1)
 		((char *)s)[i++] = '\0';
+}
+
+void	ft_memset(void *s, size_t n, char c)
+{
+	size_t	i;
+
+	i = 0;
+	if (n < 1)
+		return ;
+	while (n-- >= 1)
+		((char *)s)[i++] = c;
 }
 
 void	*ft_calloc(size_t nmemb, size_t size)
@@ -57,23 +68,5 @@ void	max_map(void)
 		if (d()->max_x < ft_strlen(d()->map[y]))
 			d()->max_x = ft_strlen(d()->map[y]);
 		y++;
-	}
-}
-
-void	get_index(void)
-{
-	if (d()->side == 0)
-	{
-		if (d()->ray_dir_x < 0)
-			d()->texture_index = 3;
-		else
-			d()->texture_index = 2;
-	}
-	else
-	{
-		if (d()->ray_dir_y > 0)
-			d()->texture_index = 1;
-		else
-			d()->texture_index = 0;
 	}
 }

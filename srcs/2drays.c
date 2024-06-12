@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   2drays.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jnuncio- <jnuncio-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 16:48:17 by gcatarin          #+#    #+#             */
-/*   Updated: 2024/06/11 21:45:51 by gcatarin         ###   ########.fr       */
+/*   Updated: 2024/06/12 21:11:26 by jnuncio-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	draw_map(void)
 	int	x;
 
 	y = 0;
-	while (y < d()->map_h)
+	while (d()->map[y])
 	{
 		x = 0;
 		while (x < d()->max_x)

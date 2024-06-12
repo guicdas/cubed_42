@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lib_utils2.c                                       :+:      :+:    :+:   */
+/*   utils5.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jnuncio- <jnuncio-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 19:50:59 by mneves-l          #+#    #+#             */
-/*   Updated: 2024/06/11 21:34:34 by gcatarin         ###   ########.fr       */
+/*   Updated: 2024/06/12 21:17:07 by jnuncio-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,4 +52,33 @@ static char	**__split(char const *s, char c, int j, char **list)
 char	**ft_split(char const *s, char c)
 {
 	return (__split((char *) s, c, 0, NULL));
+}
+
+int	check_c(const char *s, char c)
+{
+	while (*s)
+	{
+		if (*s == c)
+			return (1);
+		s++;
+	}
+	return (0);
+}
+
+void	get_index(void)
+{
+	if (d()->side == 0)
+	{
+		if (d()->ray_dir_x < 0)
+			d()->texture_index = 3;
+		else
+			d()->texture_index = 2;
+	}
+	else
+	{
+		if (d()->ray_dir_y > 0)
+			d()->texture_index = 1;
+		else
+			d()->texture_index = 0;
+	}
 }

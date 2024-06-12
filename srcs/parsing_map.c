@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_map.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jnuncio- <jnuncio-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 20:12:37 by mneves-l          #+#    #+#             */
-/*   Updated: 2024/06/11 22:14:09 by gcatarin         ###   ########.fr       */
+/*   Updated: 2024/06/12 21:04:55 by jnuncio-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,18 +22,18 @@ static void	init_orientation(float a, float px, float py)
 int	check_char(char c)
 {
 	if (c != '1' && c != '0' && c != 'N' && c != 'S' && c != 'W' \
-	&& c != 'E' && c != '\2')
+	&& c != 'E' && c != '9')
 		return (1);
 	if (c == 'N' || c == 'S' || c == 'W' || c == 'E')
 	{
 		if (c == 'N')
-			init_orientation(3 * PI / 2 + 0.01, 0.66, 0);
+			init_orientation(3 * PI / 2 + 0, 0.66, 0);
 		else if (c == 'S')
-			init_orientation(PI / 2 + 0.01, -0.66, 0);
+			init_orientation(PI / 2 + 0, -0.66, 0);
 		else if (c == 'W')
-			init_orientation(PI + 0.01, 0, -0.66);
+			init_orientation(PI + 0, 0, -0.66);
 		else if (c == 'E')
-			init_orientation(0.01, 0, 0.66);
+			init_orientation(0, 0, 0.66);
 		return (2);
 	}
 	else
@@ -75,8 +75,8 @@ void	map_flood_fill(int x, int y, char **map, int size)
 		return ;
 	if (ft_strlen(map[y]) <= x)
 		return ;
-	if (map[y][x] == '\2')
-		error("Error\nFound a leak");
+	if (map[y][x] == '9')
+		error("Error\nFound a leak in the map structure!");
 	if (check_char(map[y][x]) == 2)
 		map[y][x] = '-';
 	if (map[y][x] == '0')
