@@ -6,7 +6,7 @@
 /*   By: jnuncio- <jnuncio-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 16:31:05 by gcatarin          #+#    #+#             */
-/*   Updated: 2024/06/12 20:51:54 by jnuncio-         ###   ########.fr       */
+/*   Updated: 2024/06/13 12:00:28 by jnuncio-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ t_data	*d(void)
 void	valid_entry(int ac, char *str)
 {
 	if (ac != 2)
-		error("Error\nWrong input -> ./cub3d [path_to_map]\n");
+		error("Error\nWrong number of arguments.\n");
 	if (ft_strlen(str) <= 4)
 		error("Error\nEmpty map name\n");
 	while (*str && *str != '.')
@@ -40,17 +40,17 @@ static int	*xpm_to_img(char *path)
 	int		y;
 
 	init_image(&img, path, 0);
-	buffer = ft_calloc(d()->texture_size * d()->texture_size, sizeof(int));
+	buffer = ft_calloc(d()->texture_w * d()->texture_h, sizeof(int));
 	if (!buffer)
 		error("Error\nCouldn't allocate buffer!\n");
 	y = 0;
-	while (y < d()->texture_size)
+	while (y < d()->texture_h)
 	{
 		x = 0;
-		while (x < d()->texture_size)
+		while (x < d()->texture_w)
 		{
-			buffer[y * d()->texture_size + x] = \
-			img.addr[y * d()->texture_size + x];
+			buffer[y * d()->texture_w + x] = \
+			img.addr[y * d()->texture_w + x];
 			x++;
 		}
 		y++;
@@ -78,11 +78,9 @@ static void	assets(void)
 	d()->textures[1] = xpm_to_img(d()->map_so);
 	d()->textures[2] = xpm_to_img(d()->map_ea);
 	d()->textures[3] = xpm_to_img(d()->map_we);
-	init_image(&d()->wall, "textures/image_1_.xpm", 1);
+	init_image(&d()->wall, "textures/miniwall.xpm", 1);
 	init_image(&d()->exit, "textures/exit.xpm", 1);
-	init_image(&d()->floor, "textures/wall.xpm", 1);
-	init_image(&d()->empty, "textures/black.xpm", 1);
-	init_image(&d()->player, "textures/player.xpm", 1);
+	init_image(&d()->floor, "textures/minifloor.xpm", 1);
 	init_pixels();
 	max_map();
 	d()->player_a = ROT_SPEED;

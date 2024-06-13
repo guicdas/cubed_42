@@ -6,79 +6,69 @@
 /*   By: jnuncio- <jnuncio-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 19:50:59 by mneves-l          #+#    #+#             */
-/*   Updated: 2024/06/12 21:17:07 by jnuncio-         ###   ########.fr       */
+/*   Updated: 2024/06/13 11:53:20 by jnuncio-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cubed.h"
 
-int	ft_strlen_array(char **str)
+static char	*get_info(char *str)
 {
-	int	i;
+	char	**args;
+	size_t	size;
 
-	i = 0;
-	if (str == NULL)
-		return (0);
-	while (str[i])
-		i++;
-	return (i);
+	args = ft_split(str, ' ');
+	size = ft_strlen_array(args);
+	if (size != 2)
+		return (free_double((void **)args), NULL);
+	str = args[1];
+	args[1] = NULL;
+	return (free_double((void **)args), str);
 }
 
-static char	**__split(char const *s, char c, int j, char **list)
+static void	clean_infos(char *s)
 {
-	char	*t;
-	int		i;
-
-	i = 0;
-	t = 0;
-	while (s && *s == c && *s)
-		s++;
-	while (s && s[i] != c && s[i])
-		i++;
-	if (i > 0)
-		t = ft_calloc((i + 1), sizeof(char));
-	i = 0;
-	while (s && t && *s != c && *s)
-		t[i++] = *s++;
-	if (++j >= 0 && i)
-		list = __split(s, c, j, list);
-	else if (!list)
-		list = ft_calloc(j, sizeof(char *));
-	if (list)
-		list[--j] = t;
-	return (list);
-}
-
-char	**ft_split(char const *s, char c)
-{
-	return (__split((char *) s, c, 0, NULL));
-}
-
-int	check_c(const char *s, char c)
-{
-	while (*s)
+	if (s[0] == 'E' && s[1] == 'A' && ft_isspace(s[2]))
 	{
-		if (*s == c)
-			return (1);
-		s++;
+		if (d()->map_ea)
+			error("Error\nMultiple EA textures in map file.\n");
+		d()->map_ea = get_info(s);
+		d()->n_info++;
 	}
-	return (0);
+	else if (s[0] == 'W' && s[1] == 'E' && ft_isspace(s[2]))
+	{
+		if (d()->map_we)
+			error("Error\nMultiple WE textures in map file.\n");
+		d()->map_we = get_info(s);
+		d()->n_info++;
+	}
 }
 
-void	get_index(void)
+void	clean_info(char *s)
 {
-	if (d()->side == 0)
+	if (s[0] == 'N' && s[1] == 'O' && ft_isspace(s[2]))
 	{
-		if (d()->ray_dir_x < 0)
-			d()->texture_index = 3;
-		else
-			d()->texture_index = 2;
+		if (d()->map_no)
+			error("Error\nMultiple NO textures in map file.\n");
+		d()->map_no = get_info(s);
+		d()->n_info++;
+	}
+	else if (s[0] == 'S' && s[1] == 'O' && ft_isspace(s[2]))
+	{
+		if (d()->map_so)
+			error("Error\nMultiple SO textures in map file.\n");
+		d()->map_so = get_info(s);
+		d()->n_info++;
 	}
 	else
-	{
-		if (d()->ray_dir_y > 0)
-			d()->texture_index = 1;
-		else
-			d()->texture_index = 0;
-	}
+		clean_infos(s);
+}
+
+void	init_texture(t_img *img)
+{
+	img->image = NULL;
+	img->addr = NULL;
+	img->bpp = 0;
+	img->endian = 0;
+	img->linesize = 0;
 }

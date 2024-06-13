@@ -6,7 +6,7 @@
 /*   By: jnuncio- <jnuncio-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 19:51:10 by mneves-l          #+#    #+#             */
-/*   Updated: 2024/06/12 20:58:20 by jnuncio-         ###   ########.fr       */
+/*   Updated: 2024/06/13 11:59:06 by jnuncio-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,12 +74,11 @@ typedef struct s_data
 	int		n_player;
 	int		n_info;
 
-	int		mmap_s;
+	int		mmap_s_h;
+	int		mmap_s_w;
 	t_img	wall;
 	t_img	exit;
 	t_img	floor;
-	t_img	empty;
-	t_img	player;
 
 	char	*map_no;
 	char	*map_so;
@@ -121,7 +120,8 @@ typedef struct s_data
 	int		draw_start;
 	int		draw_end;
 
-	int		texture_size;
+	int		texture_w;
+	int		texture_h;
 	double	step;
 	double	pos;
 	int		texture_x;
@@ -135,36 +135,45 @@ t_data	*d(void);
 //	get_next_line.c
 char	*get_next_line(int fd);
 
-//	lib_utils.c
-void	*ft_calloc(size_t nmemb, size_t size);
-int		ft_strcmp(char *s1, char *s2);
-int		ft_strncmp(char *s1, char *s2);
-int		ft_strlen(const char *str);
-int		ft_strlen_array(char **str);
-char	**ft_split(char const *s, char c);
-void	ft_memset(void *s, size_t n, char c);
-void	ft_putendl_fd(char *s, int fd);
-int		check_c(const char *s, char c);
-
-// utils.c
-void	draw_vertical_line(int x, int start, int end, int color);
+//	utils1.c
 int		ft_isspace(int c);
-char	*ft_itoa(long long n, int bs, char *b);
 int		ft_isdigit(int c);
-
-//	leave.c
-void	error(char *s);
-int		destroy_hook(void);
-void	free_double(void **map);
-
-//	parsing_dir.c
-void	parsing(char **av);
-int		check_for_element(char *s);
+char	*ft_itoa(long long n, int bs, char *b);
 char	*clean_string(char *s, int i, int flag);
 
+//	utils2.c
+void	ft_memset(void *s, size_t n, char c);
+void	*ft_calloc(size_t nmemb, size_t size);
+void	draw_vertical_line(int x, int start, int end, int color);
+void	max_map(void);
+
+//	utils3.c
+void	init_map(int width, int i);
+int		ft_strcmp(char *s1, char *s2);
+int		ft_strlen(const char *str);
+void	ft_putendl_fd(char *s, int fd);
+
+//	utils4.c
+int		ft_strlen_array(char **str);
+char	**ft_split(char const *s, char c);
+void	get_index(void);
+
+//	utils5.c
+void	clean_info(char *str);
+void	init_texture(t_img *img);
+
+//	leave.c
+void	free_double(void **map);
+void	free_image(void);
+void	error(char *s);
+
+//	parsing_dir.c
+int		check_for_element(char *s);
+void	parsing(char **av);
+
 //	debug.c
-void	map_print(void);
 void	info_print(void);
+void	map_print(void);
 void	debug_dda(void);
 
 //	parsing_map.c
@@ -173,35 +182,33 @@ void	map_check_matriz(void);
 void	map_flood_fill(int x, int y, char **map, int size);
 
 //	moves.c
-void	move(int keypress);
 void	rotate(int keypress);
+void	move(int keypress);
+void	move_left(void);
+void	move_right(void);
 
 //	hooks.c
+void	print_minimap(void);
 int		movekey_hook(int keypress);
+int		destroy_hook(void);
 
 //	2drays.c
-void	draw_player_direction(int x1, int y1, int color);
+void	put_image(void *img, int h, int w);
 void	draw_map(void);
+void	draw_player_direction(int x1, int y1, int color);
 
 //	rays.c
 void	raycaster(void);
 
 //	renders.c
 void	render_frame(void);
-void	print_minimap(void);
 
 //	init.c
 void	init_image(t_img *img, char *path, int i);
+void	init_dda(int x);
+void	initialize_everything(void);
 void	init_values(void);
 void	init_pixels(void);
-void	init_dda(int x);
 
+//	colors.c
 void	limits_colors(char *s);
-void	initialize_everything(void);
-void	max_map(void);
-void	get_index(void);
-void	put_image(void *img, int h, int w);
-void	init_map(int width, int i);
-void	clean_info(char *str);
-void	move_left(void);
-void	move_right(void);

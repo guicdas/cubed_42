@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   debug.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jnuncio- <jnuncio-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/07 14:25:08 by gcatarin          #+#    #+#             */
-/*   Updated: 2024/06/11 15:30:57 by gcatarin         ###   ########.fr       */
+/*   Updated: 2024/06/13 10:58:47 by jnuncio-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ void	map_print(void)
 	printf("\n\tFULL MAP\n");
 	while (d()->full_map[i])
 		printf("\t%s\n", d()->full_map[i++]);
+	printf("\n");
 }
 
 void	debug_dda(void)

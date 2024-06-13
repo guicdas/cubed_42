@@ -6,7 +6,7 @@
 /*   By: jnuncio- <jnuncio-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 17:45:43 by gcatarin          #+#    #+#             */
-/*   Updated: 2024/06/12 21:12:48 by jnuncio-         ###   ########.fr       */
+/*   Updated: 2024/06/13 11:11:51 by jnuncio-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,18 @@ static void	free_info(void)
 		free(d()->map_we);
 }
 
+void	free_double(void **map)
+{
+	int	i;
+
+	i = -1;
+	if (!map)
+		return ;
+	while (map[++i])
+		free(map[i]);
+	free(map);
+}
+
 void	free_image(void)
 {
 	if (d()->wall.image)
@@ -46,10 +58,6 @@ void	free_image(void)
 		mlx_destroy_image(d()->mlx, d()->exit.image);
 	if (d()->floor.image)
 		mlx_destroy_image(d()->mlx, d()->floor.image);
-	if (d()->empty.image)
-		mlx_destroy_image(d()->mlx, d()->empty.image);
-	if (d()->player.image)
-		mlx_destroy_image(d()->mlx, d()->player.image);
 }
 
 void	error(char *s)
@@ -69,10 +77,4 @@ void	error(char *s)
 		mlx_destroy_display(d()->mlx);
 	free(d()->mlx);
 	exit(0);
-}
-
-int	destroy_hook(void)
-{
-	error("\nexit");
-	return (0);
 }

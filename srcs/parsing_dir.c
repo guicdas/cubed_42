@@ -6,7 +6,7 @@
 /*   By: jnuncio- <jnuncio-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 19:46:55 by mneves-l          #+#    #+#             */
-/*   Updated: 2024/06/12 21:18:26 by jnuncio-         ###   ########.fr       */
+/*   Updated: 2024/06/13 11:12:27 by jnuncio-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,8 +124,6 @@ void	parsing(char **av)
 	i = copy_map(fd2);
 	close(fd2);
 	load_map(i);
-	map_print();
-	info_print();
 	map_check_matriz();
 	if (d()->n_player != 1)
 		error("Error\nWrong player count!\n");

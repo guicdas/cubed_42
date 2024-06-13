@@ -6,7 +6,7 @@
 /*   By: jnuncio- <jnuncio-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 19:04:48 by gcatarin          #+#    #+#             */
-/*   Updated: 2024/06/12 17:03:46 by jnuncio-         ###   ########.fr       */
+/*   Updated: 2024/06/13 10:25:01 by jnuncio-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	ft_isdigit(int c)
 	return (0);
 }
 
-char	*convert(long long n, char *str, int bs, char *b)
+static char	*convert(long long n, char *str, int bs, char *b)
 {
 	if (n < 0)
 	{

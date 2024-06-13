@@ -6,7 +6,7 @@
 /*   By: jnuncio- <jnuncio-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 20:12:37 by mneves-l          #+#    #+#             */
-/*   Updated: 2024/06/12 21:04:55 by jnuncio-         ###   ########.fr       */
+/*   Updated: 2024/06/13 10:59:59 by jnuncio-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static void	init_orientation(float a, float px, float py)
 int	check_char(char c)
 {
 	if (c != '1' && c != '0' && c != 'N' && c != 'S' && c != 'W' \
-	&& c != 'E' && c != '9')
+	&& c != 'E' && c != '\2')
 		return (1);
 	if (c == 'N' || c == 'S' || c == 'W' || c == 'E')
 	{
@@ -75,7 +75,7 @@ void	map_flood_fill(int x, int y, char **map, int size)
 		return ;
 	if (ft_strlen(map[y]) <= x)
 		return ;
-	if (map[y][x] == '9')
+	if (map[y][x] == '\2')
 		error("Error\nFound a leak in the map structure!");
 	if (check_char(map[y][x]) == 2)
 		map[y][x] = '-';

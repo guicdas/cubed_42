@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rays.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jnuncio- <jnuncio-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 16:57:42 by gcatarin          #+#    #+#             */
-/*   Updated: 2024/06/11 17:08:23 by gcatarin         ###   ########.fr       */
+/*   Updated: 2024/06/13 12:01:25 by jnuncio-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,25 +89,25 @@ static void	calculate_line(void)
 	d()->wall_x -= floor(d()->wall_x);
 }
 
-void	update_textures(int x)
+static void	update_textures(int x)
 {
 	int	color;
 	int	y;
 
 	get_index();
-	d()->texture_x = (int)(d()->wall_x * d()->texture_size);
+	d()->texture_x = (int)(d()->wall_x * d()->texture_w);
 	if ((d()->side == 0 && d()->ray_dir_x > 0) || \
 	(d()->side == 1 && d()->ray_dir_y < 0))
-		d()->texture_x = d()->texture_size - d()->texture_x - 1;
-	d()->step = d()->texture_size / d()->line_height;
+		d()->texture_x = d()->texture_w - d()->texture_x - 1;
+	d()->step = d()->texture_h / d()->line_height;
 	d()->pos = (d()->draw_start - d()->screen_height / 2 + \
 	d()->line_height / 2) * d()->step;
 	y = d()->draw_start;
 	while (y < d()->draw_end)
 	{
-		d()->texture_y = (int)d()->pos & (d()->texture_size - 1);
+		d()->texture_y = (int)d()->pos & (d()->texture_h - 1);
 		d()->pos += d()->step;
-		color = d()->textures[d()->texture_index][d()->texture_size \
+		color = d()->textures[d()->texture_index][d()->texture_w \
 		* d()->texture_y + d()->texture_x];
 		if (d()->side == 1)
 			color = (color >> 1) & 8355711;

@@ -6,7 +6,7 @@
 /*   By: jnuncio- <jnuncio-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 16:48:17 by gcatarin          #+#    #+#             */
-/*   Updated: 2024/06/12 21:11:26 by jnuncio-         ###   ########.fr       */
+/*   Updated: 2024/06/13 12:01:46 by jnuncio-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,57 +32,23 @@ void	draw_map(void)
 			{
 				if (d()->map[y][x] == '1')
 					put_image(d()->wall.image, \
-					x * d()->mmap_s, y * d()->mmap_s);
+					x * d()->mmap_s_w, y * d()->mmap_s_h);
 				else if (d()->map[y][x] == '-' || d()->map[y][x] == 'P' \
 				|| d()->map[y][x] == '0')
 					put_image(d()->floor.image, \
-					x * d()->mmap_s, y * d()->mmap_s);
+					x * d()->mmap_s_w, y * d()->mmap_s_h);
 			}
 			x++;
 		}
 		y++;
 	}
-}
-/*
-void	draw_map(void)
-{
-	int	y;
-	int	x;
-
-	y = 0;
-	while (y < d()->map_h - 1)
-	{
-		x = 0;
-		while (x < d()->max_x)
-		{
-			if (x < ft_strlen(d()->map[y]))
-			{
-				if (d()->map[y][x] == '1')
-					put_image(d()->wall.image, x * d()->mmap_s + \
-					d()->player_x / 10, y * d()->mmap_s + d()->player_y / 10);
-				else 
-					put_image(d()->floor.image, x * d()->mmap_s + \
-					d()->player_x / 10, y * d()->mmap_s + d()->player_y / 10);
-			}
-			else
-				put_image(d()->empty.image, x * d()->mmap_s + \
-				d()->player_x / 10, y * d()->mmap_s + d()->player_y / 10);
-			x++;
-		}
-		y++;
-	}
-}*/
-
-float	distance(float ax, float ay, float bx, float by)
-{
-	return (sqrt((bx - ax) * (bx - ax) + (by - ay) * (by - ay)));
 }
 
 void	draw_player_direction(int x1, int y1, int color)
 {
 	float	i;
 
-	i = 7;
+	i = 5;
 	while (i > 0)
 	{
 		mlx_pixel_put(d()->mlx, d()->win_ptr, \

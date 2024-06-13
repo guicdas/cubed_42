@@ -6,13 +6,13 @@
 /*   By: jnuncio- <jnuncio-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 16:32:04 by gcatarin          #+#    #+#             */
-/*   Updated: 2024/06/12 21:14:11 by jnuncio-         ###   ########.fr       */
+/*   Updated: 2024/06/13 10:13:43 by jnuncio-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cubed.h"
 
-void	ft_bzero(void *s, size_t n)
+static void	ft_bzero(void *s, size_t n)
 {
 	size_t	i;
 

@@ -3,68 +3,71 @@
 /*                                                        :::      ::::::::   */
 /*   utils4.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jnuncio- <jnuncio-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 19:50:59 by mneves-l          #+#    #+#             */
-/*   Updated: 2024/06/11 21:51:14 by gcatarin         ###   ########.fr       */
+/*   Updated: 2024/06/13 11:31:05 by jnuncio-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cubed.h"
 
-int	ft_strcmp(char *s1, char *s2)
-{
-	int	i;
-
-	i = 0;
-	while (s1[i] == s2[i] && s1[i] != '\0' && s2[i] != '\0')
-		i++;
-	return (s1[i] - s2[i]);
-}
-
-int	ft_strncmp(char *s1, char *s2)
-{
-	int	i;
-
-	i = 0;
-	while (s1[i] == s2[i] && s1[i] != '\0' && s2[i] != '\0')
-		i++;
-	return (s1[i] - s2[i]);
-}
-
-int	ft_strlen(const char *str)
+int	ft_strlen_array(char **str)
 {
 	int	i;
 
 	i = 0;
 	if (str == NULL)
 		return (0);
-	while (str[i] != '\0')
+	while (str[i])
 		i++;
 	return (i);
 }
 
-void	ft_putendl_fd(char *s, int fd)
+static char	**split_ft(char const *s, char c, int j, char **list)
 {
-	int	i;
+	char	*t;
+	int		i;
 
 	i = 0;
-	while (s[i])
-	{
-		write(fd, &s[i], 1);
+	t = 0;
+	while (s && *s == c && *s)
+		s++;
+	while (s && s[i] != c && s[i])
 		i++;
-	}
-	write(fd, "\n", 1);
+	if (i > 0)
+		t = ft_calloc((i + 1), sizeof(char));
+	i = 0;
+	while (s && t && *s != c && *s)
+		t[i++] = *s++;
+	if (++j >= 0 && i)
+		list = split_ft(s, c, j, list);
+	else if (!list)
+		list = ft_calloc(j, sizeof(char *));
+	if (list)
+		list[--j] = t;
+	return (list);
 }
 
-void	free_double(void **map)
+char	**ft_split(char const *s, char c)
 {
-	int	i;
+	return (split_ft((char *) s, c, 0, NULL));
+}
 
-	i = -1;
-	if (!map)
-		return ;
-	while (map[++i])
-		free(map[i]);
-	free(map);
+void	get_index(void)
+{
+	if (d()->side == 0)
+	{
+		if (d()->ray_dir_x < 0)
+			d()->texture_index = 3;
+		else
+			d()->texture_index = 2;
+	}
+	else
+	{
+		if (d()->ray_dir_y > 0)
+			d()->texture_index = 1;
+		else
+			d()->texture_index = 0;
+	}
 }
