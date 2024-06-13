@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   colors.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jnuncio- <jnuncio-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 16:44:00 by gcatarin          #+#    #+#             */
-/*   Updated: 2024/06/12 21:13:52 by jnuncio-         ###   ########.fr       */
+/*   Updated: 2024/06/13 13:44:50 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ static int	rgb_args(char *s)
 	int		ret;
 	int		size;
 
-	args = ft_split(s, ',');
+	args = ft_split(s, ",");
 	size = ft_strlen_array(args);
 	if (size != 3)
 	{
@@ -72,7 +72,7 @@ static int	color_args(char *str)
 	int		ret;
 
 	ret = 0;
-	args = ft_split(str, ' ');
+	args = ft_split(str, SPACE);
 	size = ft_strlen_array(args);
 	if (size != 2)
 	{
@@ -84,7 +84,7 @@ static int	color_args(char *str)
 	return (ret);
 }
 
-void	limits_colors(char *s)
+int	limits_colors(char *s)
 {
 	if (s[0] == 'F' && ft_isspace(s[1]))
 	{
@@ -92,6 +92,7 @@ void	limits_colors(char *s)
 			error("Error\nMultiple floor colors in map file.\n");
 		d()->map_f = color_args(s);
 		d()->n_info++;
+		return (1);
 	}
 	else if (s[0] == 'C' && ft_isspace(s[1]))
 	{
@@ -99,5 +100,7 @@ void	limits_colors(char *s)
 			error("Error\nMultiple ceiling colors in map file.\n");
 		d()->map_c = color_args(s);
 		d()->n_info++;
+		return (1);
 	}
+	return (0);
 }

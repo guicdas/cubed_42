@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jnuncio- <jnuncio-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/07 14:10:24 by gcatarin          #+#    #+#             */
-/*   Updated: 2024/06/13 12:09:07 by jnuncio-         ###   ########.fr       */
+/*   Updated: 2024/06/13 14:07:43 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,10 @@ void	initialize_everything(void)
 	d()->screen_width = SCREENW;
 	d()->mmap_s_w = MINISIZE;
 	d()->mmap_s_h = MINISIZE;
+	d()->map_no = NULL;
+	d()->map_ea = NULL;
+	d()->map_so = NULL;
+	d()->map_we = NULL;
 	d()->max_x = 0;
 	d()->map_x = 0;
 	d()->map_y = 0;

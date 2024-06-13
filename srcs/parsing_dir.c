@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_dir.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jnuncio- <jnuncio-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 19:46:55 by mneves-l          #+#    #+#             */
-/*   Updated: 2024/06/13 11:12:27 by jnuncio-         ###   ########.fr       */
+/*   Updated: 2024/06/13 14:07:58 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@ static void	get_map_lines(int fd)
 		n_lines++;
 		free(tmp);
 	}
+	if (n_lines == 0)
+		error("Error\nEmpty .cub file");
 	temp = ft_calloc(sizeof(char *), n_lines + 1);
 	d()->full_map = temp;
 	if (!d()->full_map)
@@ -97,8 +99,8 @@ int	check_for_element(char *s)
 	}
 	if (s && *s)
 	{
-		clean_info(s);
-		limits_colors(s);
+		if ((clean_info(s) || limits_colors(s)) == 0)
+			error("Error\nWrong textures for .cub file\n");
 		return (1);
 	}
 	return (0);
@@ -125,8 +127,9 @@ void	parsing(char **av)
 	close(fd2);
 	load_map(i);
 	map_check_matriz();
+	map_print();
 	if (d()->n_player != 1)
 		error("Error\nWrong player count!\n");
 	map_flood_fill((int)d()->player_x / 64, (int)d()->player_y / 64, \
-	d()->map, d()->map_h);
+	d()->map, d()->map_h + 1);
 }

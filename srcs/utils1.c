@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils1.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jnuncio- <jnuncio-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 19:04:48 by gcatarin          #+#    #+#             */
-/*   Updated: 2024/06/13 10:25:01 by jnuncio-         ###   ########.fr       */
+/*   Updated: 2024/06/13 13:17:44 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ char	*clean_string(char *s, int i, int flag)
 	else
 		start = 0;
 	i = ft_strlen(s) - 1;
-	while (ft_isspace(s[i]) == 1 || s[i] == '\n')
+	while ((ft_isspace(s[i]) == 1 || s[i] == '\n') && i > 0)
 		i--;
 	new = ft_calloc(sizeof(char *), i - start + 1);
 	end = i + 1;

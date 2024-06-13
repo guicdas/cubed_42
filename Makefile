@@ -1,6 +1,6 @@
 NAME			= cub3d
 CC				= cc
-FLAGS			= -Wall -Werror -Wextra -fsanitize=address
+FLAGS			= -Wall -Werror -Wextra #-fsanitize=address
 MLXFLAGS		= minilibx-linux/libmlx.a -lXext -lX11 -lm
 MINILIBX_PATH	= minilibx-linux
 MINILIBX		= $(MINILIBX_PATH)/libmlx.a
@@ -30,7 +30,7 @@ GREY 		= \033[0;37m
 all: minilibx objs ${NAME}
 
 minilibx:
-	@make -C minilibx-linux/ > /dev/null 2>&1
+	@make -C minilibx-linux/
 
 ${NAME}: $(OBJ)
 	clear

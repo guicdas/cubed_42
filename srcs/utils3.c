@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils3.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jnuncio- <jnuncio-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 21:40:23 by gcatarin          #+#    #+#             */
-/*   Updated: 2024/06/13 11:46:28 by jnuncio-         ###   ########.fr       */
+/*   Updated: 2024/06/13 12:35:30 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,18 +19,18 @@ static size_t	ft_strlcpy_map(char *dest, const char *src, size_t size)
 	count = 0;
 	if (size == 0)
 		return (ft_strlen(src));
-	dest[0] = '\2';
+	dest[0] = '.';
 	while (src[count] != '\0')
 	{
 		if (ft_isspace(src[count]) == 1)
-			dest[count + 1] = '\2';
+			dest[count + 1] = '.';
 		else
 			dest[count + 1] = src[count];
 		count++;
 	}
 	while (count < (size - 1))
 	{
-		dest[count + 1] = '\2';
+		dest[count + 1] = '.';
 		count++;
 	}
 	dest[count] = '\0';
@@ -49,7 +49,7 @@ void	init_map(int width, int j)
 	if (!d()->map)
 		error("Error\n Couldn't allocate map\n");
 	(d())->map[0] = ft_calloc(width + 3, sizeof(char));
-	ft_memset(d()->map[0], width + 2, '\2');
+	ft_memset(d()->map[0], width + 2, '.');
 	while (i <= d()->map_h)
 	{
 		tmp1 = ft_calloc(width + 3, sizeof(char));
@@ -61,7 +61,7 @@ void	init_map(int width, int j)
 		i++;
 	}
 	(d())->map[i] = ft_calloc(width + 3, sizeof(char));
-	ft_memset(d()->map[i], width + 2, '\2');
+	ft_memset(d()->map[i], width + 2, '.');
 }
 
 int	ft_strcmp(char *s1, char *s2)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cubed.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jnuncio- <jnuncio-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 19:51:10 by mneves-l          #+#    #+#             */
-/*   Updated: 2024/06/13 11:59:06 by jnuncio-         ###   ########.fr       */
+/*   Updated: 2024/06/13 13:45:04 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,9 @@
 
 #define HEXA "0123456789ABCDEF"
 #define DECA "0123456789"
+#define SPACE " \t\n\v\f\r"
 
-#define BUFFER_SIZE 20
+#define BUFFER_SIZE 50
 
 typedef struct s_img
 {
@@ -155,11 +156,11 @@ void	ft_putendl_fd(char *s, int fd);
 
 //	utils4.c
 int		ft_strlen_array(char **str);
-char	**ft_split(char const *s, char c);
+char	**ft_split(char const *s, char *c);
 void	get_index(void);
 
 //	utils5.c
-void	clean_info(char *str);
+int		clean_info(char *str);
 void	init_texture(t_img *img);
 
 //	leave.c
@@ -211,4 +212,4 @@ void	init_values(void);
 void	init_pixels(void);
 
 //	colors.c
-void	limits_colors(char *s);
+int		limits_colors(char *s);

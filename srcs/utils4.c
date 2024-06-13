@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils4.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jnuncio- <jnuncio-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 19:50:59 by mneves-l          #+#    #+#             */
-/*   Updated: 2024/06/13 11:31:05 by jnuncio-         ###   ########.fr       */
+/*   Updated: 2024/06/13 14:08:13 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,21 +24,32 @@ int	ft_strlen_array(char **str)
 	return (i);
 }
 
-static char	**split_ft(char const *s, char c, int j, char **list)
+static int	is_char(char c, char *str)
+{
+	while (str && *str)
+	{
+		if (c == *str)
+			return (1);
+		str++;
+	}
+	return (0);
+}
+
+static char	**split_ft(char const *s, char *c, int j, char **list)
 {
 	char	*t;
 	int		i;
 
 	i = 0;
 	t = 0;
-	while (s && *s == c && *s)
+	while (s && is_char(*s, c) && *s)
 		s++;
-	while (s && s[i] != c && s[i])
+	while (s && is_char(s[i], c) == 0 && s[i])
 		i++;
 	if (i > 0)
 		t = ft_calloc((i + 1), sizeof(char));
 	i = 0;
-	while (s && t && *s != c && *s)
+	while (s && t && is_char(*s, c) == 0 && *s)
 		t[i++] = *s++;
 	if (++j >= 0 && i)
 		list = split_ft(s, c, j, list);
@@ -49,7 +60,7 @@ static char	**split_ft(char const *s, char c, int j, char **list)
 	return (list);
 }
 
-char	**ft_split(char const *s, char c)
+char	**ft_split(char const *s, char *c)
 {
 	return (split_ft((char *) s, c, 0, NULL));
 }
