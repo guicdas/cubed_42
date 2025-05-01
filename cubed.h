@@ -6,20 +6,22 @@
 /*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 19:51:10 by gcatarin          #+#    #+#             */
-/*   Updated: 2025/05/01 03:39:23 by gcatarin         ###   ########.fr       */
+/*   Updated: 2025/05/01 19:10:32 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #pragma once
 
-#include <stdio.h>
-#include <unistd.h>
-#include <fcntl.h>
-#include <stdlib.h>
-#include <math.h>
+# include <stdio.h>
+# include <unistd.h>
+# include <fcntl.h>
+# include <stdlib.h>
+# include <math.h>
+# include <stdbool.h>
+# include <X11/X.h>
 
-#include "minilibx-linux/mlx.h"
-#include "defines.h"
+# include "minilibx-linux/mlx.h"
+# include "defs_and_structs.h"
 
 typedef struct s_img
 {
@@ -32,34 +34,12 @@ typedef struct s_img
 
 }	t_img;
 
-typedef struct s_header
-{
-	char	*key;
-	char	**target;
-}	t_header;
-
 typedef struct s_data
 {
 	void	*mlx;
 	void	*win_ptr;
-	int		moves;
-	int		screen_height;
-	int		screen_width;
-	int		**pixels;
-	int		**textures;
-	int		info_count;
-	int		settings_flag;
-	int		n_player;
-	int		n_info;
-
 	t_header file_header[6];
-
-	int		mmap_s_h;
-	int		mmap_s_w;
-	t_img	wall;
-	t_img	exit;
-	t_img	floor;
-
+	//int		last_mouse_x;
 	char	*map_no;
 	char	*map_so;
 	char	*map_we;
@@ -68,6 +48,21 @@ typedef struct s_data
 	char	*map_c;
 	int		hex_floor;
 	int		hex_ceiling;
+	bool	settings_flag;
+
+	int		moves;
+	int		screen_height;
+	int		screen_width;
+	int		**pixels;
+	int		**textures;
+	int		info_count;
+	int		n_player;
+	int		n_info;
+	int		mmap_s_h;
+	int		mmap_s_w;
+	t_img	wall;
+	t_img	exit;
+	t_img	floor;
 	int		map_x;
 	int		map_y;
 	int		map_h;
@@ -82,7 +77,7 @@ typedef struct s_data
 	float	player_a;
 	double	player_dx;
 	double	player_dy;
-	float	player_speed;
+	float	p_speed;
 
 	double	camera_x;
 	double	ray_dir_x;
@@ -117,7 +112,15 @@ void	parse_map(char **av);
 int		get_color_rgb(char *str);
 int		verify_map_header(char *s);
 void	error(char *s);
+void	leave(void);
 void	initialize_data(void);
+int		mouse_move(int x, int y, void *param);
+void	free_double(void **map);
+void	rotate(int keypress);
+void	move(int keypress);
+void	move_sideways(int keypress);
+int		movekey_hook(int keypress);
+int		destroy_hook(void);
 
 //	ft_utils.c
 int		ft_isspace(int c);
@@ -147,41 +150,21 @@ void	max_map(void);
 void	init_map(int width, int i);
 void	get_index(void);
 void	init_texture(t_img *img);
-
 //	leave.c
-void	free_double(void **map);
 void	free_image(void);
-
-
 //	parsing_map.c
 int		check_char(char c);
 void	map_check_matriz(void);
 void	map_flood_fill(int x, int y, char **map, int size);
-
-//	moves.c
-void	rotate(int keypress);
-void	move(int keypress);
-void	move_left(void);
-void	move_right(void);
-
-//	hooks.c
-void	print_minimap(void);
-int		movekey_hook(int keypress);
-int		destroy_hook(void);
-
 //	2drays.c
 void	put_image(void *img, int h, int w);
 void	draw_map(void);
 void	draw_player_direction(int x1, int y1, int color);
-
 //	rays.c
 void	raycaster(void);
-
 //	renders.c
 void	render_frame(void);
-
 //	init.c
 void	init_image(t_img *img, char *path, int i);
 void	init_dda(int x);
 void	init_values(void);
-void	init_pixels(void);

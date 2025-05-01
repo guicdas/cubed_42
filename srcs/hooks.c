@@ -3,66 +3,99 @@
 /*                                                        :::      ::::::::   */
 /*   hooks.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jnuncio- <jnuncio-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/07 14:01:48 by gcatarin          #+#    #+#             */
-/*   Updated: 2024/06/13 12:02:01 by jnuncio-         ###   ########.fr       */
+/*   Updated: 2025/05/01 19:16:01 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cubed.h"
 
-void	print_minimap(void)
-{
-	draw_map();
-	mlx_pixel_put(d()->mlx, d()->win_ptr, \
-	(d()->player_x / 64) * d()->mmap_s_w, \
-	(d()->player_y / 64) * d()->mmap_s_h, GREEN);
-	draw_player_direction((d()->player_x / 64) * d()->mmap_s_w, \
-	(d()->player_y / 64) * d()->mmap_s_h, RED);
-}
-
 static void	show_settings(void)
 {
 	mlx_string_put(d()->mlx, d()->win_ptr, 2, 12, \
-	BLACK, ft_itoa(d()->moves, 10, DECA));
+BLACK, ft_itoa(d()->moves, 10, DECA));
 	mlx_string_put(d()->mlx, d()->win_ptr, 2, 24, WHITE, "Y:");
 	mlx_string_put(d()->mlx, d()->win_ptr, 14, 26, \
-	BLACK, ft_itoa((int)d()->player_y / 64, 10, DECA));
+BLACK, ft_itoa((int)d()->player_y / 64, 10, DECA));
 	mlx_string_put(d()->mlx, d()->win_ptr, 40, 24, WHITE, "X:");
 	mlx_string_put(d()->mlx, d()->win_ptr, 54, 26, \
-	BLACK, ft_itoa((int)d()->player_x / 64, 10, DECA));
+BLACK, ft_itoa((int)d()->player_x / 64, 10, DECA));
 }
 
-int	movekey_hook(int keypress)
+static void	print_minimap(void)
+{
+	draw_map();
+	mlx_pixel_put(d()->mlx, d()->win_ptr, \
+(d()->player_x / 64) * d()->mmap_s_w, \
+(d()->player_y / 64) * d()->mmap_s_h, GREEN);
+	draw_player_direction((d()->player_x / 64) * d()->mmap_s_w, \
+(d()->player_y / 64) * d()->mmap_s_h, RED);
+	show_settings();
+}
+
+int	movekey_hook(int key)
 {
 	init_values();
-	if (keypress == KEY_ESC)
-		error("Leaving!\n");
-	if (keypress == KEY_Q && d()->settings_flag)
-		d()->settings_flag--;
-	else if (keypress == KEY_Q && !d()->settings_flag)
-		d()->settings_flag++;
-	if (keypress == KEY_W || keypress == KEY_S)
-		move(keypress);
-	if (keypress == KEY_A)
-		move_left();
-	if (keypress == KEY_D)
-		move_right();
-	else if (keypress == KEY_RIGHT || keypress == KEY_LEFT)
-		rotate(keypress);
+	if (key == KEY_ESC)
+		leave();
+	d()->settings_flag += (key == KEY_Q);
+	if (key == KEY_W || key == KEY_S)
+		move(key);
+	else if (key == KEY_A || key == KEY_D)
+		move_sideways(key);
+	else if (key == KEY_RIGHT || key == KEY_LEFT)
+		rotate(key);
 	raycaster();
 	render_frame();
 	if (d()->settings_flag == 1)
-	{
 		print_minimap();
-		show_settings();
-	}
 	return (0);
 }
 
 int	destroy_hook(void)
 {
-	error("\nexit");
+	leave();
+	return (0);
+}
+
+static void	wrap_mouse_position(int x, int y)
+{
+	int edge_warp;
+
+	edge_warp = 20;
+	if (x > d()->screen_width - edge_warp)
+	{
+		x = edge_warp;
+		mlx_mouse_move(d()->mlx, d()->win_ptr, x, y);
+	}
+	if (x < edge_warp)
+	{
+		x = d()->screen_width - edge_warp;
+		mlx_mouse_move(d()->mlx, d()->win_ptr, x, y);
+	}
+}
+
+int mouse_move(int x, int y, void *p)
+{
+	(void) p;
+	double	old_dir;
+	double	old_plane;
+	float	rot;
+
+	rot = d()->player_a;
+	old_dir = d()->player_dx;
+	old_plane = d()->plane_x;
+	wrap_mouse_position(x, y);
+
+	//if (x == d()->last_mouse_x)
+		return (0);
+	//if (x < d()->last_mouse_x)
+		rot *= -1;
+	d()->player_dx = (d()->player_dx * cos(rot)) - (d()->player_dy * sin(rot));
+	d()->player_dy = (old_dir * sin(rot)) + (d()->player_dy * cos(rot));
+	d()->plane_x = (d()->plane_x * cos(rot)) - (d()->plane_y * sin(rot));
+	d()->plane_y = (old_plane * sin(rot)) + (d()->plane_y * cos(rot));
 	return (0);
 }

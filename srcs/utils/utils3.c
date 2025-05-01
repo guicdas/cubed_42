@@ -6,7 +6,7 @@
 /*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/01 01:38:42 by gcatarin          #+#    #+#             */
-/*   Updated: 2025/05/01 03:41:49 by gcatarin         ###   ########.fr       */
+/*   Updated: 2025/05/01 17:00:25 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ s, d()->file_header[i].target) == 1)
 		i++;
 	}
 	error("Error\nWrong textures for .cub file");
+	return (0);
 }
 
 void	init_texture(t_img *img)

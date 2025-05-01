@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   moves.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jnuncio- <jnuncio-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 17:44:24 by gcatarin          #+#    #+#             */
-/*   Updated: 2024/06/13 10:28:56 by jnuncio-         ###   ########.fr       */
+/*   Updated: 2025/05/01 19:25:04 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,54 +42,39 @@ void	rotate(int keypress)
 	d()->moves++;
 }
 
-void	move(int keypress)
+void	move(int key)
 {
-	if (keypress == KEY_W)
-	{
-		if (check_move(d()->player_dx * d()->player_speed, 0) == 1)
-			d()->player_x += d()->player_dx * d()->player_speed;
-		if (check_move(0, d()->player_dy * d()->player_speed) == 1)
-			d()->player_y += d()->player_dy * d()->player_speed;
-		d()->moves++;
-	}
-	else
-	{
-		if (check_move(-d()->player_dx * d()->player_speed, 0) == 1)
-			d()->player_x -= d()->player_dx * d()->player_speed;
-		if (check_move(0, -d()->player_dy * d()->player_speed) == 1)
-			d()->player_y -= d()->player_dy * d()->player_speed;
-		d()->moves++;
-	}
-}
+	int	dir;
 
-void	move_left(void)
-{
-	int	rot;
-
-	rot = d()->player_a;
-	if (check_move(((d()->player_dx * cos(rot - PI / 2)) - \
-	(d()->player_dy * sin(rot - PI / 2))) * d()->player_speed, 0) == 1)
-		d()->player_x += ((d()->player_dx * cos(rot - PI / 2)) - \
-		(d()->player_dy * sin(rot - PI / 2))) * d()->player_speed;
-	if (check_move(0, ((d()->player_dx * sin(rot - PI / 2)) + \
-	(d()->player_dy * cos(rot - PI / 2))) * d()->player_speed) == 1)
-		d()->player_y += ((d()->player_dx * sin(rot - PI / 2)) + \
-		(d()->player_dy * cos(rot - PI / 2))) * d()->player_speed;
+	dir = -1;
+	if (key == KEY_W)
+		dir = 1;
+	if (check_move((dir * d()->player_dx) * d()->p_speed, 0) == 1)
+		d()->player_x += dir * (d()->player_dx * d()->p_speed);
+	if (check_move(0, (dir * d()->player_dy) * d()->p_speed) == 1)
+		d()->player_y += dir * (d()->player_dy * d()->p_speed);
 	d()->moves++;
 }
 
-void	move_right(void)
+void	move_sideways(int key)
 {
-	int	rot;
+	int	rot, dir;
+	double x_movement;
+	double y_movement;
 
-	rot = d()->player_a;
-	if (check_move(-((d()->player_dx * cos(-rot - PI / 2)) - \
-	(d()->player_dy * sin(-rot - PI / 2))) * d()->player_speed, 0) == 1)
-		d()->player_x -= ((d()->player_dx * cos(-rot - PI / 2)) - \
-		(d()->player_dy * sin(-rot - PI / 2))) * d()->player_speed;
-	if (check_move(0, -((d()->player_dx * sin(-rot - PI / 2)) + \
-	(d()->player_dy * cos(-rot - PI / 2))) * d()->player_speed) == 1)
-		d()->player_y -= ((d()->player_dx * sin(-rot - PI / 2)) + \
-		(d()->player_dy * cos(-rot - PI / 2))) * d()->player_speed;
+	if (key != KEY_A)
+		dir = 1;
+	else
+		dir = -1;
+	rot = d()->player_a * (float) dir;
+	x_movement = d()->player_dx * cos(rot - PI / 2);
+	y_movement = d()->player_dy * sin(rot - PI / 2);
+	
+	if (check_move((dir * (x_movement - y_movement)) * d()->p_speed, 0) == 1)
+		d()->player_x += dir * ((x_movement - y_movement) * d()->p_speed);
+	if (check_move(0, dir * (x_movement + y_movement) * d()->p_speed) == 1)
+		d()->player_y += ((d()->player_dx * sin(rot - PI / 2)) + \
+		(d()->player_dy * cos(rot - PI / 2))) * d()->p_speed;
+
 	d()->moves++;
 }

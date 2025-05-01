@@ -6,7 +6,7 @@
 /*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 16:31:05 by gcatarin          #+#    #+#             */
-/*   Updated: 2025/05/01 03:42:37 by gcatarin         ###   ########.fr       */
+/*   Updated: 2025/05/01 19:09:09 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,13 +23,13 @@ t_data	*d(void)
 static void	verify_input(int ac, char *str)
 {
 	if (ac != 2)
-		error("Error\nWrong number of arguments.\n");
+		error("Error\nWrong number of arguments!");
 	if (ft_strlen(str) <= 4)
-		error("Error\nEmpty map name\n");
+		error("Error\nEmpty map name!");
 	while (*str && *str != '.')
 		str++;
 	if (ft_strcmp(str, ".cub") != 0)
-		error("Error\nWrong file format -> [map.cub]\n");
+		error("Error\nWrong file format -> [map.cub]");
 }
 
 static int	*xpm_to_img(char *path)
@@ -42,7 +42,7 @@ static int	*xpm_to_img(char *path)
 	init_image(&img, path, 0);
 	buffer = ft_calloc(d()->texture_w * d()->texture_h, sizeof(int));
 	if (!buffer)
-		error("Error\nCouldn't allocate buffer!\n");
+		error("Error\nCouldn't allocate buffer!");
 	y = 0;
 	while (y < d()->texture_h)
 	{
@@ -62,11 +62,11 @@ img.addr[y * d()->texture_w + x];
 static void	load_textures_and_assets(void)
 {
 	void	*tmp;
-	void	*tmp1;
+	int		**tmp1;
 
 	d()->mlx = mlx_init();
 	tmp = mlx_new_window(d()->mlx, d()->screen_width, \
-d()->screen_height, "CUBED");
+d()->screen_height, "CUB3D_42");
 	d()->win_ptr = tmp;
 	if (!d()->mlx || !d()->win_ptr)
 		error("Error\n Cub3d coudn't be initialized!");
@@ -81,12 +81,10 @@ d()->screen_height, "CUBED");
 	init_image(&d()->wall, "textures/miniwall.xpm", 1);
 	init_image(&d()->exit, "textures/exit.xpm", 1);
 	init_image(&d()->floor, "textures/minifloor.xpm", 1);
-	init_pixels();
+	//init_values();
 	max_map();
-	d()->player_a = ROT_SPEED;
-}
+} 
 
-//verify make has all the rules
 int	main(int ac, char **av)
 {
 	verify_input(ac, av[1]);
@@ -95,7 +93,8 @@ int	main(int ac, char **av)
 	load_textures_and_assets();
 	mlx_string_put(d()->mlx, d()->win_ptr, d()->screen_width / 2 - 75, \
 d()->screen_height / 2, WHITE, "PRESS ANY KEY");
-	mlx_hook(d()->win_ptr, 17, 0, destroy_hook, d);
-	mlx_hook(d()->win_ptr, 2, 1L << 0, movekey_hook, d);
+	mlx_hook(d()->win_ptr, DestroyNotify, NoEventMask, destroy_hook, d());
+	mlx_hook(d()->win_ptr, KeyPress, KeyPressMask, movekey_hook, d());
+	//mlx_hook(d()->win_ptr, MotionNotify, PointerMotionMask, mouse_move, d);
 	mlx_loop(d()->mlx);
 }

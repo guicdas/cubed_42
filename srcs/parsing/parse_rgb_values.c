@@ -6,7 +6,7 @@
 /*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 16:44:00 by gcatarin          #+#    #+#             */
-/*   Updated: 2025/05/01 03:23:35 by gcatarin         ###   ########.fr       */
+/*   Updated: 2025/05/01 16:58:49 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ static int	verify_rgb_value(char **args, int index)
 			return (rgb_value);
 	}
 	free_double((void **)args);
-	return (error("Error\nInvalid RGB input."), NULL);
+	return (error("Error\nInvalid RGB input."), 0);
 }
 
 static unsigned long	calculate_rgb_value(char **s)
@@ -57,11 +57,11 @@ static unsigned long	calculate_rgb_value(char **s)
 		rgb_value = verify_rgb_value(args, 1);
 		ret += ((rgb_value & 0xff) << 8);
 		rgb_value = verify_rgb_value(args, 2);
-		free_double((char **)args);
-		return (ret + rgb_value & 0xff);
+		free_double((void **)args);
+		return (ret + (rgb_value & 0xff));
 	}
 	free_double((void **)args);
-	return (error("Error\nInvalid RGB format.\n"), NULL);
+	return (error("Error\nInvalid RGB format.\n"), 0);
 }
 
 int	get_color_rgb(char *str)
@@ -76,5 +76,5 @@ int	get_color_rgb(char *str)
 		return (free_double((void **)args), ret);
 	}
 	free_double((void **)args);
-	return (error("Error\nInvalid RGB format."), NULL);
+	return (error("Error\nInvalid RGB format."), 0);
 }

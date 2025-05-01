@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init.c                                             :+:      :+:    :+:   */
+/*   initialize_values.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/07 14:10:24 by gcatarin          #+#    #+#             */
-/*   Updated: 2025/05/01 03:39:31 by gcatarin         ###   ########.fr       */
+/*   Updated: 2025/05/01 18:58:20 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,28 +16,30 @@ void	init_image(t_img *img, char *path, int i)
 {
 	init_texture(img);
 	if (i == 0)
-		img->image = mlx_xpm_file_to_image(d()->mlx, path,&d()->texture_w, &d()->texture_h);
+		img->image = mlx_xpm_file_to_image(d()->mlx, \
+path,&d()->texture_w, &d()->texture_h);
 	else
-		img->image = mlx_xpm_file_to_image(d()->mlx, path, &d()->mmap_s_w, &d()->mmap_s_h);
+		img->image = mlx_xpm_file_to_image(d()->mlx, \
+path, &d()->mmap_s_w, &d()->mmap_s_h);
 	if (img->image == NULL)
-		error("Error\nCouldn't open map file!\n");
+		error("Error\nCouldn't open map file!");
 	if (i == 1 && (d()->mmap_s_w != MINISIZE || d()->mmap_s_h != MINISIZE))
 		error("Error\nWrong minimap texture size\n");
 	if (i == 0 && (d()->texture_w != TEXTURE_SIZE || \
 	d()->texture_h != TEXTURE_SIZE))
 		error("Error\nWrong texture size\n");
 	img->addr = (int *)mlx_get_data_addr(img->image, &img->bpp, \
-	&img->linesize, &img->endian);
+&img->linesize, &img->endian);
 	if (img->addr == NULL)
-		error("Error\nget_data_addr didn't work correctly!\n");
+		error("Error\nget_data_addr didn't work correctly!");
 }
 
 void	init_dda(int x)
 {
 	d()->camera_x = 2 * x / (double)d()->screen_width - 1;
-	d()->ray_dir_x = (d()->player_dx / d()->player_speed) \
+	d()->ray_dir_x = (d()->player_dx / d()->p_speed) \
 	+ d()->plane_x * d()->camera_x;
-	d()->ray_dir_y = (d()->player_dy / d()->player_speed) \
+	d()->ray_dir_y = (d()->player_dy / d()->p_speed) \
 	+ d()->plane_y * d()->camera_x;
 	d()->map_x = (int)d()->player_x / 64;
 	d()->map_y = (int)d()->player_y / 64;
@@ -47,13 +49,6 @@ void	init_dda(int x)
 
 void	initialize_data(void)
 {
-	d()->texture_w = TEXTURE_SIZE;
-	d()->texture_h = TEXTURE_SIZE;
-	d()->player_speed = PLAYER_SPEED;
-	d()->screen_height = SCREENH;
-	d()->screen_width = SCREENW;
-	d()->mmap_s_w = MINISIZE;
-	d()->mmap_s_h = MINISIZE;
 	d()->file_header[0].key = "NO";
 	d()->file_header[0].target = &d()->map_no;
 	d()->file_header[1].key = "SO";
@@ -66,7 +61,39 @@ void	initialize_data(void)
 	d()->file_header[4].target = &d()->map_f;
 	d()->file_header[5].key = "C";
 	d()->file_header[5].target = &d()->map_c;
-	
+	d()->settings_flag = -1;
+	d()->p_speed = PLAYER_SPEED;
+	// d()->last_mouse_x = SCREENW / 2;
+
+	d()->texture_w = TEXTURE_SIZE;
+	d()->texture_h = TEXTURE_SIZE;
+	d()->screen_height = SCREENH;
+	d()->screen_width = SCREENW;
+	d()->mmap_s_w = MINISIZE;
+	d()->mmap_s_h = MINISIZE;
+}
+
+static void	init_pixels(void)
+{
+	int		i;
+	void	*tmp;
+	void	*tmp1;
+
+	i = 0;
+	if (d()->pixels)
+		free_double((void **)d()->pixels);
+	tmp = ft_calloc(d()->screen_height + 1, sizeof(int *));
+	d()->pixels = tmp;
+	if (!d()->pixels)
+		error("Error\n Couldn't allocate pixels!");
+	while (i < d()->screen_height)
+	{
+		tmp1 = ft_calloc(d()->screen_width + 1, sizeof(int));
+		d()->pixels[i] = tmp1;
+		if (!d()->pixels[i])
+			error("Error\n Couldn't allocate pixels!");
+		i++;
+	}
 }
 
 void	init_values(void)
@@ -80,27 +107,4 @@ void	init_values(void)
 	d()->draw_start = 0;
 	d()->draw_end = 0;
 	d()->wall_dist = 0;
-}
-
-void	init_pixels(void)
-{
-	int		i;
-	void	*tmp;
-	void	*tmp1;
-
-	i = 0;
-	if (d()->pixels)
-		free_double((void **)d()->pixels);
-	tmp = ft_calloc(d()->screen_height + 1, sizeof(int *));
-	d()->pixels = tmp;
-	if (!d()->pixels)
-		error("Error\n Couldn't allocate pixels\n");
-	while (i < d()->screen_height)
-	{
-		tmp1 = ft_calloc(d()->screen_width + 1, sizeof(int));
-		d()->pixels[i] = tmp1;
-		if (!d()->pixels[i])
-			error("Error\n Couldn't allocate pixels\n");
-		i++;
-	}
 }

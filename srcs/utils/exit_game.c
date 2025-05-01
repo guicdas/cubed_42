@@ -6,7 +6,7 @@
 /*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 17:45:43 by gcatarin          #+#    #+#             */
-/*   Updated: 2025/05/01 03:45:51 by gcatarin         ###   ########.fr       */
+/*   Updated: 2025/05/01 16:50:29 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,11 @@ void	free_image(void)
 void	error(char *s)
 {
 	ft_putendl_fd(s, 2);
+	leave();
+}
+
+void	leave(void)
+{
 	free_maps();
 	if (d()->textures)
 		free_double((void **)d()->textures);

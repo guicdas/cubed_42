@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/17 20:12:37 by mneves-l          #+#    #+#             */
-/*   Updated: 2025/04/30 23:31:34 by gcatarin         ###   ########.fr       */
+/*   Created: 2025/05/01 16:59:42 by gcatarin          #+#    #+#             */
+/*   Updated: 2025/05/01 17:05:16 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static void	init_orientation(float a, float px, float py)
 int	check_char(char c)
 {
 	if (c != '1' && c != '0' && c != 'N' && c != 'S' && c != 'W' \
-	&& c != 'E' && c != '.')
+&& c != 'E' && c != '.')
 		return (1);
 	if (c == 'N' || c == 'S' || c == 'W' || c == 'E')
 	{
@@ -57,8 +57,8 @@ void	map_check_matriz(void)
 			{
 				d()->player_x = (x * 64) + 32;
 				d()->player_y = (y * 64) + 32;
-				d()->player_dx = cos(d()->player_a) * d()->player_speed;
-				d()->player_dy = sin(d()->player_a) * d()->player_speed;
+				d()->player_dx = cos(d()->player_a) * d()->p_speed;
+				d()->player_dy = sin(d()->player_a) * d()->p_speed;
 				d()->n_player++;
 			}
 			x++;

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parsing_dir.c                                      :+:      :+:    :+:   */
+/*   parse_map_file.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 21:38:24 by gcatarin          #+#    #+#             */
-/*   Updated: 2025/05/01 03:24:33 by gcatarin         ###   ########.fr       */
+/*   Updated: 2025/05/01 16:54:28 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,7 +118,7 @@ void	parse_map(char **av)
 	close(fd2);
 	load_map(i);
 	map_check_matriz();
-	map_print();
+	//map_print();
 	if (d()->n_player != 1)
 		error("Error\nWrong player count!");
 	map_flood_fill((int)d()->player_x / 64, (int)d()->player_y / 64, \
