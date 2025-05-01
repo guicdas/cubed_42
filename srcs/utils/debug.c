@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   debug.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jnuncio- <jnuncio-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/07 14:25:08 by gcatarin          #+#    #+#             */
-/*   Updated: 2024/06/13 10:58:47 by jnuncio-         ###   ########.fr       */
+/*   Updated: 2025/05/01 03:45:50 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../cubed.h"
+#include "../../cubed.h"
 
 void	info_print(void)
 {
@@ -19,8 +19,8 @@ void	info_print(void)
 	printf("Value SO -> |%s|\n", (d()->map_so));
 	printf("Value WE -> |%s|\n", (d()->map_we));
 	printf("Value EA -> |%s|\n", (d()->map_ea));
-	printf("Value F  -> |%d|\n", (d()->map_f));
-	printf("Value C  -> |%d|\n\n", (d()->map_c));
+	printf("Value F  -> |%s|\n", (d()->map_f));
+	printf("Value C  -> |%s|\n\n", (d()->map_c));
 	printf("player_pos [x][y]= [%f][%f]\n", d()->player_x, d()->player_y);
 	printf("WIDTH: %d HEIGHT: %d\n", d()->max_x, d()->map_h);
 }
@@ -34,7 +34,7 @@ void	map_print(void)
 	while (d()->map[i])
 		printf("\t%s\n", d()->map[i++]);
 	i = 0;
-	printf("\n\tFULL MAP\n");
+	printf("\n\tFULL MAP FILE\n");
 	while (d()->full_map[i])
 		printf("\t%s\n", d()->full_map[i++]);
 	printf("\n");

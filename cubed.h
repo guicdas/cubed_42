@@ -5,50 +5,21 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/17 19:51:10 by mneves-l          #+#    #+#             */
-/*   Updated: 2024/06/13 13:45:04 by gcatarin         ###   ########.fr       */
+/*   Created: 2024/04/17 19:51:10 by gcatarin          #+#    #+#             */
+/*   Updated: 2025/05/01 03:39:23 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #pragma once
 
-#include "minilibx-linux/mlx.h"
 #include <stdio.h>
 #include <unistd.h>
 #include <fcntl.h>
 #include <stdlib.h>
 #include <math.h>
 
-#define KEY_W 119
-#define KEY_D 100
-#define KEY_S 115
-#define KEY_A 97
-#define KEY_Q 113
-#define KEY_ESC 65307
-#define KEY_LEFT 65361
-#define KEY_RIGHT 65363
-
-#define RED 0xE40000
-#define GREEN 0x3BFC3B
-#define YELLOW 0xF4FF49
-#define BLACK 0x000000
-#define WHITE 0xFFFFFF
-
-#define SCREENH 768
-#define SCREENW 1024
-#define TEXTURE_SIZE 128
-#define PLAYER_SPEED 5
-#define ROT_SPEED 0.2
-#define MINISIZE 16
-
-#define PI 3.14159265359
-#define DR 0.0174533
-
-#define HEXA "0123456789ABCDEF"
-#define DECA "0123456789"
-#define SPACE " \t\n\v\f\r"
-
-#define BUFFER_SIZE 50
+#include "minilibx-linux/mlx.h"
+#include "defines.h"
 
 typedef struct s_img
 {
@@ -60,6 +31,12 @@ typedef struct s_img
 	int		endian;
 
 }	t_img;
+
+typedef struct s_header
+{
+	char	*key;
+	char	**target;
+}	t_header;
 
 typedef struct s_data
 {
@@ -75,6 +52,8 @@ typedef struct s_data
 	int		n_player;
 	int		n_info;
 
+	t_header file_header[6];
+
 	int		mmap_s_h;
 	int		mmap_s_w;
 	t_img	wall;
@@ -85,8 +64,10 @@ typedef struct s_data
 	char	*map_so;
 	char	*map_we;
 	char	*map_ea;
-	int		map_f;
-	int		map_c;
+	char	*map_f;
+	char	*map_c;
+	int		hex_floor;
+	int		hex_ceiling;
 	int		map_x;
 	int		map_y;
 	int		map_h;
@@ -132,50 +113,45 @@ typedef struct s_data
 }	t_data;
 
 t_data	*d(void);
+void	parse_map(char **av);
+int		get_color_rgb(char *str);
+int		verify_map_header(char *s);
+void	error(char *s);
+void	initialize_data(void);
 
-//	get_next_line.c
-char	*get_next_line(int fd);
-
-//	utils1.c
+//	ft_utils.c
 int		ft_isspace(int c);
 int		ft_isdigit(int c);
+int		ft_strlen_array(char **str);
+void	ft_putendl_fd(char *s, int fd);
+int		ft_strcmp(char *s1, char *s2);
+int		ft_strlen(const char *str);
+void	*ft_calloc(size_t nmemb, size_t size);
+int		ft_strncmp(const char *s1, const char *s2, unsigned int n);
+char	*get_next_line(int fd);
+
+
+char	**ft_split(char const *s, char *c);
 char	*ft_itoa(long long n, int bs, char *b);
 char	*clean_string(char *s, int i, int flag);
 
-//	utils2.c
-void	ft_memset(void *s, size_t n, char c);
-void	*ft_calloc(size_t nmemb, size_t size);
+//	DEBUG
+void	info_print(void);
+void	map_print(void);
+void	debug_dda(void);
+
+
+//	utils.c
 void	draw_vertical_line(int x, int start, int end, int color);
 void	max_map(void);
-
-//	utils3.c
 void	init_map(int width, int i);
-int		ft_strcmp(char *s1, char *s2);
-int		ft_strlen(const char *str);
-void	ft_putendl_fd(char *s, int fd);
-
-//	utils4.c
-int		ft_strlen_array(char **str);
-char	**ft_split(char const *s, char *c);
 void	get_index(void);
-
-//	utils5.c
-int		clean_info(char *str);
 void	init_texture(t_img *img);
 
 //	leave.c
 void	free_double(void **map);
 void	free_image(void);
-void	error(char *s);
 
-//	parsing_dir.c
-int		check_for_element(char *s);
-void	parsing(char **av);
-
-//	debug.c
-void	info_print(void);
-void	map_print(void);
-void	debug_dda(void);
 
 //	parsing_map.c
 int		check_char(char c);
@@ -207,9 +183,5 @@ void	render_frame(void);
 //	init.c
 void	init_image(t_img *img, char *path, int i);
 void	init_dda(int x);
-void	initialize_everything(void);
 void	init_values(void);
 void	init_pixels(void);
-
-//	colors.c
-int		limits_colors(char *s);

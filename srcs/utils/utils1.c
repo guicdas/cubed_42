@@ -6,26 +6,28 @@
 /*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 19:04:48 by gcatarin          #+#    #+#             */
-/*   Updated: 2024/06/13 13:17:44 by gcatarin         ###   ########.fr       */
+/*   Updated: 2025/05/01 01:38:36 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../cubed.h"
+#include "../../cubed.h"
 
-int	ft_isspace(int c)
+void	get_index(void)
 {
-	c = (unsigned char)c;
-	if (c == '\t' || c == '\n' || c == '\v' || c == '\f' || c == '\r'
-		|| c == ' ')
-		return (1);
-	return (0);
-}
-
-int	ft_isdigit(int c)
-{
-	if (c >= '0' && c <= '9')
-		return (1);
-	return (0);
+	if (d()->side == 0)
+	{
+		if (d()->ray_dir_x < 0)
+			d()->texture_index = 3;
+		else
+			d()->texture_index = 2;
+	}
+	else
+	{
+		if (d()->ray_dir_y > 0)
+			d()->texture_index = 1;
+		else
+			d()->texture_index = 0;
+	}
 }
 
 static char	*convert(long long n, char *str, int bs, char *b)

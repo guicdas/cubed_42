@@ -1,28 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils4.c                                           :+:      :+:    :+:   */
+/*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/17 19:50:59 by mneves-l          #+#    #+#             */
-/*   Updated: 2024/06/13 14:08:13 by gcatarin         ###   ########.fr       */
+/*   Created: 2025/05/01 01:39:00 by gcatarin          #+#    #+#             */
+/*   Updated: 2025/05/01 03:41:49 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../cubed.h"
-
-int	ft_strlen_array(char **str)
-{
-	int	i;
-
-	i = 0;
-	if (str == NULL)
-		return (0);
-	while (str[i])
-		i++;
-	return (i);
-}
+#include "../../cubed.h"
 
 static int	is_char(char c, char *str)
 {
@@ -63,22 +51,4 @@ static char	**split_ft(char const *s, char *c, int j, char **list)
 char	**ft_split(char const *s, char *c)
 {
 	return (split_ft((char *) s, c, 0, NULL));
-}
-
-void	get_index(void)
-{
-	if (d()->side == 0)
-	{
-		if (d()->ray_dir_x < 0)
-			d()->texture_index = 3;
-		else
-			d()->texture_index = 2;
-	}
-	else
-	{
-		if (d()->ray_dir_y > 0)
-			d()->texture_index = 1;
-		else
-			d()->texture_index = 0;
-	}
 }

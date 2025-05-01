@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils5.c                                           :+:      :+:    :+:   */
+/*   utils3.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/17 19:50:59 by mneves-l          #+#    #+#             */
-/*   Updated: 2024/06/13 13:52:45 by gcatarin         ###   ########.fr       */
+/*   Created: 2025/05/01 01:38:42 by gcatarin          #+#    #+#             */
+/*   Updated: 2025/05/01 03:41:49 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../cubed.h"
+#include "../../cubed.h"
 
 static char	*get_info(char *str)
 {
@@ -26,46 +26,38 @@ static char	*get_info(char *str)
 	return (free_double((void **)args), str);
 }
 
-static int	clean_infos(char *s)
+static int	verify_header_line(char *texture, char *s, char **info)
 {
-	if (s[0] == 'E' && s[1] == 'A' && ft_isspace(s[2]))
+	int	len;
+
+	len = ft_strlen(texture);
+	if (ft_strncmp(s, texture, len) == 0 && ft_isspace(s[len]))
 	{
-		if (d()->map_ea)
-			error("Error\nMultiple EA textures in map file.\n");
-		d()->map_ea = get_info(s);
-		d()->n_info++;
-		return (1);
-	}
-	else if (s[0] == 'W' && s[1] == 'E' && ft_isspace(s[2]))
-	{
-		if (d()->map_we)
-			error("Error\nMultiple WE textures in map file.\n");
-		d()->map_we = get_info(s);
+		if (*info)
+			error("Error\nRepeated information in map header.");
+		if (len == 1)
+			*info = s;
+		else
+			*info = get_info(s);
 		d()->n_info++;
 		return (1);
 	}
 	return (0);
 }
 
-int	clean_info(char *s)
+int	verify_map_header(char *s)
 {
-	if (s[0] == 'N' && s[1] == 'O' && ft_isspace(s[2]))
+	int	i;
+
+	i = 0;
+	while (i < 6)
 	{
-		if (d()->map_no)
-			error("Error\nMultiple NO textures in map file.\n");
-		d()->map_no = get_info(s);
-		d()->n_info++;
-		return (1);
+		if (verify_header_line(d()->file_header[i].key, \
+s, d()->file_header[i].target) == 1)
+			return (1);
+		i++;
 	}
-	else if (s[0] == 'S' && s[1] == 'O' && ft_isspace(s[2]))
-	{
-		if (d()->map_so)
-			error("Error\nMultiple SO textures in map file.\n");
-		d()->map_so = get_info(s);
-		d()->n_info++;
-		return (1);
-	}
-	return (clean_infos(s));
+	error("Error\nWrong textures for .cub file");
 }
 
 void	init_texture(t_img *img)

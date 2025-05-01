@@ -5,37 +5,35 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/17 19:46:55 by mneves-l          #+#    #+#             */
-/*   Updated: 2024/06/13 14:07:58 by gcatarin         ###   ########.fr       */
+/*   Created: 2025/04/30 21:38:24 by gcatarin          #+#    #+#             */
+/*   Updated: 2025/05/01 03:24:33 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../cubed.h"
+#include "../../cubed.h"
 
-static void	get_map_lines(int fd)
+static void	allocate_maplines(int fd)
 {
 	char	*tmp;
-	char	**temp;
 	int		n_lines;
 
-	n_lines = 0;
-	while (1)
+	n_lines = 1;
+	while (n_lines++)
 	{
 		tmp = get_next_line(fd);
 		if (tmp == NULL)
 			break ;
-		n_lines++;
 		free(tmp);
 	}
-	if (n_lines == 0)
+	if (n_lines - 2 <= 0)
 		error("Error\nEmpty .cub file");
-	temp = ft_calloc(sizeof(char *), n_lines + 1);
-	d()->full_map = temp;
+	d()->full_map = ft_calloc(sizeof(char *), n_lines - 1);
 	if (!d()->full_map)
-		error("Error\n Couldn't allocate full map\n");
+		error("Error\nCouldn't allocate full map");
+	//temp ?
 }
 
-static int	copy_map(int fd2)
+static int	copy_full_map_file(int fd)
 {
 	char	*tmp;
 	char	*temp;
@@ -44,7 +42,7 @@ static int	copy_map(int fd2)
 	n_lines = 0;
 	while (1)
 	{
-		tmp = get_next_line(fd2);
+		tmp = get_next_line(fd);
 		if (tmp == NULL)
 			break ;
 		if (tmp[0] != '\n')
@@ -55,22 +53,34 @@ static int	copy_map(int fd2)
 			temp[0] = '\n';
 			temp[1] = '\0';
 		}
-		d()->full_map[n_lines] = temp;
-		n_lines++;
+		d()->full_map[n_lines++] = temp;
+		//temp = NULL ou assim
 		free(tmp);
 	}
 	d()->full_map[n_lines] = NULL;
 	return (n_lines);
 }
 
+static int	check_for_element(char *s)
+{
+	while (s && ft_isspace(*s) == 1)
+		s++;
+	if (d()->n_info == 6)
+	{
+		(d())->init_map_flag += (s && *s != '\0');
+		return (1 + (d()->init_map_flag > 0));
+	}
+	if (s && *s)
+		return (verify_map_header(s));
+	return (0);
+}
+
 static void	load_map(int nlines)
 {
 	int	i;
-	int	j;
 	int	max_width;
 
 	i = -1;
-	j = 0;
 	max_width = 0;
 	while (d()->full_map[++i])
 	{
@@ -84,29 +94,13 @@ static void	load_map(int nlines)
 	if (d()->n_info != 6)
 		error("Error\nMissing element in .cub file!");
 	if (!d()->map_h)
-		error("Error\nMissing map in .cub file!\n");
+		error("Error\nMissing map in .cub file!");
+	d()->hex_ceiling = get_color_rgb(d()->map_c);
+	d()->hex_floor = get_color_rgb(d()->map_f);
 	init_map(max_width, nlines - d()->map_h);
 }
 
-int	check_for_element(char *s)
-{
-	while (s && ft_isspace(*s) == 1)
-		s++;
-	if (d()->n_info == 6)
-	{
-		(d())->init_map_flag += (s && *s != '\0');
-		return (1 + (d()->init_map_flag > 0));
-	}
-	if (s && *s)
-	{
-		if ((clean_info(s) || limits_colors(s)) == 0)
-			error("Error\nWrong textures for .cub file\n");
-		return (1);
-	}
-	return (0);
-}
-
-void	parsing(char **av)
+void	parse_map(char **av)
 {
 	int	fd;
 	int	fd2;
@@ -114,22 +108,19 @@ void	parsing(char **av)
 
 	fd = open(av[1], O_RDONLY, 0700);
 	if (fd < 0)
-		error("Error\nCouldn't open map\n");
+		error("Error\nCouldn't open map");
+	allocate_maplines(fd);
+	close(fd);
 	fd2 = open(av[1], O_RDONLY, 0700);
 	if (fd2 < 0)
-	{
-		close(fd);
-		error("Error\nCouldn't open map\n");
-	}
-	get_map_lines(fd);
-	close(fd);
-	i = copy_map(fd2);
+		error("Error\nCouldn't re-open map");
+	i = copy_full_map_file(fd2);
 	close(fd2);
 	load_map(i);
 	map_check_matriz();
 	map_print();
 	if (d()->n_player != 1)
-		error("Error\nWrong player count!\n");
+		error("Error\nWrong player count!");
 	map_flood_fill((int)d()->player_x / 64, (int)d()->player_y / 64, \
-	d()->map, d()->map_h + 1);
+d()->map, d()->map_h + 1);
 }

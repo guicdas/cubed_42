@@ -6,7 +6,7 @@
 /*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 20:12:37 by mneves-l          #+#    #+#             */
-/*   Updated: 2024/06/13 12:35:30 by gcatarin         ###   ########.fr       */
+/*   Updated: 2025/04/30 23:31:34 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void	map_check_matriz(void)
 		while (d()->map[y][x])
 		{
 			if (check_char(d()->map[y][x]) == 1)
-				error("Error\nWrong character found in map!\n");
+				error("Error\nWrong character found in map!");
 			if (check_char(d()->map[y][x]) == 2)
 			{
 				d()->player_x = (x * 64) + 32;

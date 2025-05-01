@@ -6,7 +6,7 @@
 /*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/07 14:10:24 by gcatarin          #+#    #+#             */
-/*   Updated: 2024/06/13 14:07:43 by gcatarin         ###   ########.fr       */
+/*   Updated: 2025/05/01 03:39:31 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,15 +16,9 @@ void	init_image(t_img *img, char *path, int i)
 {
 	init_texture(img);
 	if (i == 0)
-	{
-		img->image = mlx_xpm_file_to_image(d()->mlx, path, \
-		&d()->texture_w, &d()->texture_h);
-	}
+		img->image = mlx_xpm_file_to_image(d()->mlx, path,&d()->texture_w, &d()->texture_h);
 	else
-	{
-		img->image = mlx_xpm_file_to_image(d()->mlx, path, \
-		&d()->mmap_s_w, &d()->mmap_s_h);
-	}
+		img->image = mlx_xpm_file_to_image(d()->mlx, path, &d()->mmap_s_w, &d()->mmap_s_h);
 	if (img->image == NULL)
 		error("Error\nCouldn't open map file!\n");
 	if (i == 1 && (d()->mmap_s_w != MINISIZE || d()->mmap_s_h != MINISIZE))
@@ -51,14 +45,8 @@ void	init_dda(int x)
 	d()->delta_dist_y = fabs(1 / d()->ray_dir_y);
 }
 
-void	initialize_everything(void)
+void	initialize_data(void)
 {
-	d()->mlx = NULL;
-	d()->win_ptr = NULL;
-	d()->moves = 0;
-	d()->textures = NULL;
-	d()->pixels = NULL;
-	d()->texture_index = 0;
 	d()->texture_w = TEXTURE_SIZE;
 	d()->texture_h = TEXTURE_SIZE;
 	d()->player_speed = PLAYER_SPEED;
@@ -66,14 +54,19 @@ void	initialize_everything(void)
 	d()->screen_width = SCREENW;
 	d()->mmap_s_w = MINISIZE;
 	d()->mmap_s_h = MINISIZE;
-	d()->map_no = NULL;
-	d()->map_ea = NULL;
-	d()->map_so = NULL;
-	d()->map_we = NULL;
-	d()->max_x = 0;
-	d()->map_x = 0;
-	d()->map_y = 0;
-	d()->map_h = 0;
+	d()->file_header[0].key = "NO";
+	d()->file_header[0].target = &d()->map_no;
+	d()->file_header[1].key = "SO";
+	d()->file_header[1].target = &d()->map_so;
+	d()->file_header[2].key = "WE";
+	d()->file_header[2].target = &d()->map_we;
+	d()->file_header[3].key = "EA";
+	d()->file_header[3].target = &d()->map_ea;
+	d()->file_header[4].key = "F";
+	d()->file_header[4].target = &d()->map_f;
+	d()->file_header[5].key = "C";
+	d()->file_header[5].target = &d()->map_c;
+	
 }
 
 void	init_values(void)

@@ -6,7 +6,7 @@
 /*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 16:31:05 by gcatarin          #+#    #+#             */
-/*   Updated: 2024/06/13 13:31:14 by gcatarin         ###   ########.fr       */
+/*   Updated: 2025/05/01 03:42:37 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ t_data	*d(void)
 	return (&data);
 }
 
-void	valid_entry(int ac, char *str)
+static void	verify_input(int ac, char *str)
 {
 	if (ac != 2)
 		error("Error\nWrong number of arguments.\n");
@@ -50,7 +50,7 @@ static int	*xpm_to_img(char *path)
 		while (x < d()->texture_w)
 		{
 			buffer[y * d()->texture_w + x] = \
-			img.addr[y * d()->texture_w + x];
+img.addr[y * d()->texture_w + x];
 			x++;
 		}
 		y++;
@@ -59,21 +59,21 @@ static int	*xpm_to_img(char *path)
 	return (buffer);
 }
 
-static void	assets(void)
+static void	load_textures_and_assets(void)
 {
 	void	*tmp;
 	void	*tmp1;
 
 	d()->mlx = mlx_init();
 	tmp = mlx_new_window(d()->mlx, d()->screen_width, \
-	d()->screen_height, "CUBED");
+d()->screen_height, "CUBED");
 	d()->win_ptr = tmp;
 	if (!d()->mlx || !d()->win_ptr)
-		error("Error\n Cub3d coudn't be initialized!\n");
+		error("Error\n Cub3d coudn't be initialized!");
 	tmp1 = ft_calloc(5, sizeof(int *));
 	d()->textures = tmp1;
 	if (!d()->textures)
-		error("Error\n Couldn't allocate textures\n");
+		error("Error\n Couldn't allocate textures!");
 	d()->textures[0] = xpm_to_img(d()->map_no);
 	d()->textures[1] = xpm_to_img(d()->map_so);
 	d()->textures[2] = xpm_to_img(d()->map_ea);
@@ -86,14 +86,15 @@ static void	assets(void)
 	d()->player_a = ROT_SPEED;
 }
 
+//verify make has all the rules
 int	main(int ac, char **av)
 {
-	valid_entry(ac, av[1]);
-	initialize_everything();
-	parsing(av);
-	assets();
+	verify_input(ac, av[1]);
+	initialize_data();
+	parse_map(av);
+	load_textures_and_assets();
 	mlx_string_put(d()->mlx, d()->win_ptr, d()->screen_width / 2 - 75, \
-	d()->screen_height / 2, WHITE, "PRESS ANY KEY");
+d()->screen_height / 2, WHITE, "PRESS ANY KEY");
 	mlx_hook(d()->win_ptr, 17, 0, destroy_hook, d);
 	mlx_hook(d()->win_ptr, 2, 1L << 0, movekey_hook, d);
 	mlx_loop(d()->mlx);

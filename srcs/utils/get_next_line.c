@@ -6,11 +6,11 @@
 /*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 19:37:38 by mneves-l          #+#    #+#             */
-/*   Updated: 2024/06/03 18:37:34 by gcatarin         ###   ########.fr       */
+/*   Updated: 2025/05/01 01:50:56 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../cubed.h"
+#include "../../cubed.h"
 
 int	ft_line_size(char *str)
 {

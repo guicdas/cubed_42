@@ -1,16 +1,50 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils2.c                                           :+:      :+:    :+:   */
+/*   ft_utils.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jnuncio- <jnuncio-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/29 16:32:04 by gcatarin          #+#    #+#             */
-/*   Updated: 2024/06/13 10:13:43 by jnuncio-         ###   ########.fr       */
+/*   Created: 2025/05/01 01:14:41 by gcatarin          #+#    #+#             */
+/*   Updated: 2025/05/01 01:38:36 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../cubed.h"
+#include "../../cubed.h"
+
+int	ft_strcmp(char *s1, char *s2)
+{
+	int	i;
+
+	i = 0;
+	while (s1[i] == s2[i] && s1[i] != '\0' && s2[i] != '\0')
+		i++;
+	return (s1[i] - s2[i]);
+}
+
+int	ft_strncmp(const char *s1, const char *s2, unsigned int n)
+{
+	unsigned int	i;
+
+	i = 0;
+	while (i < n && s1[i] && s2[i] && s1[i] == s2[i])
+		i++;
+	if (i == n)
+		return (0);
+	return ((unsigned char)s1[i] - (unsigned char)s2[i]);
+}
+
+int	ft_strlen(const char *str)
+{
+	int	i;
+
+	i = 0;
+	if (str == NULL)
+		return (0);
+	while (str[i] != '\0')
+		i++;
+	return (i);
+}
 
 static void	ft_bzero(void *s, size_t n)
 {
@@ -21,17 +55,6 @@ static void	ft_bzero(void *s, size_t n)
 		return ;
 	while (n-- >= 1)
 		((char *)s)[i++] = '\0';
-}
-
-void	ft_memset(void *s, size_t n, char c)
-{
-	size_t	i;
-
-	i = 0;
-	if (n < 1)
-		return ;
-	while (n-- >= 1)
-		((char *)s)[i++] = c;
 }
 
 void	*ft_calloc(size_t nmemb, size_t size)
@@ -47,26 +70,4 @@ void	*ft_calloc(size_t nmemb, size_t size)
 		return (NULL);
 	ft_bzero(result, total_mem);
 	return (result);
-}
-
-void	draw_vertical_line(int x, int start, int end, int color)
-{
-	while (start < end)
-	{
-		mlx_pixel_put(d()->mlx, d()->win_ptr, start, x, color);
-		start += 2;
-	}
-}
-
-void	max_map(void)
-{
-	int	y;
-
-	y = 0;
-	while (y < d()->map_h - 1)
-	{
-		if (d()->max_x < ft_strlen(d()->map[y]))
-			d()->max_x = ft_strlen(d()->map[y]);
-		y++;
-	}
 }

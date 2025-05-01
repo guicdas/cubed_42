@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils3.c                                           :+:      :+:    :+:   */
+/*   utils2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 21:40:23 by gcatarin          #+#    #+#             */
-/*   Updated: 2024/06/13 12:35:30 by gcatarin         ###   ########.fr       */
+/*   Updated: 2025/05/01 01:38:36 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../cubed.h"
+#include "../../cubed.h"
 
 static size_t	ft_strlcpy_map(char *dest, const char *src, size_t size)
 {
@@ -35,6 +35,17 @@ static size_t	ft_strlcpy_map(char *dest, const char *src, size_t size)
 	}
 	dest[count] = '\0';
 	return (ft_strlen(src));
+}
+
+static void	ft_memset(void *s, size_t n, char c)
+{
+	size_t	i;
+
+	i = 0;
+	if (n < 1)
+		return ;
+	while (n-- >= 1)
+		((char *)s)[i++] = c;
 }
 
 void	init_map(int width, int j)
@@ -64,37 +75,24 @@ void	init_map(int width, int j)
 	ft_memset(d()->map[i], width + 2, '.');
 }
 
-int	ft_strcmp(char *s1, char *s2)
+void	draw_vertical_line(int x, int start, int end, int color)
 {
-	int	i;
-
-	i = 0;
-	while (s1[i] == s2[i] && s1[i] != '\0' && s2[i] != '\0')
-		i++;
-	return (s1[i] - s2[i]);
-}
-
-int	ft_strlen(const char *str)
-{
-	int	i;
-
-	i = 0;
-	if (str == NULL)
-		return (0);
-	while (str[i] != '\0')
-		i++;
-	return (i);
-}
-
-void	ft_putendl_fd(char *s, int fd)
-{
-	int	i;
-
-	i = 0;
-	while (s[i])
+	while (start < end)
 	{
-		write(fd, &s[i], 1);
-		i++;
+		mlx_pixel_put(d()->mlx, d()->win_ptr, start, x, color);
+		start += 2;
 	}
-	write(fd, "\n", 1);
+}
+
+void	max_map(void)
+{
+	int	y;
+
+	y = 0;
+	while (y < d()->map_h - 1)
+	{
+		if (d()->max_x < ft_strlen(d()->map[y]))
+			d()->max_x = ft_strlen(d()->map[y]);
+		y++;
+	}
 }
