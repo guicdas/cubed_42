@@ -6,7 +6,7 @@
 /*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/07 14:10:24 by gcatarin          #+#    #+#             */
-/*   Updated: 2025/05/01 18:58:20 by gcatarin         ###   ########.fr       */
+/*   Updated: 2025/05/01 22:42:26 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,11 +36,11 @@ path, &d()->mmap_s_w, &d()->mmap_s_h);
 
 void	init_dda(int x)
 {
-	d()->camera_x = 2 * x / (double)d()->screen_width - 1;
-	d()->ray_dir_x = (d()->player_dx / d()->p_speed) \
-	+ d()->plane_x * d()->camera_x;
-	d()->ray_dir_y = (d()->player_dy / d()->p_speed) \
-	+ d()->plane_y * d()->camera_x;
+	d()->camera_x = 2 * x / (double)SCREENW - 1;
+	d()->ray_dir_x = (d()->player_dx / d()->p_speed) + \
+d()->plane_x * d()->camera_x;
+	d()->ray_dir_y = (d()->player_dy / d()->p_speed) + \
+d()->plane_y * d()->camera_x;
 	d()->map_x = (int)d()->player_x / 64;
 	d()->map_y = (int)d()->player_y / 64;
 	d()->delta_dist_x = fabs(1 / d()->ray_dir_x);
@@ -67,8 +67,6 @@ void	initialize_data(void)
 
 	d()->texture_w = TEXTURE_SIZE;
 	d()->texture_h = TEXTURE_SIZE;
-	d()->screen_height = SCREENH;
-	d()->screen_width = SCREENW;
 	d()->mmap_s_w = MINISIZE;
 	d()->mmap_s_h = MINISIZE;
 }
@@ -76,20 +74,16 @@ void	initialize_data(void)
 static void	init_pixels(void)
 {
 	int		i;
-	void	*tmp;
-	void	*tmp1;
 
 	i = 0;
 	if (d()->pixels)
 		free_double((void **)d()->pixels);
-	tmp = ft_calloc(d()->screen_height + 1, sizeof(int *));
-	d()->pixels = tmp;
+	d()->pixels = (int **)ft_calloc(SCREENH + 1, sizeof(int *));
 	if (!d()->pixels)
 		error("Error\n Couldn't allocate pixels!");
-	while (i < d()->screen_height)
+	while (i < SCREENH)
 	{
-		tmp1 = ft_calloc(d()->screen_width + 1, sizeof(int));
-		d()->pixels[i] = tmp1;
+		d()->pixels[i] = ft_calloc(SCREENW + 1, sizeof(int));
 		if (!d()->pixels[i])
 			error("Error\n Couldn't allocate pixels!");
 		i++;
@@ -99,6 +93,8 @@ static void	init_pixels(void)
 void	init_values(void)
 {
 	init_pixels();
+	// take out init_pixels for cool effect
+	// also not best for optimization
 	d()->side_dist_x = 0;
 	d()->side_dist_y = 0;
 	d()->line_height = 0;

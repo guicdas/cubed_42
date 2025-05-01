@@ -6,7 +6,7 @@
 /*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 19:51:10 by gcatarin          #+#    #+#             */
-/*   Updated: 2025/05/01 19:10:32 by gcatarin         ###   ########.fr       */
+/*   Updated: 2025/05/01 21:52:51 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ typedef struct s_data
 	char	*map_c;
 	int		hex_floor;
 	int		hex_ceiling;
-	bool	settings_flag;
+	int		settings_flag;
 
 	int		moves;
 	int		screen_height;
@@ -74,10 +74,10 @@ typedef struct s_data
 
 	double	player_x;
 	double	player_y;
-	float	player_a;
+	double	player_a;
 	double	player_dx;
 	double	player_dy;
-	float	p_speed;
+	double	p_speed;
 
 	double	camera_x;
 	double	ray_dir_x;
@@ -121,6 +121,7 @@ void	move(int keypress);
 void	move_sideways(int keypress);
 int		movekey_hook(int keypress);
 int		destroy_hook(void);
+void	load_map_body(void);
 
 //	ft_utils.c
 int		ft_isspace(int c);
@@ -143,7 +144,6 @@ void	info_print(void);
 void	map_print(void);
 void	debug_dda(void);
 
-
 //	utils.c
 void	draw_vertical_line(int x, int start, int end, int color);
 void	max_map(void);
@@ -153,8 +153,6 @@ void	init_texture(t_img *img);
 //	leave.c
 void	free_image(void);
 //	parsing_map.c
-int		check_char(char c);
-void	map_check_matriz(void);
 void	map_flood_fill(int x, int y, char **map, int size);
 //	2drays.c
 void	put_image(void *img, int h, int w);

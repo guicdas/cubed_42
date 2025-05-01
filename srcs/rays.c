@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rays.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jnuncio- <jnuncio-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 16:57:42 by gcatarin          #+#    #+#             */
-/*   Updated: 2024/06/13 12:01:25 by jnuncio-         ###   ########.fr       */
+/*   Updated: 2025/05/01 20:34:45 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,8 +61,8 @@ static void	dda_execute(void)
 		}
 		if (d()->map_y < 0.1 || d()->map_x < 0.1 \
 		|| d()->map_y > d()->map_h - 1 || d()->map_x > d()->max_x \
-		|| d()->map_x > d()->screen_width - 0.1 \
-		|| d()->map_y > d()->screen_height - 1.1)
+		|| d()->map_x > SCREENW - 0.1 \
+		|| d()->map_y > SCREENH - 1.1)
 			break ;
 		else if (d()->map[d()->map_y][d()->map_x] == '1')
 			hit = 1;
@@ -75,13 +75,13 @@ static void	calculate_line(void)
 		d()->wall_dist = (d()->side_dist_x - d()->delta_dist_x);
 	else
 		d()->wall_dist = (d()->side_dist_y - d()->delta_dist_y);
-	d()->line_height = (int)(d()->screen_height / d()->wall_dist);
-	d()->draw_start = -(d()->line_height) / 2 + (d()->screen_height / 2);
+	d()->line_height = (int)(SCREENH / d()->wall_dist);
+	d()->draw_start = -(d()->line_height) / 2 + (SCREENH / 2);
 	if (d()->draw_start < 0)
 		d()->draw_start = 0;
-	d()->draw_end = d()->line_height / 2 + (d()->screen_height / 2);
-	if (d()->draw_end >= d()->screen_height)
-		d()->draw_end = d()->screen_height - 1;
+	d()->draw_end = d()->line_height / 2 + (SCREENH / 2);
+	if (d()->draw_end >= SCREENH)
+		d()->draw_end = SCREENH - 1;
 	if (d()->side == 0)
 		d()->wall_x = d()->player_y + d()->wall_dist * d()->ray_dir_y;
 	else
@@ -100,7 +100,7 @@ static void	update_textures(int x)
 	(d()->side == 1 && d()->ray_dir_y < 0))
 		d()->texture_x = d()->texture_w - d()->texture_x - 1;
 	d()->step = d()->texture_h / d()->line_height;
-	d()->pos = (d()->draw_start - d()->screen_height / 2 + \
+	d()->pos = (d()->draw_start - SCREENH / 2 + \
 	d()->line_height / 2) * d()->step;
 	y = d()->draw_start;
 	while (y < d()->draw_end)
@@ -122,7 +122,7 @@ void	raycaster(void)
 	int		i;
 
 	i = 0;
-	while (i < d()->screen_width)
+	while (i < SCREENW)
 	{
 		init_dda(i);
 		calculate_dda();

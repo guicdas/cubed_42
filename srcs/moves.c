@@ -6,7 +6,7 @@
 /*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 17:44:24 by gcatarin          #+#    #+#             */
-/*   Updated: 2025/05/01 19:25:04 by gcatarin         ###   ########.fr       */
+/*   Updated: 2025/05/01 21:03:00 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static int	check_move(float i, float j)
 	int	x;
 
 	y = (int)(d()->player_y + j) / 64;
-	x = (int)(d()->player_x + i) / 64;
+	x = (int)(d()->player_x + i) / 64; // texture size ou assim
 	if (d()->map[y][x] != '1')
 		return (1);
 	return (0);
@@ -28,13 +28,13 @@ void	rotate(int keypress)
 {
 	double	old_dir;
 	double	old_plane;
-	float	rot;
+	double	rot;
 
 	rot = d()->player_a;
 	old_dir = d()->player_dx;
 	old_plane = d()->plane_x;
-	if (keypress == KEY_LEFT)
-		rot *= -1;
+	rot *= -2 * (keypress == KEY_LEFT) + 1;
+	printf(" %f - %f\n",  rot, d()->player_a);
 	d()->player_dx = (d()->player_dx * cos(rot)) - (d()->player_dy * sin(rot));
 	d()->player_dy = (old_dir * sin(rot)) + (d()->player_dy * cos(rot));
 	d()->plane_x = (d()->plane_x * cos(rot)) - (d()->plane_y * sin(rot));
@@ -46,9 +46,7 @@ void	move(int key)
 {
 	int	dir;
 
-	dir = -1;
-	if (key == KEY_W)
-		dir = 1;
+	dir = -2 * (key != KEY_W) + 1;
 	if (check_move((dir * d()->player_dx) * d()->p_speed, 0) == 1)
 		d()->player_x += dir * (d()->player_dx * d()->p_speed);
 	if (check_move(0, (dir * d()->player_dy) * d()->p_speed) == 1)
@@ -58,23 +56,12 @@ void	move(int key)
 
 void	move_sideways(int key)
 {
-	int	rot, dir;
-	double x_movement;
-	double y_movement;
+	int	dir;
 
-	if (key != KEY_A)
-		dir = 1;
-	else
-		dir = -1;
-	rot = d()->player_a * (float) dir;
-	x_movement = d()->player_dx * cos(rot - PI / 2);
-	y_movement = d()->player_dy * sin(rot - PI / 2);
-	
-	if (check_move((dir * (x_movement - y_movement)) * d()->p_speed, 0) == 1)
-		d()->player_x += dir * ((x_movement - y_movement) * d()->p_speed);
-	if (check_move(0, dir * (x_movement + y_movement) * d()->p_speed) == 1)
-		d()->player_y += ((d()->player_dx * sin(rot - PI / 2)) + \
-		(d()->player_dy * cos(rot - PI / 2))) * d()->p_speed;
-
+	dir = -2 * (key != KEY_D) + 1;
+	if (check_move(dir * -d()->player_dy * d()->p_speed, 0) == 1)
+		d()->player_x += dir * -d()->player_dy * d()->p_speed;
+	if (check_move(0, dir * d()->player_dx * d()->p_speed) == 1)
+		d()->player_y += dir * d()->player_dx * d()->p_speed;
 	d()->moves++;
 }

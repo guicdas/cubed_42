@@ -6,7 +6,7 @@
 /*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 21:38:24 by gcatarin          #+#    #+#             */
-/*   Updated: 2025/05/01 16:54:28 by gcatarin         ###   ########.fr       */
+/*   Updated: 2025/05/01 21:54:11 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ static int	check_for_element(char *s)
 	return (0);
 }
 
-static void	load_map(int nlines)
+static void	load_map_header(int nlines)
 {
 	int	i;
 	int	max_width;
@@ -116,11 +116,9 @@ void	parse_map(char **av)
 		error("Error\nCouldn't re-open map");
 	i = copy_full_map_file(fd2);
 	close(fd2);
-	load_map(i);
-	map_check_matriz();
+	load_map_header(i);
+	load_map_body();
 	//map_print();
-	if (d()->n_player != 1)
-		error("Error\nWrong player count!");
 	map_flood_fill((int)d()->player_x / 64, (int)d()->player_y / 64, \
 d()->map, d()->map_h + 1);
 }

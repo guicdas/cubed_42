@@ -6,7 +6,7 @@
 /*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 16:31:05 by gcatarin          #+#    #+#             */
-/*   Updated: 2025/05/01 19:09:09 by gcatarin         ###   ########.fr       */
+/*   Updated: 2025/05/01 20:33:26 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,8 +65,7 @@ static void	load_textures_and_assets(void)
 	int		**tmp1;
 
 	d()->mlx = mlx_init();
-	tmp = mlx_new_window(d()->mlx, d()->screen_width, \
-d()->screen_height, "CUB3D_42");
+	tmp = mlx_new_window(d()->mlx, SCREENW, SCREENH, "CUB3D_42");
 	d()->win_ptr = tmp;
 	if (!d()->mlx || !d()->win_ptr)
 		error("Error\n Cub3d coudn't be initialized!");
@@ -81,7 +80,7 @@ d()->screen_height, "CUB3D_42");
 	init_image(&d()->wall, "textures/miniwall.xpm", 1);
 	init_image(&d()->exit, "textures/exit.xpm", 1);
 	init_image(&d()->floor, "textures/minifloor.xpm", 1);
-	//init_values();
+	init_values();
 	max_map();
 } 
 
@@ -91,8 +90,8 @@ int	main(int ac, char **av)
 	initialize_data();
 	parse_map(av);
 	load_textures_and_assets();
-	mlx_string_put(d()->mlx, d()->win_ptr, d()->screen_width / 2 - 75, \
-d()->screen_height / 2, WHITE, "PRESS ANY KEY");
+	mlx_string_put(d()->mlx, d()->win_ptr, SCREENW / 2 - 75, SCREENH / 2, 	
+WHITE, "PRESS ANY KEY");
 	mlx_hook(d()->win_ptr, DestroyNotify, NoEventMask, destroy_hook, d());
 	mlx_hook(d()->win_ptr, KeyPress, KeyPressMask, movekey_hook, d());
 	//mlx_hook(d()->win_ptr, MotionNotify, PointerMotionMask, mouse_move, d);

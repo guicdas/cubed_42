@@ -6,7 +6,7 @@
 /*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/07 14:01:48 by gcatarin          #+#    #+#             */
-/*   Updated: 2025/05/01 19:16:01 by gcatarin         ###   ########.fr       */
+/*   Updated: 2025/05/01 20:31:15 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	movekey_hook(int key)
 	init_values();
 	if (key == KEY_ESC)
 		leave();
-	d()->settings_flag += (key == KEY_Q);
+	d()->settings_flag = -2 * (key == KEY_Q) + 1;
 	if (key == KEY_W || key == KEY_S)
 		move(key);
 	else if (key == KEY_A || key == KEY_D)
@@ -49,7 +49,7 @@ int	movekey_hook(int key)
 		rotate(key);
 	raycaster();
 	render_frame();
-	if (d()->settings_flag == 1)
+	if (d()->settings_flag)
 		print_minimap();
 	return (0);
 }
@@ -65,14 +65,14 @@ static void	wrap_mouse_position(int x, int y)
 	int edge_warp;
 
 	edge_warp = 20;
-	if (x > d()->screen_width - edge_warp)
+	if (x > SCREENW - edge_warp)
 	{
 		x = edge_warp;
 		mlx_mouse_move(d()->mlx, d()->win_ptr, x, y);
 	}
 	if (x < edge_warp)
 	{
-		x = d()->screen_width - edge_warp;
+		x = SCREENW - edge_warp;
 		mlx_mouse_move(d()->mlx, d()->win_ptr, x, y);
 	}
 }
