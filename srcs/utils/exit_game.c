@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   leave.c                                            :+:      :+:    :+:   */
+/*   exit_game.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 17:45:43 by gcatarin          #+#    #+#             */
-/*   Updated: 2025/05/01 16:50:29 by gcatarin         ###   ########.fr       */
+/*   Updated: 2025/05/01 23:54:29 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,16 +50,6 @@ void	free_double(void **map)
 	free(map);
 }
 
-void	free_image(void)
-{
-	if (d()->wall.image)
-		mlx_destroy_image(d()->mlx, d()->wall.image);
-	if (d()->exit.image)
-		mlx_destroy_image(d()->mlx, d()->exit.image);
-	if (d()->floor.image)
-		mlx_destroy_image(d()->mlx, d()->floor.image);
-}
-
 void	error(char *s)
 {
 	ft_putendl_fd(s, 2);
@@ -75,7 +65,12 @@ void	leave(void)
 		free_double((void **)d()->pixels);
 	free_info();
 	if (d()->mlx)
-		free_image();
+	{
+		if (d()->wall.image)
+			mlx_destroy_image(d()->mlx, d()->wall.image);
+		if (d()->floor.image)
+			mlx_destroy_image(d()->mlx, d()->floor.image);
+	}
 	if (d()->mlx && d()->win_ptr)
 		mlx_destroy_window(d()->mlx, d()->win_ptr);
 	if (d()->mlx)

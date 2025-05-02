@@ -6,7 +6,7 @@
 /*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/07 14:10:24 by gcatarin          #+#    #+#             */
-/*   Updated: 2025/05/01 22:42:26 by gcatarin         ###   ########.fr       */
+/*   Updated: 2025/05/02 01:15:34 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	init_image(t_img *img, char *path, int i)
 	init_texture(img);
 	if (i == 0)
 		img->image = mlx_xpm_file_to_image(d()->mlx, \
-path,&d()->texture_w, &d()->texture_h);
+path, &d()->texture_w, &d()->texture_h);
 	else
 		img->image = mlx_xpm_file_to_image(d()->mlx, \
 path, &d()->mmap_s_w, &d()->mmap_s_h);
@@ -26,7 +26,7 @@ path, &d()->mmap_s_w, &d()->mmap_s_h);
 	if (i == 1 && (d()->mmap_s_w != MINISIZE || d()->mmap_s_h != MINISIZE))
 		error("Error\nWrong minimap texture size\n");
 	if (i == 0 && (d()->texture_w != TEXTURE_SIZE || \
-	d()->texture_h != TEXTURE_SIZE))
+d()->texture_h != TEXTURE_SIZE))
 		error("Error\nWrong texture size\n");
 	img->addr = (int *)mlx_get_data_addr(img->image, &img->bpp, \
 &img->linesize, &img->endian);
@@ -41,7 +41,7 @@ void	init_dda(int x)
 d()->plane_x * d()->camera_x;
 	d()->ray_dir_y = (d()->player_dy / d()->p_speed) + \
 d()->plane_y * d()->camera_x;
-	d()->map_x = (int)d()->player_x / 64;
+	d()->map_x = (int)d()->player_x / 64;// texture size
 	d()->map_y = (int)d()->player_y / 64;
 	d()->delta_dist_x = fabs(1 / d()->ray_dir_x);
 	d()->delta_dist_y = fabs(1 / d()->ray_dir_y);
@@ -64,7 +64,6 @@ void	initialize_data(void)
 	d()->settings_flag = -1;
 	d()->p_speed = PLAYER_SPEED;
 	// d()->last_mouse_x = SCREENW / 2;
-
 	d()->texture_w = TEXTURE_SIZE;
 	d()->texture_h = TEXTURE_SIZE;
 	d()->mmap_s_w = MINISIZE;
@@ -83,14 +82,14 @@ static void	init_pixels(void)
 		error("Error\n Couldn't allocate pixels!");
 	while (i < SCREENH)
 	{
-		d()->pixels[i] = ft_calloc(SCREENW + 1, sizeof(int));
+		(d()->pixels[i]) = ft_calloc(SCREENW + 1, sizeof(int ));
 		if (!d()->pixels[i])
 			error("Error\n Couldn't allocate pixels!");
 		i++;
 	}
 }
 
-void	init_values(void)
+void	init_pixels_and_values(void)
 {
 	init_pixels();
 	// take out init_pixels for cool effect

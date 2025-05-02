@@ -6,38 +6,47 @@
 /*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/07 14:01:48 by gcatarin          #+#    #+#             */
-/*   Updated: 2025/05/01 20:31:15 by gcatarin         ###   ########.fr       */
+/*   Updated: 2025/05/02 02:29:24 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cubed.h"
 
-static void	show_settings(void)
+static long	get_time_ms(void)
 {
-	mlx_string_put(d()->mlx, d()->win_ptr, 2, 12, \
-BLACK, ft_itoa(d()->moves, 10, DECA));
-	mlx_string_put(d()->mlx, d()->win_ptr, 2, 24, WHITE, "Y:");
-	mlx_string_put(d()->mlx, d()->win_ptr, 14, 26, \
-BLACK, ft_itoa((int)d()->player_y / 64, 10, DECA));
-	mlx_string_put(d()->mlx, d()->win_ptr, 40, 24, WHITE, "X:");
-	mlx_string_put(d()->mlx, d()->win_ptr, 54, 26, \
-BLACK, ft_itoa((int)d()->player_x / 64, 10, DECA));
+	struct timeval	tv;
+
+	gettimeofday(&tv, NULL);
+	return (tv.tv_sec * 1000L + tv.tv_usec / 1000L);
 }
 
-static void	print_minimap(void)
+int	frame_count_hook(void)
 {
-	draw_map();
-	mlx_pixel_put(d()->mlx, d()->win_ptr, \
-(d()->player_x / 64) * d()->mmap_s_w, \
-(d()->player_y / 64) * d()->mmap_s_h, GREEN);
-	draw_player_direction((d()->player_x / 64) * d()->mmap_s_w, \
-(d()->player_y / 64) * d()->mmap_s_h, RED);
-	show_settings();
+	static int	frames = 0;
+	static long	last_time = 0;
+	static int	fps = 0;
+	static int	old_moves = 0;
+	long		now;
+
+	now = get_time_ms();
+	if (old_moves != d()->moves)
+	{
+		render_frame();
+		old_moves = d()->moves;
+	}
+	if (now - last_time >= 1000)
+	{
+		fps = frames;
+		frames = 0;
+		last_time = now;
+		printf("FPS: %d\n", fps);
+	}
+	return (0);
 }
 
 int	movekey_hook(int key)
 {
-	init_values();
+	init_pixels_and_values();
 	if (key == KEY_ESC)
 		leave();
 	d()->settings_flag = -2 * (key == KEY_Q) + 1;
@@ -49,8 +58,8 @@ int	movekey_hook(int key)
 		rotate(key);
 	raycaster();
 	render_frame();
-	if (d()->settings_flag)
-		print_minimap();
+	if ((int)(d()->player_x - 32) / 64 != d()->player_x_map)
+		error("DEumr\nerda!");
 	return (0);
 }
 
@@ -60,6 +69,7 @@ int	destroy_hook(void)
 	return (0);
 }
 
+/*
 static void	wrap_mouse_position(int x, int y)
 {
 	int edge_warp;
@@ -98,4 +108,4 @@ int mouse_move(int x, int y, void *p)
 	d()->plane_x = (d()->plane_x * cos(rot)) - (d()->plane_y * sin(rot));
 	d()->plane_y = (old_plane * sin(rot)) + (d()->plane_y * cos(rot));
 	return (0);
-}
+}*/

@@ -1,13 +1,13 @@
 NAME			= cub3d
 CC				= cc
-FLAGS			= -Wall -Wextra -fsanitize=address -Werror 
+FLAGS			= -Wall -Wextra -fsanitize=address #-Werror 
 MLXFLAGS		= minilibx-linux/libmlx.a -lXext -lX11 -lm
 MINILIBX_PATH	= minilibx-linux/
 MINILIBX		= $(MINILIBX_PATH)/libmlx.a
 SRC				= srcs/2drays.c srcs/initialize_values.c srcs/main.c srcs/moves.c srcs/renders.c srcs/rays.c srcs/hooks.c \
 				srcs/parsing/parse_map_header.c srcs/parsing/parse_rgb_values.c srcs/parsing/parse_map_body.c\
 				srcs/utils/utils1.c srcs/utils/utils2.c srcs/utils/utils3.c srcs/utils/ft_utils.c srcs/utils/ft_utils2.c srcs/utils/ft_split.c \
-				srcs/utils/get_next_line.c srcs/utils/debug.c srcs/utils/exit_game.c
+				srcs/utils/get_next_line.c srcs/utils/debug.c srcs/utils/exit_game.c 
 
 OBJ_DIR			= objs
 OBJ				= $(SRC:srcs/%.c=$(OBJ_DIR)/%.o)

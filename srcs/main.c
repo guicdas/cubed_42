@@ -6,12 +6,11 @@
 /*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 16:31:05 by gcatarin          #+#    #+#             */
-/*   Updated: 2025/05/01 20:33:26 by gcatarin         ###   ########.fr       */
+/*   Updated: 2025/05/02 02:21:16 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cubed.h"
-#include "../minilibx-linux/mlx.h"	
 
 t_data	*d(void)
 {
@@ -62,15 +61,13 @@ img.addr[y * d()->texture_w + x];
 static void	load_textures_and_assets(void)
 {
 	void	*tmp;
-	int		**tmp1;
 
 	d()->mlx = mlx_init();
 	tmp = mlx_new_window(d()->mlx, SCREENW, SCREENH, "CUB3D_42");
 	d()->win_ptr = tmp;
 	if (!d()->mlx || !d()->win_ptr)
 		error("Error\n Cub3d coudn't be initialized!");
-	tmp1 = ft_calloc(5, sizeof(int *));
-	d()->textures = tmp1;
+	d()->textures = ft_calloc(5, sizeof(int *));
 	if (!d()->textures)
 		error("Error\n Couldn't allocate textures!");
 	d()->textures[0] = xpm_to_img(d()->map_no);
@@ -78,11 +75,11 @@ static void	load_textures_and_assets(void)
 	d()->textures[2] = xpm_to_img(d()->map_ea);
 	d()->textures[3] = xpm_to_img(d()->map_we);
 	init_image(&d()->wall, "textures/miniwall.xpm", 1);
-	init_image(&d()->exit, "textures/exit.xpm", 1);
 	init_image(&d()->floor, "textures/minifloor.xpm", 1);
-	init_values();
+	init_image(&d()->door, "textures/door.xpm", 1);
+	init_pixels_and_values();
 	max_map();
-} 
+}
 
 int	main(int ac, char **av)
 {
@@ -90,10 +87,11 @@ int	main(int ac, char **av)
 	initialize_data();
 	parse_map(av);
 	load_textures_and_assets();
-	mlx_string_put(d()->mlx, d()->win_ptr, SCREENW / 2 - 75, SCREENH / 2, 	
+	mlx_string_put(d()->mlx, d()->win_ptr, SCREENW / 2 - 75, SCREENH / 2, \
 WHITE, "PRESS ANY KEY");
-	mlx_hook(d()->win_ptr, DestroyNotify, NoEventMask, destroy_hook, d());
-	mlx_hook(d()->win_ptr, KeyPress, KeyPressMask, movekey_hook, d());
+	mlx_hook(d()->win_ptr, DestroyNotify, NoEventMask, destroy_hook, NULL);
+	mlx_hook(d()->win_ptr, KeyPress, KeyPressMask, movekey_hook, NULL);
 	//mlx_hook(d()->win_ptr, MotionNotify, PointerMotionMask, mouse_move, d);
+	//mlx_loop_hook(d()->mlx, frame_count_hook, NULL);
 	mlx_loop(d()->mlx);
 }
